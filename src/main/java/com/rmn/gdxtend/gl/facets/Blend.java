@@ -1,5 +1,7 @@
 package com.rmn.gdxtend.gl.facets;
 
+import static com.badlogic.gdx.Gdx.gl;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.rmn.gdxtend.gl.Facet;
@@ -15,27 +17,27 @@ public class Blend extends Facet<Blend> {
 	/**
 	 * Whether blending is enabled
 	 */
-	public boolean enabled = false;
+	boolean enabled = false;
 
 	/**
 	 * The blending function
 	 */
-	public BlendEquation equation = BlendEquation.GL_FUNC_ADD;
+	BlendEquation equation = BlendEquation.GL_FUNC_ADD;
 
 	/**
 	 * Blend colour
 	 */
-	public final Color color = new Color( 0, 0, 0, 0 );
+	final Color color = new Color( 0, 0, 0, 0 );
 
 	/**
 	 * The blending source factor, see glBlendFunc
 	 */
-	public SourceFactor srcFactor = SourceFactor.ONE;
+	SourceFactor srcFactor = SourceFactor.ONE;
 
 	/**
 	 * The blending destination factor, see glBlendFunc
 	 */
-	public DestinationFactor destFactor = DestinationFactor.ZERO;
+	DestinationFactor destFactor = DestinationFactor.ZERO;
 
 	public Blend enabled( boolean e ) {
 		enabled = e;
@@ -92,24 +94,24 @@ public class Blend extends Facet<Blend> {
 	}
 
 	@Override
-	public void transitionFrom( Blend b, GL20 context ) {
+	public void transition( Blend b ) {
 		if( enabled && !b.enabled ) {
-			context.glEnable( GL20.GL_BLEND );
+			gl.glEnable( GL20.GL_BLEND );
 		}
 		else if( !enabled && b.enabled ) {
-			context.glDisable( GL20.GL_BLEND );
+			gl.glDisable( GL20.GL_BLEND );
 		}
 
 		if( srcFactor != b.srcFactor || destFactor != b.destFactor ) {
-			context.glBlendFunc( srcFactor.value, destFactor.value );
+			gl.glBlendFunc( srcFactor.value, destFactor.value );
 		}
 
 		if( !color.equals( b.color ) ) {
-			context.glBlendColor( color.r, color.g, color.b, color.a );
+			gl.glBlendColor( color.r, color.g, color.b, color.a );
 		}
 
 		if( equation != b.equation ) {
-			context.glBlendEquation( equation.value );
+			gl.glBlendEquation( equation.value );
 		}
 	}
 
@@ -124,10 +126,9 @@ public class Blend extends Facet<Blend> {
 				.result();
 	}
 
-	@SuppressWarnings( "boxing" )
 	@Override
 	public String toString() {
-		return String.format( "Blending %s src:%s dest:%s eq:%s colour %s",
-				enabled, srcFactor, destFactor, equation, color );
+		return "Blending " + enabled + " src:" + srcFactor + " dest:" + destFactor
+				+ " eq:" + equation + " color:" + color;
 	}
 }

@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 
 public class GLStateTest {
@@ -18,6 +19,8 @@ public class GLStateTest {
 	@Before
 	public void before() {
 		MockitoAnnotations.initMocks( this );
+
+		Gdx.gl = context;
 	}
 
 }

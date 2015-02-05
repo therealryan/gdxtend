@@ -66,7 +66,7 @@ public class PolygonOffsetTest extends GLStateTest {
 
 	@Test
 	public void noopTransition() {
-		polyOffset.transitionFrom( control, context );
+		polyOffset.transition( control );
 
 		verify( context, never() ).glEnable( anyInt() );
 		verify( context, never() ).glDisable( anyInt() );
@@ -77,7 +77,7 @@ public class PolygonOffsetTest extends GLStateTest {
 	public void transition() {
 		polyOffset.enabled( true ).factor( 0.5f ).units( 0.25f );
 
-		polyOffset.transitionFrom( control, context );
+		polyOffset.transition( control );
 
 		verify( context ).glEnable( GL20.GL_POLYGON_OFFSET_FILL );
 		verify( context ).glPolygonOffset( 0.5f, 0.25f );

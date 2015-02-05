@@ -1,6 +1,5 @@
 package com.rmn.gdxtend.gl;
 
-import com.badlogic.gdx.graphics.GL20;
 
 /**
  * Represents some aspect of the rendering state.
@@ -22,10 +21,10 @@ public abstract class Facet<T extends Facet<T>> implements Comparable<T> {
 	/**
 	 * Alter the OpenGL state if necessary
 	 * 
-	 * @param facet
+	 * @param from
 	 *          The current state.
 	 */
-	public abstract void transitionFrom( T facet, GL20 context );
+	public abstract void transition( T from  );
 
 	@SuppressWarnings( "unchecked" )
 	@Override

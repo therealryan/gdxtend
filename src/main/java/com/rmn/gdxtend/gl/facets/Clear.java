@@ -1,7 +1,8 @@
 package com.rmn.gdxtend.gl.facets;
 
+import static com.badlogic.gdx.Gdx.gl;
+
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.rmn.gdxtend.gl.Facet;
 import com.rmn.gdxtend.util.Comparison;
 
@@ -13,17 +14,17 @@ public class Clear extends Facet<Clear> {
 	/**
 	 * Clear color
 	 */
-	public final Color color = new Color( 0, 0, 0, 0 );
+	final Color color = new Color( 0, 0, 0, 0 );
 
 	/**
 	 * Clear depth
 	 */
-	public float depth = 0;
+	float depth = 0;
 
 	/**
 	 * Clear stencil value
 	 */
-	public int stencil = 0;
+	int stencil = 0;
 
 	public Clear r( float r ) {
 		color.set( r, color.g, color.b, color.a );
@@ -77,23 +78,22 @@ public class Clear extends Facet<Clear> {
 	}
 
 	@Override
-	public void transitionFrom( Clear c, GL20 context ) {
+	public void transition( Clear c ) {
 		if( !color.equals( c.color ) ) {
-			context.glClearColor( color.r, color.g, color.b, color.a );
+			gl.glClearColor( color.r, color.g, color.b, color.a );
 		}
 
 		if( depth != c.depth ) {
-			context.glClearDepthf( depth );
+			gl.glClearDepthf( depth );
 		}
 
 		if( stencil != c.stencil ) {
-			context.glClearStencil( stencil );
+			gl.glClearStencil( stencil );
 		}
 	}
 
-	@SuppressWarnings( "boxing" )
 	@Override
 	public String toString() {
-		return String.format( "Clear %s d:%s s:%s", color, depth, stencil );
+		return "Clear c:" + color + " d:" + depth + " s:" + stencil;
 	}
 }

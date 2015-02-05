@@ -1,5 +1,7 @@
 package com.rmn.gdxtend.gl.facets;
 
+import static com.badlogic.gdx.Gdx.gl;
+
 import com.badlogic.gdx.graphics.GL20;
 import com.rmn.gdxtend.gl.Facet;
 import com.rmn.gdxtend.gl.enums.ComparisonFunction;
@@ -12,27 +14,27 @@ public class Depth extends Facet<Depth> {
 	/**
 	 * Whether the depth test is enabled or not
 	 */
-	public boolean enabled = false;
+	boolean enabled = false;
 
 	/**
 	 * The depth test function, see glDepthFunc
 	 */
-	public ComparisonFunction func = ComparisonFunction.LESS;
+	ComparisonFunction func = ComparisonFunction.LESS;
 
 	/**
 	 * Whether or not to write to the depth buffer, see glDepthMask
 	 */
-	public boolean mask = true;
+	boolean mask = true;
 
 	/**
 	 * See glDepthRange
 	 */
-	public float near = 0;
+	float near = 0;
 
 	/**
 	 * See glDepthRange
 	 */
-	public float far = 1;
+	float far = 1;
 
 	public Depth enabled( boolean e ) {
 		enabled = e;
@@ -69,24 +71,24 @@ public class Depth extends Facet<Depth> {
 	}
 
 	@Override
-	public void transitionFrom( Depth d, GL20 context ) {
+	public void transition( Depth d ) {
 		if( enabled && !d.enabled ) {
-			context.glEnable( GL20.GL_DEPTH_TEST );
+			gl.glEnable( GL20.GL_DEPTH_TEST );
 		}
 		else if( !enabled && d.enabled ) {
-			context.glDisable( GL20.GL_DEPTH_TEST );
+			gl.glDisable( GL20.GL_DEPTH_TEST );
 		}
 
 		if( func != d.func ) {
-			context.glDepthFunc( func.value );
+			gl.glDepthFunc( func.value );
 		}
 
 		if( mask != d.mask ) {
-			context.glDepthMask( mask );
+			gl.glDepthMask( mask );
 		}
 
 		if( near != d.near || far != d.far ) {
-			context.glDepthRangef( near, far );
+			gl.glDepthRangef( near, far );
 		}
 	}
 

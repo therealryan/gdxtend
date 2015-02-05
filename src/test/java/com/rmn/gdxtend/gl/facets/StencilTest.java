@@ -124,7 +124,7 @@ public class StencilTest extends GLStateTest {
 	}
 
 	public void noopTransition() {
-		stencil.transitionFrom( control, context );
+		stencil.transition( control );
 
 		verify( context, never() ).glEnable( anyInt() );
 		verify( context, never() ).glDisable( anyInt() );
@@ -145,7 +145,7 @@ public class StencilTest extends GLStateTest {
 				.dpfail( StencilOperation.DECR_WRAP )
 				.dppass( StencilOperation.INCR );
 
-		stencil.transitionFrom( control, context );
+		stencil.transition( control );
 
 		verify( context ).glEnable( GL20.GL_STENCIL_TEST );
 		verify( context ).glStencilFunc( GL20.GL_GEQUAL, 1, 2 );
@@ -153,7 +153,7 @@ public class StencilTest extends GLStateTest {
 		verify( context ).glStencilOp( GL20.GL_DECR, GL20.GL_DECR_WRAP,
 				GL20.GL_INCR );
 
-		control.transitionFrom( stencil, context );
+		control.transition( stencil );
 
 		verify( context ).glDisable( GL20.GL_STENCIL_TEST );
 	}

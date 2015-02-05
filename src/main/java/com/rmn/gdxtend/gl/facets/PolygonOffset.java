@@ -1,5 +1,7 @@
 package com.rmn.gdxtend.gl.facets;
 
+import static com.badlogic.gdx.Gdx.gl;
+
 import com.badlogic.gdx.graphics.GL20;
 import com.rmn.gdxtend.gl.Facet;
 import com.rmn.gdxtend.util.Comparison;
@@ -11,19 +13,19 @@ public class PolygonOffset extends Facet<PolygonOffset> {
 	/**
 	 * Controls {@link GL11#GL_POLYGON_OFFSET_FILL}
 	 */
-	public boolean enabled = false;
+	boolean enabled = false;
 
 	/**
 	 * A scale factor that is used to create a variable depth offset for each
 	 * polygon.
 	 */
-	public float factor = 0;
+	float factor = 0;
 
 	/**
 	 * Multiplied by an implementation-specific value to create a constant depth
 	 * offset.
 	 */
-	public float units = 0;
+	float units = 0;
 
 	public PolygonOffset enabled( boolean e ) {
 		enabled = e;
@@ -48,18 +50,18 @@ public class PolygonOffset extends Facet<PolygonOffset> {
 	}
 
 	@Override
-	public void transitionFrom( PolygonOffset po, GL20 context ) {
+	public void transition( PolygonOffset po ) {
 		if( enabled != po.enabled ) {
 			if( enabled ) {
-				context.glEnable( GL20.GL_POLYGON_OFFSET_FILL );
+				gl.glEnable( GL20.GL_POLYGON_OFFSET_FILL );
 			}
 			else {
-				context.glDisable( GL20.GL_POLYGON_OFFSET_FILL );
+				gl.glDisable( GL20.GL_POLYGON_OFFSET_FILL );
 			}
 		}
 
 		if( factor != po.factor || units != po.units ) {
-			context.glPolygonOffset( factor, units );
+			gl.glPolygonOffset( factor, units );
 		}
 	}
 
@@ -72,10 +74,9 @@ public class PolygonOffset extends Facet<PolygonOffset> {
 				.result();
 	}
 
-	@SuppressWarnings( "boxing" )
 	@Override
 	public String toString() {
-		return String.format( "Polygon offset %s factor %s units %s", enabled,
-				factor, units );
+		return "Polygon offset " + enabled + " factor:" + factor + " units:"
+				+ units;
 	}
 }

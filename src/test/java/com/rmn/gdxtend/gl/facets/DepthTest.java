@@ -93,7 +93,7 @@ public class DepthTest extends GLStateTest {
 
 	@Test
 	public void noopTransition() {
-		depth.transitionFrom( control, context );
+		depth.transition( control );
 
 		verify( context, never() ).glEnable( anyInt() );
 		verify( context, never() ).glDisable( anyInt() );
@@ -110,14 +110,14 @@ public class DepthTest extends GLStateTest {
 				.near( 0.5f )
 				.far( 0.25f );
 
-		depth.transitionFrom( control, context );
+		depth.transition( control );
 
 		verify( context ).glEnable( GL20.GL_DEPTH_TEST );
 		verify( context ).glDepthFunc( GL20.GL_ALWAYS );
 		verify( context ).glDepthMask( false );
 		verify( context ).glDepthRangef( 0.5f, 0.25f );
 
-		control.transitionFrom( depth, context );
+		control.transition( depth );
 
 		verify( context ).glDisable( GL20.GL_DEPTH_TEST );
 	}

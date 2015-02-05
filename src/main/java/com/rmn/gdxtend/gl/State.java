@@ -25,7 +25,6 @@ package com.rmn.gdxtend.gl;
 
 import java.util.Arrays;
 
-import com.badlogic.gdx.graphics.GL20;
 import com.rmn.gdxtend.gl.facets.Blend;
 import com.rmn.gdxtend.gl.facets.Clear;
 import com.rmn.gdxtend.gl.facets.Depth;
@@ -127,10 +126,10 @@ public class State implements Comparable<State> {
 	 * Applies this rendering state to OpenGL
 	 */
 	@SuppressWarnings( "unchecked" )
-	public void apply( GL20 context ) {
+	public void apply() {
 		for( int i = 0; i < facets.length; i++ ) {
 			if( facets[ i ] != null ) {
-				facets[ i ].transitionFrom( currentState.facets[ i ], context );
+				facets[ i ].transition( currentState.facets[ i ] );
 			}
 		}
 

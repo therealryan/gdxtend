@@ -1,35 +1,44 @@
 package com.rmn.gdxtend.gl.facets;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyFloat;
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 import org.junit.Test;
+import org.mockito.Mock;
 
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
-import com.rmn.gdxtend.gl.enums.MagFilter;
-import com.rmn.gdxtend.gl.enums.MinFilter;
 
 public class TextureStateTest extends GLStateTest {
 
 	private TextureState tex = new TextureState();
 	private TextureState control = new TextureState();
 
+	@Mock
+	private Texture imageA;
+
+	@Mock
+	private Texture imageB;
+
 	@Test
 	public void construction() {
-		tex.id( 1 );
-		tex.filter.min( MinFilter.LINEAR_MIPMAP_LINEAR ).mag( MagFilter.NEAREST );
-		tex.wrap.s( TextureWrap.MirroredRepeat ).t( TextureWrap.ClampToEdge );
+		tex.with( imageA );
+		tex.min( TextureFilter.MipMapLinearLinear ).mag( TextureFilter.Nearest );
+		tex.s( TextureWrap.MirroredRepeat ).t( TextureWrap.ClampToEdge );
 
-		assertEquals( 1, tex.id );
-		assertEquals( MinFilter.LINEAR_MIPMAP_LINEAR, tex.filter.min );
-		assertEquals( MagFilter.NEAREST, tex.filter.mag );
-		assertEquals( TextureWrap.MirroredRepeat, tex.wrap.s );
-		assertEquals( TextureWrap.ClampToEdge, tex.wrap.t );
+		assertEquals( imageA, tex.texture );
+		assertEquals( TextureFilter.MipMapLinearLinear, tex.min );
+		assertEquals( TextureFilter.Nearest, tex.mag );
+		assertEquals( TextureWrap.MirroredRepeat, tex.s );
+		assertEquals( TextureWrap.ClampToEdge, tex.t );
 	}
 
 	@Test
@@ -39,18 +48,22 @@ public class TextureStateTest extends GLStateTest {
 
 	@Test
 	public void copy() {
-		tex.id( 1 );
-		tex.filter.min( MinFilter.LINEAR_MIPMAP_LINEAR ).mag( MagFilter.NEAREST );
-		tex.wrap.s( TextureWrap.MirroredRepeat ).t( TextureWrap.ClampToEdge );
+		tex.with( imageA );
+		tex.min( TextureFilter.MipMapLinearLinear ).mag( TextureFilter.Nearest );
+		tex.s( TextureWrap.MirroredRepeat ).t( TextureWrap.ClampToEdge );
 
-		TextureState copy = new TextureState().from( tex );
+		TextureState copy = new TextureState();
+
+		assertFalse( copy.equals( tex ) );
+
+		copy.from( tex );
 
 		assertTrue( copy.equals( tex ) );
 	}
 
 	@Test
 	public void idComparison() {
-		tex.id( 1 );
+		tex.with( imageA );
 
 		assertEquals( 1, tex.compareTo( control ) );
 		assertEquals( -1, control.compareTo( tex ) );
@@ -58,7 +71,7 @@ public class TextureStateTest extends GLStateTest {
 
 	@Test
 	public void minComparison() {
-		tex.filter.min( MinFilter.LINEAR_MIPMAP_LINEAR );
+		tex.min( TextureFilter.MipMapLinearLinear );
 
 		assertEquals( 1, tex.compareTo( control ) );
 		assertEquals( -1, control.compareTo( tex ) );
@@ -66,7 +79,7 @@ public class TextureStateTest extends GLStateTest {
 
 	@Test
 	public void magComparison() {
-		tex.filter.mag( MagFilter.NEAREST );
+		tex.mag( TextureFilter.Nearest );
 
 		assertEquals( -1, tex.compareTo( control ) );
 		assertEquals( 1, control.compareTo( tex ) );
@@ -74,7 +87,7 @@ public class TextureStateTest extends GLStateTest {
 
 	@Test
 	public void sComparison() {
-		tex.wrap.s( TextureWrap.MirroredRepeat );
+		tex.s( TextureWrap.MirroredRepeat );
 
 		assertEquals( -1, tex.compareTo( control ) );
 		assertEquals( 1, control.compareTo( tex ) );
@@ -82,7 +95,7 @@ public class TextureStateTest extends GLStateTest {
 
 	@Test
 	public void tComparison() {
-		tex.wrap.t( TextureWrap.MirroredRepeat );
+		tex.t( TextureWrap.MirroredRepeat );
 
 		assertEquals( -1, tex.compareTo( control ) );
 		assertEquals( 1, control.compareTo( tex ) );
@@ -90,7 +103,7 @@ public class TextureStateTest extends GLStateTest {
 
 	@Test
 	public void noopTransition() {
-		tex.transitionFrom( control, context );
+		tex.transition( control );
 
 		verify( context, never() ).glEnable( anyInt() );
 		verify( context, never() ).glDisable( anyInt() );
@@ -99,68 +112,55 @@ public class TextureStateTest extends GLStateTest {
 
 	@Test
 	public void enableTransition() {
-		tex.id( 1 );
-		tex.filter.min( MinFilter.LINEAR_MIPMAP_LINEAR ).mag( MagFilter.NEAREST );
-		tex.wrap.s( TextureWrap.MirroredRepeat ).t( TextureWrap.ClampToEdge );
+		tex.with( imageA )
+				.min( TextureFilter.MipMapLinearLinear )
+				.mag( TextureFilter.Nearest )
+				.s( TextureWrap.MirroredRepeat )
+				.t( TextureWrap.ClampToEdge );
 
-		tex.transitionFrom( control, context );
+		tex.transition( control );
 
-		verify( context ).glEnable( GL20.GL_TEXTURE_2D );
-		verify( context ).glBindTexture( GL20.GL_TEXTURE_2D, 1 );
-		verify( context ).glTexParameteri( GL20.GL_TEXTURE_2D,
-				GL20.GL_TEXTURE_MIN_FILTER, GL20.GL_LINEAR_MIPMAP_LINEAR );
-		verify( context ).glTexParameteri( GL20.GL_TEXTURE_2D,
-				GL20.GL_TEXTURE_MAG_FILTER, GL20.GL_NEAREST );
-		verify( context ).glTexParameteri( GL20.GL_TEXTURE_2D,
-				GL20.GL_TEXTURE_WRAP_S, GL20.GL_MIRRORED_REPEAT );
-		verify( context ).glTexParameteri( GL20.GL_TEXTURE_2D,
-				GL20.GL_TEXTURE_WRAP_T, GL20.GL_CLAMP_TO_EDGE );
-	}
-
-	@Test
-	public void switchTransition() {
-		tex.id( 1 );
-		tex.filter.min( MinFilter.LINEAR_MIPMAP_LINEAR ).mag( MagFilter.NEAREST );
-		tex.wrap.s( TextureWrap.MirroredRepeat ).t( TextureWrap.ClampToEdge );
-
-		TextureState other = new TextureState().from( tex ).id( 2 );
-		other.transitionFrom( tex, context );
-
-		verify( context ).glBindTexture( GL20.GL_TEXTURE_2D, 2 );
-		verify( context ).glTexParameteri( GL20.GL_TEXTURE_2D,
-				GL20.GL_TEXTURE_MIN_FILTER, GL20.GL_LINEAR_MIPMAP_LINEAR );
-		verify( context ).glTexParameteri( GL20.GL_TEXTURE_2D,
-				GL20.GL_TEXTURE_MAG_FILTER, GL20.GL_NEAREST );
-		verify( context ).glTexParameteri( GL20.GL_TEXTURE_2D,
-				GL20.GL_TEXTURE_WRAP_S, GL20.GL_MIRRORED_REPEAT );
-		verify( context ).glTexParameteri( GL20.GL_TEXTURE_2D,
-				GL20.GL_TEXTURE_WRAP_T, GL20.GL_CLAMP_TO_EDGE );
+		verify( imageA )
+				.bind();
+		verify( imageA )
+				.unsafeSetFilter( TextureFilter.MipMapLinearLinear,
+						TextureFilter.Nearest );
+		verify( imageA )
+				.unsafeSetWrap( TextureWrap.MirroredRepeat, TextureWrap.ClampToEdge );
 	}
 
 	@Test
 	public void paramTransition() {
-		tex.filter.min( MinFilter.LINEAR_MIPMAP_LINEAR ).mag( MagFilter.NEAREST );
-		tex.wrap.s( TextureWrap.MirroredRepeat ).t( TextureWrap.ClampToEdge );
+		tex.with( imageA );
+		tex.min( TextureFilter.MipMapLinearLinear ).mag( TextureFilter.Nearest );
+		tex.s( TextureWrap.MirroredRepeat ).t( TextureWrap.ClampToEdge );
 
-		tex.transitionFrom( control, context );
+		TextureState other = new TextureState().from( tex );
+		other.min( TextureFilter.Linear ).mag( TextureFilter.Linear )
+				.s( TextureWrap.ClampToEdge ).t( TextureWrap.Repeat );
 
-		verify( context, never() ).glBindTexture( GL20.GL_TEXTURE_2D, 2 );
-		verify( context ).glTexParameteri( GL20.GL_TEXTURE_2D,
-				GL20.GL_TEXTURE_MIN_FILTER, GL20.GL_LINEAR_MIPMAP_LINEAR );
-		verify( context ).glTexParameteri( GL20.GL_TEXTURE_2D,
-				GL20.GL_TEXTURE_MAG_FILTER, GL20.GL_NEAREST );
-		verify( context ).glTexParameteri( GL20.GL_TEXTURE_2D,
-				GL20.GL_TEXTURE_WRAP_S, GL20.GL_MIRRORED_REPEAT );
-		verify( context ).glTexParameteri( GL20.GL_TEXTURE_2D,
-				GL20.GL_TEXTURE_WRAP_T, GL20.GL_CLAMP_TO_EDGE );
+		other.transition( tex );
+
+		verify( imageA, never() )
+				.bind();
+		verify( imageA )
+				.unsafeSetFilter( TextureFilter.Linear, TextureFilter.Linear );
+		verify( imageA )
+				.unsafeSetWrap( TextureWrap.ClampToEdge, TextureWrap.Repeat );
 	}
 
 	@Test
 	public void disableTransition() {
 
-		tex.id( 1 );
-		control.transitionFrom( tex, context );
+		tex.with( imageA );
 
-		verify( context ).glDisable( GL20.GL_TEXTURE_2D );
+		control.transition( tex );
+
+		verify( context )
+				.glBindTexture( GL20.GL_TEXTURE_2D, 0 );
+		verify( imageA, never() )
+				.unsafeSetFilter( isA( TextureFilter.class ), isA( TextureFilter.class ) );
+		verify( imageA, never() )
+				.unsafeSetWrap( isA( TextureWrap.class ), isA( TextureWrap.class ) );
 	}
 }

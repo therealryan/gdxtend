@@ -74,7 +74,7 @@ public class ClearTest extends GLStateTest {
 
 	@Test
 	public void noopTransition() {
-		clear.transitionFrom( control, context );
+		clear.transition( control );
 
 		verify( context, never() ).glClearColor(
 				anyFloat(), anyFloat(), anyFloat(), anyFloat() );
@@ -86,7 +86,7 @@ public class ClearTest extends GLStateTest {
 	public void transition() {
 		clear.r( 0.5f ).g( 0.25f ).b( 0.125f ).a( 0.0625f ).depth( 2 ).stencil( 3 );
 
-		clear.transitionFrom( control, context );
+		clear.transition( control );
 
 		verify( context ).glClearColor( 0.5f, 0.25f, 0.125f, 0.0625f );
 		verify( context ).glClearDepthf( 2 );

@@ -102,7 +102,7 @@ public class BlendTest extends GLStateTest {
 	}
 
 	public void noopTransition() {
-		blend.transitionFrom( control, context );
+		blend.transition( control );
 
 		verify( context, never() ).glEnable( anyInt() );
 		verify( context, never() ).glDisable( anyInt() );
@@ -119,14 +119,14 @@ public class BlendTest extends GLStateTest {
 				.src( SourceFactor.CONSTANT_COLOR ).dst( DestinationFactor.DST_COLOR )
 				.equation( BlendEquation.GL_FUNC_SUBTRACT );
 
-		blend.transitionFrom( control, context );
+		blend.transition( control );
 
 		verify( context ).glEnable( GL20.GL_BLEND );
 		verify( context ).glBlendFunc( GL20.GL_CONSTANT_COLOR, GL20.GL_DST_COLOR );
 		verify( context ).glBlendEquation( GL20.GL_FUNC_SUBTRACT );
 		verify( context ).glBlendColor( 0.5f, 0.25f, 0.125f, 0.0625f );
 
-		control.transitionFrom( blend, context );
+		control.transition( blend );
 
 		verify( context ).glDisable( GL20.GL_BLEND );
 	}

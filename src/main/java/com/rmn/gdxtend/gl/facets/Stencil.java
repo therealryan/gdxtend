@@ -1,5 +1,7 @@
 package com.rmn.gdxtend.gl.facets;
 
+import static com.badlogic.gdx.Gdx.gl;
+
 import com.badlogic.gdx.graphics.GL20;
 import com.rmn.gdxtend.gl.Facet;
 import com.rmn.gdxtend.gl.enums.ComparisonFunction;
@@ -11,17 +13,17 @@ import com.rmn.gdxtend.util.Comparison;
  */
 public class Stencil extends Facet<Stencil> {
 
-	public boolean enabled = false;
+	boolean enabled = false;
 
-	public ComparisonFunction function = ComparisonFunction.ALWAYS;
-	public int reference = 0;
-	public int testMask = 0xFFFFFFFF;
+	ComparisonFunction function = ComparisonFunction.ALWAYS;
+	int reference = 0;
+	int testMask = 0xFF_FF_FF_FF;
 
-	public int writeMask = 0xFFFFFFFF;
+	int writeMask = 0xFF_FF_FF_FF;
 
-	public StencilOperation sfail = StencilOperation.KEEP;
-	public StencilOperation dpfail = StencilOperation.KEEP;
-	public StencilOperation dppass = StencilOperation.KEEP;
+	StencilOperation sfail = StencilOperation.KEEP;
+	StencilOperation dpfail = StencilOperation.KEEP;
+	StencilOperation dppass = StencilOperation.KEEP;
 
 	/**
 	 * @param e
@@ -143,37 +145,35 @@ public class Stencil extends Facet<Stencil> {
 	}
 
 	@Override
-	public void transitionFrom( Stencil s, GL20 context ) {
+	public void transition( Stencil s ) {
 		if( enabled != s.enabled ) {
 			if( enabled ) {
-				context.glEnable( GL20.GL_STENCIL_TEST );
+				gl.glEnable( GL20.GL_STENCIL_TEST );
 			}
 			else {
-				context.glDisable( GL20.GL_STENCIL_TEST );
+				gl.glDisable( GL20.GL_STENCIL_TEST );
 			}
 		}
 
 		if( function != s.function || reference != s.reference
 				|| testMask != s.testMask ) {
-			context.glStencilFunc( function.value, reference, testMask );
+			gl.glStencilFunc( function.value, reference, testMask );
 		}
 
 		if( writeMask != s.writeMask ) {
-			context.glStencilMask( writeMask );
+			gl.glStencilMask( writeMask );
 		}
 
 		if( sfail != s.sfail || dpfail != s.dpfail || dppass != s.dppass ) {
-			context.glStencilOp( sfail.value, dpfail.value, dppass.value );
+			gl.glStencilOp( sfail.value, dpfail.value, dppass.value );
 		}
 	}
 
-	@SuppressWarnings( "boxing" )
 	@Override
 	public String toString() {
-		return String.format(
-				"Stencil enabled:%s function:%s ref:%s testmask:%s "
-						+ "writemask:%s fail:%s zfail:%s zpass:%s",
-				enabled, function, reference, testMask, writeMask, sfail, dpfail,
-				dppass );
+
+		return "Stencil " + enabled + " function:" + function + " ref:" + reference
+				+ " tm:" + testMask + " wm:" + writeMask + " fail:" + sfail + " zfail:"
+				+ dpfail + " zpass:" + dppass;
 	}
 }
