@@ -1,7 +1,5 @@
 package com.rmn.gdxtend.util;
 
-import com.badlogic.gdx.graphics.Color;
-
 /**
  * Handy for prioritised object comparison
  */
@@ -9,6 +7,9 @@ public class Comparison {
 
 	private int d = 0;
 
+	/**
+	 * Using this is not thread-safe
+	 */
 	public static Comparison instance = new Comparison();
 
 	/**
@@ -30,6 +31,20 @@ public class Comparison {
 	 * 
 	 * @param a
 	 * @param b
+	 * @param minimum
+	 *          the minimum value - comparison will rank according to distance
+	 *          from this value
+	 * @return
+	 */
+	public Comparison compare( boolean a, boolean b, boolean minimum ) {
+		return compare( a != minimum, b != minimum );
+	}
+
+	/**
+	 * Updates the comparison
+	 * 
+	 * @param a
+	 * @param b
 	 * @return this
 	 */
 	public Comparison compare( float a, float b ) {
@@ -37,6 +52,26 @@ public class Comparison {
 			d = Float.compare( a, b );
 		}
 		return this;
+	}
+
+	/**
+	 * Updates the comparison
+	 * 
+	 * @param a
+	 * @param b
+	 * @param min
+	 *          the minimum value - comparison will rank according to distance
+	 *          from this value
+	 * @return this
+	 */
+	public Comparison compare( float a, float b, float min ) {
+		float da = a - min;
+		float db = b - min;
+
+		// first compare on distance to minumum
+		return compare( Math.abs( da ), Math.abs( db ) )
+				// if they're equidistant, just go for the smaller value
+				.compare( da, db );
 	}
 
 	/**
@@ -55,13 +90,12 @@ public class Comparison {
 	 * 
 	 * @param a
 	 * @param b
+	 * @param min
+	 *          comparison will rank according to distance from this value
 	 * @return this
 	 */
-	public <C extends Comparable<C>> Comparison compare( C a, C b ) {
-		if( d == 0 ) {
-			d = a.compareTo( b );
-		}
-		return this;
+	public <E extends Enum<E>> Comparison compare( E a, E b, E min ) {
+		return compare( a.ordinal(), b.ordinal(), min.ordinal() );
 	}
 
 	/**
@@ -71,11 +105,11 @@ public class Comparison {
 	 * @param b
 	 * @return this
 	 */
-	public Comparison compare( Color a, Color b ) {
-		return compare( a.r, b.r )
-				.compare( a.g, b.g )
-				.compare( a.b, b.b )
-				.compare( a.a, b.a );
+	public <C extends Comparable<C>> Comparison compare( C a, C b ) {
+		if( d == 0 ) {
+			d = a.compareTo( b );
+		}
+		return this;
 	}
 
 	/**

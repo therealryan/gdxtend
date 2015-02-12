@@ -7,9 +7,9 @@ import com.badlogic.gdx.graphics.GL20;
  */
 public enum SourceFactor {
 	/***/
-	ZERO( GL20.GL_ZERO ),
-	/***/
 	ONE( GL20.GL_ONE ),
+	/***/
+	ZERO( GL20.GL_ZERO ),
 	/***/
 	SRC_COLOR( GL20.GL_SRC_COLOR ),
 	/***/

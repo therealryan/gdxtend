@@ -1,6 +1,8 @@
 package com.rmn.gdxtend.gl.facets;
 
 import static com.badlogic.gdx.Gdx.gl;
+import static com.rmn.gdxtend.gl.enums.ComparisonFunction.ALWAYS;
+import static com.rmn.gdxtend.gl.enums.StencilOperation.KEEP;
 
 import com.badlogic.gdx.graphics.GL20;
 import com.rmn.gdxtend.gl.Facet;
@@ -13,17 +15,23 @@ import com.rmn.gdxtend.util.Comparison;
  */
 public class Stencil extends Facet<Stencil> {
 
-	boolean enabled = false;
+	public static final boolean DEFAULT_ENABLED = false;
+	public static final ComparisonFunction DEFAULT_FUNCTION = ALWAYS;
+	public static final int DEFAULT_REF = 0;
+	public static final int DEFAULT_MASK = 0xFF_FF_FF_FF;
+	public static final StencilOperation DEFAULT_OPERATION = KEEP;
 
-	ComparisonFunction function = ComparisonFunction.ALWAYS;
-	int reference = 0;
-	int testMask = 0xFF_FF_FF_FF;
+	boolean enabled = DEFAULT_ENABLED;
 
-	int writeMask = 0xFF_FF_FF_FF;
+	ComparisonFunction function = DEFAULT_FUNCTION;
+	int reference = DEFAULT_REF;
+	int testMask = DEFAULT_MASK;
 
-	StencilOperation sfail = StencilOperation.KEEP;
-	StencilOperation dpfail = StencilOperation.KEEP;
-	StencilOperation dppass = StencilOperation.KEEP;
+	int writeMask = DEFAULT_MASK;
+
+	StencilOperation sfail = DEFAULT_OPERATION;
+	StencilOperation dpfail = DEFAULT_OPERATION;
+	StencilOperation dppass = DEFAULT_OPERATION;
 
 	/**
 	 * @param e
@@ -133,14 +141,14 @@ public class Stencil extends Facet<Stencil> {
 	@Override
 	public int compareTo( Stencil s ) {
 		return Comparison.instance
-				.compare( enabled, s.enabled )
-				.compare( function, s.function )
-				.compare( reference, s.reference )
-				.compare( testMask, s.testMask )
-				.compare( writeMask, s.writeMask )
-				.compare( sfail, s.sfail )
-				.compare( dpfail, s.dpfail )
-				.compare( dppass, s.dppass )
+				.compare( enabled, s.enabled, DEFAULT_ENABLED )
+				.compare( function, s.function, DEFAULT_FUNCTION )
+				.compare( reference, s.reference, DEFAULT_REF )
+				.compare( testMask, s.testMask, DEFAULT_MASK )
+				.compare( writeMask, s.writeMask, DEFAULT_MASK )
+				.compare( sfail, s.sfail, DEFAULT_OPERATION )
+				.compare( dpfail, s.dpfail, DEFAULT_OPERATION )
+				.compare( dppass, s.dppass, DEFAULT_OPERATION )
 				.result();
 	}
 

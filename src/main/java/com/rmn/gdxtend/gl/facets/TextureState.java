@@ -4,9 +4,10 @@ import static com.badlogic.gdx.Gdx.gl;
 
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.rmn.gdxtend.gl.Facet;
+import com.rmn.gdxtend.gl.enums.MagFilter;
+import com.rmn.gdxtend.gl.enums.MinFilter;
 import com.rmn.gdxtend.util.Comparison;
 
 /**
@@ -16,8 +17,8 @@ public class TextureState extends Facet<TextureState> {
 
 	Texture texture = null;
 
-	TextureFilter min = TextureFilter.MipMapNearestLinear;
-	TextureFilter mag = TextureFilter.Linear;
+	MinFilter min = MinFilter.NEAREST_MIPMAP_LINEAR;
+	MagFilter mag = MagFilter.LINEAR;
 
 	TextureWrap s = TextureWrap.Repeat;
 	TextureWrap t = TextureWrap.Repeat;
@@ -27,16 +28,12 @@ public class TextureState extends Facet<TextureState> {
 		return this;
 	}
 
-	public TextureState min( TextureFilter f ) {
+	public TextureState min( MinFilter f ) {
 		min = f;
 		return this;
 	}
 
-	public TextureState mag( TextureFilter f ) {
-		if( f != TextureFilter.Linear && f != TextureFilter.Nearest ) {
-			throw new IllegalArgumentException( f
-					+ " is not a valid magnification filter" );
-		}
+	public TextureState mag( MagFilter f ) {
 		mag = f;
 
 		return this;
@@ -72,7 +69,7 @@ public class TextureState extends Facet<TextureState> {
 		}
 
 		if( texture != null ) {
-			texture.unsafeSetFilter( min, mag );
+			texture.unsafeSetFilter( min.value, mag.value );
 			texture.unsafeSetWrap( s, t );
 		}
 	}
@@ -84,9 +81,9 @@ public class TextureState extends Facet<TextureState> {
 						System.identityHashCode( texture ),
 						System.identityHashCode( other.texture ) )
 				.compare( min, other.min )
-				.compare( mag, other.mag )
-				.compare( s, other.s )
-				.compare( t, other.t )
+				.compare( other.mag, mag )
+				.compare( other.s, s )
+				.compare( other.t, t )
 				.result();
 	}
 

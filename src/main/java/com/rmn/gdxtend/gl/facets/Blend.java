@@ -1,6 +1,9 @@
 package com.rmn.gdxtend.gl.facets;
 
 import static com.badlogic.gdx.Gdx.gl;
+import static com.rmn.gdxtend.gl.enums.BlendEquation.GL_FUNC_ADD;
+import static com.rmn.gdxtend.gl.enums.DestinationFactor.ZERO;
+import static com.rmn.gdxtend.gl.enums.SourceFactor.ONE;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -14,30 +17,36 @@ import com.rmn.gdxtend.util.Comparison;
  * Controls the blending function
  */
 public class Blend extends Facet<Blend> {
+	public static final DestinationFactor DEFAULT_DEST_FACTOR = ZERO;
+	public static final SourceFactor DEFAULT_SRC_FACTOR = ONE;
+	public static final boolean DEFAULT_ENABLED = false;
+	public static final BlendEquation DEFAULT_EQUATION = GL_FUNC_ADD;
+	public static final int DEFAULT_COLOUR = new Color( 0, 0, 0, 0 ).toIntBits();
+
 	/**
 	 * Whether blending is enabled
 	 */
-	boolean enabled = false;
+	boolean enabled = DEFAULT_ENABLED;
 
 	/**
 	 * The blending function
 	 */
-	BlendEquation equation = BlendEquation.GL_FUNC_ADD;
+	BlendEquation equation = DEFAULT_EQUATION;
 
 	/**
 	 * Blend colour
 	 */
-	final Color color = new Color( 0, 0, 0, 0 );
+	final Color color = new Color( DEFAULT_COLOUR );
 
 	/**
 	 * The blending source factor, see glBlendFunc
 	 */
-	SourceFactor srcFactor = SourceFactor.ONE;
+	SourceFactor srcFactor = DEFAULT_SRC_FACTOR;
 
 	/**
 	 * The blending destination factor, see glBlendFunc
 	 */
-	DestinationFactor destFactor = DestinationFactor.ZERO;
+	DestinationFactor destFactor = DEFAULT_DEST_FACTOR;
 
 	public Blend enabled( boolean e ) {
 		enabled = e;
@@ -118,11 +127,11 @@ public class Blend extends Facet<Blend> {
 	@Override
 	public int compareTo( Blend b ) {
 		return Comparison.instance
-				.compare( enabled, b.enabled )
-				.compare( srcFactor, b.srcFactor )
-				.compare( destFactor, b.destFactor )
-				.compare( equation, b.equation )
-				.compare( color, b.color )
+				.compare( enabled, b.enabled, DEFAULT_ENABLED )
+				.compare( srcFactor, b.srcFactor, DEFAULT_SRC_FACTOR )
+				.compare( destFactor, b.destFactor, DEFAULT_DEST_FACTOR )
+				.compare( equation, b.equation, DEFAULT_EQUATION )
+				.compare( color.toIntBits(), b.color.toIntBits(), DEFAULT_COLOUR )
 				.result();
 	}
 

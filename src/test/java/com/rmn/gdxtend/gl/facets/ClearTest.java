@@ -9,7 +9,9 @@ import static org.mockito.Mockito.verify;
 
 import org.junit.Test;
 
-public class ClearTest extends GLStateTest {
+import com.badlogic.gdx.Gdx;
+
+public class ClearTest extends FacetTest {
 	private final Clear clear = new Clear();
 	private final Clear control = new Clear();
 
@@ -50,36 +52,27 @@ public class ClearTest extends GLStateTest {
 
 	@Test
 	public void colorComparison() {
-		clear.r( 1 );
-
-		assertEquals( 1, clear.compareTo( control ) );
-		assertEquals( -1, control.compareTo( clear ) );
+		comparisonOrder( control, clear.r( 1 ) );
 	}
 
 	@Test
 	public void depthComparison() {
-		clear.depth( 1 );
-
-		assertEquals( 1, clear.compareTo( control ) );
-		assertEquals( -1, control.compareTo( clear ) );
+		comparisonOrder( control, clear.depth( 1 ) );
 	}
 
 	@Test
 	public void stencilComparison() {
-		clear.stencil( 1 );
-
-		assertEquals( 1, clear.compareTo( control ) );
-		assertEquals( -1, control.compareTo( clear ) );
+		comparisonOrder( control, clear.stencil( 1 ) );
 	}
 
 	@Test
 	public void noopTransition() {
 		clear.transition( control );
 
-		verify( context, never() ).glClearColor(
+		verify( Gdx.gl, never() ).glClearColor(
 				anyFloat(), anyFloat(), anyFloat(), anyFloat() );
-		verify( context, never() ).glClearDepthf( anyFloat() );
-		verify( context, never() ).glClearStencil( anyInt() );
+		verify( Gdx.gl, never() ).glClearDepthf( anyFloat() );
+		verify( Gdx.gl, never() ).glClearStencil( anyInt() );
 	}
 
 	@Test
@@ -88,8 +81,8 @@ public class ClearTest extends GLStateTest {
 
 		clear.transition( control );
 
-		verify( context ).glClearColor( 0.5f, 0.25f, 0.125f, 0.0625f );
-		verify( context ).glClearDepthf( 2 );
-		verify( context ).glClearStencil( 3 );
+		verify( Gdx.gl ).glClearColor( 0.5f, 0.25f, 0.125f, 0.0625f );
+		verify( Gdx.gl ).glClearDepthf( 2 );
+		verify( Gdx.gl ).glClearStencil( 3 );
 	}
 }

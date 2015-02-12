@@ -1,26 +1,3 @@
-/*
- * Copyright (c) 2007, Ryan McNally All rights reserved. Redistribution and use
- * in source and binary forms, with or without modification, are permitted
- * provided that the following conditions are met: Redistributions of source
- * code must retain the above copyright notice, this list of conditions and the
- * following disclaimer. Redistributions in binary form must reproduce the above
- * copyright notice, this list of conditions and the following disclaimer in the
- * documentation and/or other materials provided with the distribution. Neither
- * the name of the <ORGANIZATION> nor the names of its contributors may be used
- * to endorse or promote products derived from this software without specific
- * prior written permission. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS
- * AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
- * BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
- * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
- * OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
- * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
- * OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
- * ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
 package com.rmn.gdxtend.gl;
 
 import java.util.Arrays;
@@ -29,8 +6,10 @@ import com.rmn.gdxtend.gl.facets.Blend;
 import com.rmn.gdxtend.gl.facets.Clear;
 import com.rmn.gdxtend.gl.facets.Depth;
 import com.rmn.gdxtend.gl.facets.PolygonOffset;
+import com.rmn.gdxtend.gl.facets.Shader;
 import com.rmn.gdxtend.gl.facets.Stencil;
 import com.rmn.gdxtend.gl.facets.TextureState;
+import com.rmn.gdxtend.gl.shader.None;
 
 /**
  * Represents a rendering state
@@ -39,7 +18,7 @@ public class State implements Comparable<State> {
 	/**
 	 * The current state of openGL
 	 */
-	private static State currentState = new State();
+	private static State currentState = new State( None.instance );
 
 	/**
 	 * The {@link State} class mirrors the OpenGL state as much as possible, so
@@ -47,7 +26,7 @@ public class State implements Comparable<State> {
 	 * State is refreshed e.g.: when the display has been (re)created
 	 */
 	public static void stateReset() {
-		currentState = new State();
+		currentState = new State( None.instance );
 	}
 
 	/**
@@ -61,8 +40,10 @@ public class State implements Comparable<State> {
 	 * traversal of the entire state tree.
 	 * 
 	 * @param states
+	 *          the states to compile
+	 * @return the number of distinct states
 	 */
-	public static void compile( State... states ) {
+	public static int compile( State... states ) {
 		// un-compile so we get the deepCompare()
 		for( int i = 0; i < states.length; i++ ) {
 			states[ i ].compilationBatch = -1;
@@ -85,8 +66,10 @@ public class State implements Comparable<State> {
 			states[ i ].compilationBatch = compilationBatchCount;
 		}
 
-		compilationBatchCount++;
+		return compiledIndex;
 	}
+
+	public final Shader shader;
 
 	public final TextureState texture = new TextureState();
 
@@ -108,8 +91,7 @@ public class State implements Comparable<State> {
 	 * </ol>
 	 */
 	@SuppressWarnings( "rawtypes" )
-	private final Facet[] facets = new Facet[] { texture, blend, depthTest,
-			polyOffset, clear };
+	private final Facet[] facets;
 
 	/**
 	 * Only states that were compiled together can be compared based on their
@@ -122,14 +104,29 @@ public class State implements Comparable<State> {
 	 */
 	private int compiledIndex = -1;
 
+	public State( Shader shader ) {
+		this.shader = shader;
+		facets = new Facet[] { shader, texture, blend,
+				depthTest, polyOffset, clear, stencil };
+	}
+
+	public State from( State s ) {
+		if( shader.getClass().equals( s.shader.getClass() ) ) {
+			shader.from( s.shader );
+		}
+		return this;
+	}
+
 	/**
 	 * Applies this rendering state to OpenGL
 	 */
 	@SuppressWarnings( "unchecked" )
 	public void apply() {
-		for( int i = 0; i < facets.length; i++ ) {
-			if( facets[ i ] != null ) {
-				facets[ i ].transition( currentState.facets[ i ] );
+		if( currentState != this ) {
+			for( int i = 0; i < facets.length; i++ ) {
+				if( facets[ i ] != null ) {
+					facets[ i ].transition( currentState.facets[ i ] );
+				}
 			}
 		}
 

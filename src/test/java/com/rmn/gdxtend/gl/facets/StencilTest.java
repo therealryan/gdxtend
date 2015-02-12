@@ -8,11 +8,12 @@ import static org.mockito.Mockito.verify;
 
 import org.junit.Test;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.rmn.gdxtend.gl.enums.ComparisonFunction;
 import com.rmn.gdxtend.gl.enums.StencilOperation;
 
-public class StencilTest extends GLStateTest {
+public class StencilTest extends FacetTest {
 
 	private Stencil stencil = new Stencil();
 	private Stencil control = new Stencil();
@@ -61,76 +62,52 @@ public class StencilTest extends GLStateTest {
 
 	@Test
 	public void enabledComparison() {
-		stencil.enabled( true );
-
-		assertEquals( 1, stencil.compareTo( control ) );
-		assertEquals( -1, control.compareTo( stencil ) );
+		comparisonOrder( control, stencil.enabled( true ) );
 	}
 
 	@Test
 	public void functionComparison() {
-		stencil.function( ComparisonFunction.GEQUAL );
-
-		assertEquals( -1, stencil.compareTo( control ) );
-		assertEquals( 1, control.compareTo( stencil ) );
+		comparisonOrder( control, stencil.function( ComparisonFunction.GEQUAL ) );
 	}
 
 	@Test
 	public void referenceComparison() {
-		stencil.reference( 3 );
-
-		assertEquals( 1, stencil.compareTo( control ) );
-		assertEquals( -1, control.compareTo( stencil ) );
+		comparisonOrder( control, stencil.reference( 3 ) );
 	}
 
 	@Test
 	public void testMaskComparison() {
-		stencil.testMask( 3 );
-
-		assertEquals( 1, stencil.compareTo( control ) );
-		assertEquals( -1, control.compareTo( stencil ) );
+		comparisonOrder( control, stencil.testMask( 3 ) );
 	}
 
 	@Test
 	public void writeMaskComparison() {
-		stencil.writeMask( 3 );
-
-		assertEquals( 1, stencil.compareTo( control ) );
-		assertEquals( -1, control.compareTo( stencil ) );
+		comparisonOrder( control, stencil.writeMask( 3 ) );
 	}
 
 	@Test
 	public void sFailCmparison() {
-		stencil.sfail( StencilOperation.DECR );
-
-		assertEquals( 1, stencil.compareTo( control ) );
-		assertEquals( -1, control.compareTo( stencil ) );
+		comparisonOrder( control, stencil.sfail( StencilOperation.DECR ) );
 	}
 
 	@Test
 	public void dpFailComparison() {
-		stencil.dpfail( StencilOperation.DECR );
-
-		assertEquals( 1, stencil.compareTo( control ) );
-		assertEquals( -1, control.compareTo( stencil ) );
+		comparisonOrder( control, stencil.dpfail( StencilOperation.DECR ) );
 	}
 
 	@Test
 	public void dpPassComparison() {
-		stencil.dppass( StencilOperation.DECR );
-
-		assertEquals( 1, stencil.compareTo( control ) );
-		assertEquals( -1, control.compareTo( stencil ) );
+		comparisonOrder( control, stencil.dppass( StencilOperation.DECR ) );
 	}
 
 	public void noopTransition() {
 		stencil.transition( control );
 
-		verify( context, never() ).glEnable( anyInt() );
-		verify( context, never() ).glDisable( anyInt() );
-		verify( context, never() ).glStencilFunc( anyInt(), anyInt(), anyInt() );
-		verify( context, never() ).glStencilMask( anyInt() );
-		verify( context, never() ).glStencilMask( anyInt() );
+		verify( Gdx.gl, never() ).glEnable( anyInt() );
+		verify( Gdx.gl, never() ).glDisable( anyInt() );
+		verify( Gdx.gl, never() ).glStencilFunc( anyInt(), anyInt(), anyInt() );
+		verify( Gdx.gl, never() ).glStencilMask( anyInt() );
+		verify( Gdx.gl, never() ).glStencilMask( anyInt() );
 	}
 
 	@Test
@@ -147,14 +124,14 @@ public class StencilTest extends GLStateTest {
 
 		stencil.transition( control );
 
-		verify( context ).glEnable( GL20.GL_STENCIL_TEST );
-		verify( context ).glStencilFunc( GL20.GL_GEQUAL, 1, 2 );
-		verify( context ).glStencilMask( 3 );
-		verify( context ).glStencilOp( GL20.GL_DECR, GL20.GL_DECR_WRAP,
+		verify( Gdx.gl ).glEnable( GL20.GL_STENCIL_TEST );
+		verify( Gdx.gl ).glStencilFunc( GL20.GL_GEQUAL, 1, 2 );
+		verify( Gdx.gl ).glStencilMask( 3 );
+		verify( Gdx.gl ).glStencilOp( GL20.GL_DECR, GL20.GL_DECR_WRAP,
 				GL20.GL_INCR );
 
 		control.transition( stencil );
 
-		verify( context ).glDisable( GL20.GL_STENCIL_TEST );
+		verify( Gdx.gl ).glDisable( GL20.GL_STENCIL_TEST );
 	}
 }

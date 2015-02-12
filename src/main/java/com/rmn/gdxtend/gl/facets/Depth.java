@@ -1,6 +1,7 @@
 package com.rmn.gdxtend.gl.facets;
 
 import static com.badlogic.gdx.Gdx.gl;
+import static com.rmn.gdxtend.gl.enums.ComparisonFunction.LESS;
 
 import com.badlogic.gdx.graphics.GL20;
 import com.rmn.gdxtend.gl.Facet;
@@ -11,30 +12,36 @@ import com.rmn.gdxtend.util.Comparison;
  * Controls depth state
  */
 public class Depth extends Facet<Depth> {
+	public static final boolean DEFAULT_MASK = true;
+	public static final ComparisonFunction DEFAULT_FUNCTION = LESS;
+	public static final boolean DEFAULT_ENABLED = false;
+	public static final int DEFAULT_NEAR = 0;
+	public static final int DEFAULT_FAR = 1;
+
 	/**
 	 * Whether the depth test is enabled or not
 	 */
-	boolean enabled = false;
+	boolean enabled = DEFAULT_ENABLED;
 
 	/**
 	 * The depth test function, see glDepthFunc
 	 */
-	ComparisonFunction func = ComparisonFunction.LESS;
+	ComparisonFunction func = DEFAULT_FUNCTION;
 
 	/**
 	 * Whether or not to write to the depth buffer, see glDepthMask
 	 */
-	boolean mask = true;
+	boolean mask = DEFAULT_MASK;
 
 	/**
 	 * See glDepthRange
 	 */
-	float near = 0;
+	float near = DEFAULT_NEAR;
 
 	/**
 	 * See glDepthRange
 	 */
-	float far = 1;
+	float far = DEFAULT_FAR;
 
 	public Depth enabled( boolean e ) {
 		enabled = e;
@@ -95,16 +102,16 @@ public class Depth extends Facet<Depth> {
 	@Override
 	public int compareTo( Depth d ) {
 		return Comparison.instance
-				.compare( enabled, d.enabled )
-				.compare( func, d.func )
-				.compare( mask, d.mask )
-				.compare( near, d.near )
-				.compare( far, d.far )
+				.compare( enabled, d.enabled, DEFAULT_ENABLED )
+				.compare( func, d.func, DEFAULT_FUNCTION )
+				.compare( mask, d.mask, DEFAULT_MASK )
+				.compare( near, d.near, DEFAULT_NEAR )
+				.compare( far, d.far, DEFAULT_FAR )
 				.result();
 	}
 
 	@Override
 	public String toString() {
-		return "Depth test " + enabled + " func = " + func.value;
+		return "Depth test " + enabled + " func = " + func;
 	}
 }

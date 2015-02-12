@@ -11,20 +11,24 @@ import com.rmn.gdxtend.util.Comparison;
  */
 public class Clear extends Facet<Clear> {
 
+	public final static int DEFAULT_COLOR = Color.argb8888( 0, 0, 0, 0 );
+	public final static float DEFAULT_DEPTH = 0;
+	public final static int DEFAULT_STENCIL = 0;
+
 	/**
 	 * Clear color
 	 */
-	final Color color = new Color( 0, 0, 0, 0 );
+	final Color color = new Color( DEFAULT_COLOR );
 
 	/**
 	 * Clear depth
 	 */
-	float depth = 0;
+	float depth = DEFAULT_DEPTH;
 
 	/**
 	 * Clear stencil value
 	 */
-	int stencil = 0;
+	int stencil = DEFAULT_STENCIL;
 
 	public Clear r( float r ) {
 		color.set( r, color.g, color.b, color.a );
@@ -71,9 +75,9 @@ public class Clear extends Facet<Clear> {
 	@Override
 	public int compareTo( Clear c ) {
 		return Comparison.instance
-				.compare( color, c.color )
-				.compare( depth, c.depth )
-				.compare( stencil, c.stencil )
+				.compare( color.toIntBits(), c.color.toIntBits(), DEFAULT_COLOR )
+				.compare( depth, c.depth, DEFAULT_DEPTH )
+				.compare( stencil, c.stencil, DEFAULT_STENCIL )
 				.result();
 	}
 

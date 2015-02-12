@@ -10,9 +10,10 @@ import static org.mockito.Mockito.verify;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 
-public class PolygonOffsetTest extends GLStateTest {
+public class PolygonOffsetTest extends FacetTest {
 
 	PolygonOffset polyOffset = new PolygonOffset();
 	PolygonOffset control = new PolygonOffset();
@@ -42,35 +43,26 @@ public class PolygonOffsetTest extends GLStateTest {
 
 	@Test
 	public void enabledComparison() {
-		polyOffset.enabled( true );
-
-		assertEquals( 1, polyOffset.compareTo( control ) );
-		assertEquals( -1, control.compareTo( polyOffset ) );
+		comparisonOrder( control, polyOffset.enabled( true ) );
 	}
 
 	@Test
 	public void factorComparison() {
-		polyOffset.factor( 0.5f );
-
-		assertEquals( 1, polyOffset.compareTo( control ) );
-		assertEquals( -1, control.compareTo( polyOffset ) );
+		comparisonOrder( control, polyOffset.factor( 0.5f ) );
 	}
 
 	@Test
 	public void unitsComparison() {
-		polyOffset.units( 0.5f );
-
-		assertEquals( 1, polyOffset.compareTo( control ) );
-		assertEquals( -1, control.compareTo( polyOffset ) );
+		comparisonOrder( control, polyOffset.units( 0.5f ) );
 	}
 
 	@Test
 	public void noopTransition() {
 		polyOffset.transition( control );
 
-		verify( context, never() ).glEnable( anyInt() );
-		verify( context, never() ).glDisable( anyInt() );
-		verify( context, never() ).glPolygonOffset( anyFloat(), anyFloat() );
+		verify( Gdx.gl, never() ).glEnable( anyInt() );
+		verify( Gdx.gl, never() ).glDisable( anyInt() );
+		verify( Gdx.gl, never() ).glPolygonOffset( anyFloat(), anyFloat() );
 	}
 
 	@Test
@@ -79,7 +71,7 @@ public class PolygonOffsetTest extends GLStateTest {
 
 		polyOffset.transition( control );
 
-		verify( context ).glEnable( GL20.GL_POLYGON_OFFSET_FILL );
-		verify( context ).glPolygonOffset( 0.5f, 0.25f );
+		verify( Gdx.gl ).glEnable( GL20.GL_POLYGON_OFFSET_FILL );
+		verify( Gdx.gl ).glPolygonOffset( 0.5f, 0.25f );
 	}
 }

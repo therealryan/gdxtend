@@ -10,22 +10,26 @@ import com.rmn.gdxtend.util.Comparison;
  * Controls polygon offset state
  */
 public class PolygonOffset extends Facet<PolygonOffset> {
+	public static final boolean DEFAULT_ENABLED = false;
+	public static final float DEFAULT_FACTOR = 0;
+	public static final float DEFAULT_UNITS = 0;
+
 	/**
 	 * Controls {@link GL11#GL_POLYGON_OFFSET_FILL}
 	 */
-	boolean enabled = false;
+	boolean enabled = DEFAULT_ENABLED;
 
 	/**
 	 * A scale factor that is used to create a variable depth offset for each
 	 * polygon.
 	 */
-	float factor = 0;
+	float factor = DEFAULT_FACTOR;
 
 	/**
 	 * Multiplied by an implementation-specific value to create a constant depth
 	 * offset.
 	 */
-	float units = 0;
+	float units = DEFAULT_UNITS;
 
 	public PolygonOffset enabled( boolean e ) {
 		enabled = e;
@@ -68,9 +72,9 @@ public class PolygonOffset extends Facet<PolygonOffset> {
 	@Override
 	public int compareTo( PolygonOffset po ) {
 		return Comparison.instance
-				.compare( enabled, po.enabled )
-				.compare( factor, po.factor )
-				.compare( units, po.units )
+				.compare( enabled, po.enabled, DEFAULT_ENABLED )
+				.compare( factor, po.factor, DEFAULT_FACTOR )
+				.compare( units, po.units, DEFAULT_UNITS )
 				.result();
 	}
 

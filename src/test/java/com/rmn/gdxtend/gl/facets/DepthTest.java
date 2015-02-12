@@ -11,10 +11,11 @@ import static org.mockito.Mockito.verify;
 
 import org.junit.Test;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.rmn.gdxtend.gl.enums.ComparisonFunction;
 
-public class DepthTest extends GLStateTest {
+public class DepthTest extends FacetTest {
 
 	public Depth depth = new Depth();
 	public Depth control = new Depth();
@@ -54,52 +55,38 @@ public class DepthTest extends GLStateTest {
 
 	@Test
 	public void enabledComparison() {
-		depth.enabled( true );
-
-		assertEquals( 1, depth.compareTo( control ) );
-		assertEquals( -1, control.compareTo( depth ) );
+		comparisonOrder( control, depth.enabled( true ) );
 	}
 
 	@Test
 	public void functionComparison() {
-		depth.function( ComparisonFunction.ALWAYS );
-		assertEquals( 1, depth.compareTo( control ) );
-		assertEquals( -1, control.compareTo( depth ) );
+		comparisonOrder( control, depth.function( ComparisonFunction.ALWAYS ) );
 	}
 
 	@Test
 	public void maskComparison() {
-		depth.mask( false );
-
-		assertEquals( -1, depth.compareTo( control ) );
-		assertEquals( 1, control.compareTo( depth ) );
+		comparisonOrder( control, depth.mask( false ) );
 	}
 
 	@Test
 	public void nearComparison() {
-		depth.near( 0.5f );
-
-		assertEquals( 1, depth.compareTo( control ) );
-		assertEquals( -1, control.compareTo( depth ) );
+		comparisonOrder( control, depth.near( 0.5f ) );
 	}
 
 	@Test
 	public void farComparison() {
-		depth.far( 0.5f );
-
-		assertEquals( -1, depth.compareTo( control ) );
-		assertEquals( 1, control.compareTo( depth ) );
+		comparisonOrder( control, depth.far( 1.5f ) );
 	}
 
 	@Test
 	public void noopTransition() {
 		depth.transition( control );
 
-		verify( context, never() ).glEnable( anyInt() );
-		verify( context, never() ).glDisable( anyInt() );
-		verify( context, never() ).glDepthFunc( anyInt() );
-		verify( context, never() ).glDepthMask( anyBoolean() );
-		verify( context, never() ).glDepthRangef( anyFloat(), anyFloat() );
+		verify( Gdx.gl, never() ).glEnable( anyInt() );
+		verify( Gdx.gl, never() ).glDisable( anyInt() );
+		verify( Gdx.gl, never() ).glDepthFunc( anyInt() );
+		verify( Gdx.gl, never() ).glDepthMask( anyBoolean() );
+		verify( Gdx.gl, never() ).glDepthRangef( anyFloat(), anyFloat() );
 	}
 
 	@Test
@@ -112,13 +99,13 @@ public class DepthTest extends GLStateTest {
 
 		depth.transition( control );
 
-		verify( context ).glEnable( GL20.GL_DEPTH_TEST );
-		verify( context ).glDepthFunc( GL20.GL_ALWAYS );
-		verify( context ).glDepthMask( false );
-		verify( context ).glDepthRangef( 0.5f, 0.25f );
+		verify( Gdx.gl ).glEnable( GL20.GL_DEPTH_TEST );
+		verify( Gdx.gl ).glDepthFunc( GL20.GL_ALWAYS );
+		verify( Gdx.gl ).glDepthMask( false );
+		verify( Gdx.gl ).glDepthRangef( 0.5f, 0.25f );
 
 		control.transition( depth );
 
-		verify( context ).glDisable( GL20.GL_DEPTH_TEST );
+		verify( Gdx.gl ).glDisable( GL20.GL_DEPTH_TEST );
 	}
 }

@@ -1,6 +1,5 @@
 package com.rmn.gdxtend.gl;
 
-
 /**
  * Represents some aspect of the rendering state.
  * 
@@ -24,7 +23,13 @@ public abstract class Facet<T extends Facet<T>> implements Comparable<T> {
 	 * @param from
 	 *          The current state.
 	 */
-	public abstract void transition( T from  );
+	public abstract void transition( T from );
+
+	/**
+	 * Implement comparison to order default states before less default
+	 */
+	@Override
+	public abstract int compareTo( T o );
 
 	@SuppressWarnings( "unchecked" )
 	@Override

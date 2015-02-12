@@ -9,12 +9,13 @@ import static org.mockito.Mockito.verify;
 
 import org.junit.Test;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.rmn.gdxtend.gl.enums.BlendEquation;
 import com.rmn.gdxtend.gl.enums.DestinationFactor;
 import com.rmn.gdxtend.gl.enums.SourceFactor;
 
-public class BlendTest extends GLStateTest {
+public class BlendTest extends FacetTest {
 
 	private final Blend blend = new Blend();
 	private final Blend control = new Blend();
@@ -63,52 +64,37 @@ public class BlendTest extends GLStateTest {
 
 	@Test
 	public void enabledComparison() {
-		blend.enabled( true );
-
-		assertEquals( 1, blend.compareTo( control ) );
-		assertEquals( -1, control.compareTo( blend ) );
+		comparisonOrder( control, blend.enabled( true ) );
 	}
 
 	@Test
 	public void srcFactorComparison() {
-		blend.src( SourceFactor.CONSTANT_COLOR );
-
-		assertEquals( 1, blend.compareTo( control ) );
-		assertEquals( -1, control.compareTo( blend ) );
+		comparisonOrder( control, blend.src( SourceFactor.ZERO ) );
 	}
 
 	@Test
 	public void dstFactorComparison() {
-		blend.dst( DestinationFactor.CONSTANT_COLOR );
-
-		assertEquals( 1, blend.compareTo( control ) );
-		assertEquals( -1, control.compareTo( blend ) );
+		comparisonOrder( control, blend.dst( DestinationFactor.ONE ) );
 	}
 
 	@Test
 	public void equationComparison() {
-		blend.equation( BlendEquation.GL_FUNC_SUBTRACT );
-
-		assertEquals( 1, blend.compareTo( control ) );
-		assertEquals( -1, control.compareTo( blend ) );
+		comparisonOrder( control, blend.equation( BlendEquation.GL_FUNC_SUBTRACT ) );
 	}
 
 	@Test
 	public void colorComparison() {
-		blend.r( 1 );
-
-		assertEquals( 1, blend.compareTo( control ) );
-		assertEquals( -1, control.compareTo( blend ) );
+		comparisonOrder( control, blend.r( 1 ) );
 	}
 
 	public void noopTransition() {
 		blend.transition( control );
 
-		verify( context, never() ).glEnable( anyInt() );
-		verify( context, never() ).glDisable( anyInt() );
-		verify( context, never() ).glBlendFunc( anyInt(), anyInt() );
-		verify( context, never() ).glBlendEquation( anyInt() );
-		verify( context, never() ).glBlendColor( anyFloat(), anyFloat(),
+		verify( Gdx.gl, never() ).glEnable( anyInt() );
+		verify( Gdx.gl, never() ).glDisable( anyInt() );
+		verify( Gdx.gl, never() ).glBlendFunc( anyInt(), anyInt() );
+		verify( Gdx.gl, never() ).glBlendEquation( anyInt() );
+		verify( Gdx.gl, never() ).glBlendColor( anyFloat(), anyFloat(),
 				anyFloat(), anyFloat() );
 	}
 
@@ -121,13 +107,13 @@ public class BlendTest extends GLStateTest {
 
 		blend.transition( control );
 
-		verify( context ).glEnable( GL20.GL_BLEND );
-		verify( context ).glBlendFunc( GL20.GL_CONSTANT_COLOR, GL20.GL_DST_COLOR );
-		verify( context ).glBlendEquation( GL20.GL_FUNC_SUBTRACT );
-		verify( context ).glBlendColor( 0.5f, 0.25f, 0.125f, 0.0625f );
+		verify( Gdx.gl ).glEnable( GL20.GL_BLEND );
+		verify( Gdx.gl ).glBlendFunc( GL20.GL_CONSTANT_COLOR, GL20.GL_DST_COLOR );
+		verify( Gdx.gl ).glBlendEquation( GL20.GL_FUNC_SUBTRACT );
+		verify( Gdx.gl ).glBlendColor( 0.5f, 0.25f, 0.125f, 0.0625f );
 
 		control.transition( blend );
 
-		verify( context ).glDisable( GL20.GL_BLEND );
+		verify( Gdx.gl ).glDisable( GL20.GL_BLEND );
 	}
 }
