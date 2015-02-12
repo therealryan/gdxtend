@@ -1,12 +1,10 @@
 package com.rmn.gdxtend.gl;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.nio.ShortBuffer;
 
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
 import com.badlogic.gdx.graphics.Mesh;
@@ -29,35 +27,35 @@ public class DynamicMeshTest extends GdxTest {
 		// I'm not sure I'll ever need to outside of a test, but why disallow it?
 		m.getVertices( f );
 
-		fail( "You can delete DynamicMesh.getVertices() now" );
+		Assertions.fail( "You can delete DynamicMesh.getVertices() now" );
 	}
 
 	@Test
 	public void vertGrowth() {
 		DynamicMesh dn = new DynamicMesh( 10, 8, VertexAttribute.Position() );
 
-		assertEquals( 10, dn.getMaxVertices() );
-		assertEquals( 8, dn.getMaxIndices() );
+		assertThat( dn.getMaxVertices() ).isEqualTo( 10 );
+		assertThat( dn.getMaxIndices() ).isEqualTo( 8 );
 
 		DynamicMesh larger = dn.withCapacity( 11, 8 );
 
-		assertTrue( dn != larger );
-		assertEquals( 20, larger.getMaxVertices() );
-		assertEquals( 8, larger.getMaxIndices() );
+		assertThat( dn ).isNotEqualTo( larger );
+		assertThat( larger.getMaxVertices() ).isEqualTo( 20 );
+		assertThat( larger.getMaxIndices() ).isEqualTo( 8 );
 	}
 
 	@Test
 	public void indexGrowth() {
 		DynamicMesh dn = new DynamicMesh( 10, 8, VertexAttribute.Position() );
 
-		assertEquals( 10, dn.getMaxVertices() );
-		assertEquals( 8, dn.getMaxIndices() );
+		assertThat( dn.getMaxVertices() ).isEqualTo( 10 );
+		assertThat( dn.getMaxIndices() ).isEqualTo( 8 );
 
 		DynamicMesh larger = dn.withCapacity( 10, 9 );
 
-		assertTrue( dn != larger );
-		assertEquals( 10, larger.getMaxVertices() );
-		assertEquals( 16, larger.getMaxIndices() );
+		assertThat( dn ).isNotEqualTo( larger );
+		assertThat( larger.getMaxVertices() ).isEqualTo( 10 );
+		assertThat( larger.getMaxIndices() ).isEqualTo( 16 );
 	}
 
 	@Test
@@ -71,26 +69,26 @@ public class DynamicMeshTest extends GdxTest {
 		dn.setIndices( preInd );
 
 		int beforeVertCount = dn.getNumVertices();
-		int beforeindexCount = dn.getNumIndices();
+		int beforeIndexCount = dn.getNumIndices();
 
 		DynamicMesh larger = dn.withCapacity( 11, 6 );
 
-		assertTrue( dn != larger );
-		assertEquals( 20, larger.getMaxVertices() );
-		assertEquals( 10, larger.getMaxIndices() );
+		assertThat( dn ).isNotEqualTo( larger );
+		assertThat( larger.getMaxVertices() ).isEqualTo( 20 );
+		assertThat( larger.getMaxIndices() ).isEqualTo( 10 );
 
 		// check we have the same data
-		assertEquals( beforeVertCount, larger.getNumVertices() );
-		assertEquals( beforeindexCount, larger.getNumIndices() );
+		assertThat( larger.getNumVertices() ).isEqualTo( beforeVertCount );
+		assertThat( larger.getNumIndices() ).isEqualTo( beforeIndexCount );
 
 		float[] postVerts =
 				new float[ larger.getNumVertices() * larger.getVertexSize() / 4 ];
 		larger.getVertices( postVerts );
-		assertArrayEquals( preVerts, postVerts, 0 );
+		assertThat( postVerts ).isEqualTo( preVerts );
 
 		short[] postInd = new short[ larger.getNumIndices() ];
 		larger.getIndices( postInd );
-		assertArrayEquals( preInd, postInd );
+		assertThat( postInd ).isEqualTo( preInd );
 	}
 
 	@Test
@@ -103,11 +101,13 @@ public class DynamicMeshTest extends GdxTest {
 			short[] expected = new short[] { 5, 6 };
 
 			ShortBuffer b = dn.getIndicesBuffer();
-			assertEquals( 0, b.position() );
-			assertEquals( 2, b.limit() );
+			assertThat( b.position() ).isEqualTo( 0 );
+			assertThat( b.limit() ).isEqualTo( 2 );
 
 			for( int i = 0; i < expected.length; i++ ) {
-				assertEquals( "index " + i, expected[ i ], b.get( i ) );
+				assertThat( b.get( i ) )
+						.as( "index " + i )
+						.isEqualTo( expected[ i ] );
 			}
 		}
 
@@ -117,11 +117,13 @@ public class DynamicMeshTest extends GdxTest {
 			short[] expected = new short[] { 5, 6, 11, 12, 13, 14, 15 };
 
 			ShortBuffer b = dn.getIndicesBuffer();
-			assertEquals( 0, b.position() );
-			assertEquals( 7, b.limit() );
+			assertThat( b.position() ).isEqualTo( 0 );
+			assertThat( b.limit() ).isEqualTo( 7 );
 
 			for( int i = 0; i < expected.length; i++ ) {
-				assertEquals( "index " + i, expected[ i ], b.get( i ) );
+				assertThat( b.get( i ) )
+						.as( "index " + i )
+						.isEqualTo( expected[ i ] );
 			}
 		}
 	}

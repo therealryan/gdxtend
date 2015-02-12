@@ -1,8 +1,6 @@
 package com.rmn.gdxtend.gl.facets;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.anyFloat;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.isA;
@@ -37,16 +35,16 @@ public class TextureStateTest extends FacetTest {
 		tex.min( MinFilter.LINEAR_MIPMAP_LINEAR ).mag( MagFilter.NEAREST );
 		tex.s( TextureWrap.MirroredRepeat ).t( TextureWrap.ClampToEdge );
 
-		assertEquals( imageA, tex.texture );
-		assertEquals( MinFilter.LINEAR_MIPMAP_LINEAR, tex.min );
-		assertEquals( MagFilter.NEAREST, tex.mag );
-		assertEquals( TextureWrap.MirroredRepeat, tex.s );
-		assertEquals( TextureWrap.ClampToEdge, tex.t );
+		assertThat( tex.texture ).isEqualTo( imageA );
+		assertThat( tex.min ).isEqualTo( MinFilter.LINEAR_MIPMAP_LINEAR );
+		assertThat( tex.mag ).isEqualTo( MagFilter.NEAREST );
+		assertThat( tex.s ).isEqualTo( TextureWrap.MirroredRepeat );
+		assertThat( tex.t ).isEqualTo( TextureWrap.ClampToEdge );
 	}
 
 	@Test
 	public void same() {
-		assertTrue( tex.equals( control ) );
+		assertThat( tex ).isEqualTo( control );
 	}
 
 	@Test
@@ -57,11 +55,11 @@ public class TextureStateTest extends FacetTest {
 
 		TextureState copy = new TextureState();
 
-		assertFalse( copy.equals( tex ) );
+		assertThat( copy ).isNotEqualTo( tex );
 
 		copy.from( tex );
 
-		assertTrue( copy.equals( tex ) );
+		assertThat( copy ).isEqualTo( tex );
 	}
 
 	@Test

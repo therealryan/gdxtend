@@ -1,8 +1,6 @@
 package com.rmn.gdxtend.gl.facets;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.anyBoolean;
 import static org.mockito.Matchers.anyFloat;
 import static org.mockito.Matchers.anyInt;
@@ -28,16 +26,16 @@ public class DepthTest extends FacetTest {
 				.near( 0.5f )
 				.far( 0.25f );
 
-		assertTrue( depth.enabled );
-		assertEquals( ComparisonFunction.ALWAYS, depth.func );
-		assertFalse( depth.mask );
-		assertEquals( 0.5f, depth.near, 0 );
-		assertEquals( 0.25f, depth.far, 0 );
+		assertThat( depth.enabled ).isTrue();
+		assertThat( depth.func ).isEqualTo( ComparisonFunction.ALWAYS );
+		assertThat( depth.mask ).isFalse();
+		assertThat( depth.near ).isEqualTo( 0.5f );
+		assertThat( depth.far ).isEqualTo( 0.25f );
 	}
 
 	@Test
 	public void same() {
-		assertTrue( depth.equals( control ) );
+		assertThat( depth ).isEqualTo( control );
 	}
 
 	@Test
@@ -48,9 +46,13 @@ public class DepthTest extends FacetTest {
 				.near( 0.5f )
 				.far( 0.25f );
 
-		Depth copy = new Depth().from( depth );
+		Depth copy = new Depth();
 
-		assertTrue( copy.equals( depth ) );
+		assertThat( copy ).isNotEqualTo( depth );
+
+		copy.from( depth );
+
+		assertThat( copy ).isEqualTo( depth );
 	}
 
 	@Test

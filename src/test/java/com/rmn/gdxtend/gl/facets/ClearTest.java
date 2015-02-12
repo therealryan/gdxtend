@@ -1,7 +1,6 @@
 package com.rmn.gdxtend.gl.facets;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.anyFloat;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.never;
@@ -24,17 +23,17 @@ public class ClearTest extends FacetTest {
 				.depth( 2 )
 				.stencil( 3 );
 
-		assertEquals( clear.color.r, 0.5f, 0 );
-		assertEquals( clear.color.g, 0.25f, 0 );
-		assertEquals( clear.color.b, 0.125f, 0 );
-		assertEquals( clear.color.a, 0.0625f, 0 );
-		assertEquals( clear.depth, 2, 0 );
-		assertEquals( clear.stencil, 3, 0 );
+		assertThat( clear.color.r ).isEqualTo( 0.5f );
+		assertThat( clear.color.g ).isEqualTo( 0.25f );
+		assertThat( clear.color.b ).isEqualTo( 0.125f );
+		assertThat( clear.color.a ).isEqualTo( 0.0625f );
+		assertThat( clear.depth ).isEqualTo( 2 );
+		assertThat( clear.stencil ).isEqualTo( 3 );
 	}
 
 	@Test
 	public void same() {
-		assertTrue( clear.equals( control ) );
+		assertThat( clear ).isEqualTo( control );
 	}
 
 	@Test
@@ -45,9 +44,13 @@ public class ClearTest extends FacetTest {
 				.a( 0.0625f )
 				.depth( 2 )
 				.stencil( 3 );
-		Clear copy = new Clear().from( clear );
+		Clear copy = new Clear();
 
-		assertTrue( copy.equals( clear ) );
+		assertThat( copy ).isNotEqualTo( clear );
+
+		copy.from( clear );
+
+		assertThat( copy ).isEqualTo( clear );
 	}
 
 	@Test

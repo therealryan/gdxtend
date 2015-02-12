@@ -1,13 +1,11 @@
 package com.rmn.gdxtend.gl.facets;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.anyFloat;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import com.badlogic.gdx.Gdx;
@@ -22,23 +20,27 @@ public class PolygonOffsetTest extends FacetTest {
 	public void construction() {
 		polyOffset.enabled( true ).factor( 0.5f ).units( 0.25f );
 
-		assertTrue( polyOffset.enabled );
-		assertEquals( 0.5f, polyOffset.factor, 0 );
-		assertEquals( 0.25f, polyOffset.units, 0 );
+		assertThat( polyOffset.enabled ).isTrue();
+		assertThat( polyOffset.factor ).isEqualTo( 0.5f );
+		assertThat( polyOffset.units ).isEqualTo( 0.25f );
 	}
 
 	@Test
 	public void same() {
-		Assert.assertTrue( polyOffset.equals( control ) );
+		assertThat( polyOffset ).isEqualTo( control );
 	}
 
 	@Test
 	public void copy() {
 		polyOffset.enabled( true ).factor( 0.5f ).units( 0.25f );
 
-		PolygonOffset copy = new PolygonOffset().from( polyOffset );
+		PolygonOffset copy = new PolygonOffset();
 
-		Assert.assertTrue( copy.equals( polyOffset ) );
+		assertThat( copy ).isNotEqualTo( polyOffset );
+
+		copy.from( polyOffset );
+
+		assertThat( copy ).isEqualTo( polyOffset );
 	}
 
 	@Test

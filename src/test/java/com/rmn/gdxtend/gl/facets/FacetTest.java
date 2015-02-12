@@ -1,5 +1,7 @@
 package com.rmn.gdxtend.gl.facets;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.Assert;
 
 import com.rmn.gdxtend.GdxTest;
@@ -19,5 +21,8 @@ public abstract class FacetTest extends GdxTest {
 	protected <T extends Facet<T>> void comparisonOrder( T control, T altered ) {
 		Assert.assertEquals( -1, control.compareTo( altered ) );
 		Assert.assertEquals( 1, altered.compareTo( control ) );
+
+		assertThat( control.compareTo( altered ) ).isEqualTo( -1 );
+		assertThat( altered.compareTo( control ) ).isEqualTo( 1 );
 	}
 }

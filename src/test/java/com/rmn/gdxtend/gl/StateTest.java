@@ -1,8 +1,6 @@
 package com.rmn.gdxtend.gl;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -37,17 +35,17 @@ public class StateTest extends GdxTest {
 	public void comparison() {
 		{ // same
 			State s = new State( None.instance );
-			assertTrue( s.equals( base ) );
-			assertTrue( s.compareTo( base ) == 0 );
+			assertThat( s ).isEqualTo( base );
+			assertThat( s.compareTo( base ) == 0 );
 		}
 
 		// check altered ordering
 		for( int i = 0; i < altered.length; i++ ) {
 			State a = altered[ i ];
 
-			assertFalse( "index " + i, base.equals( a ) );
-			assertEquals( "index " + i, -1, base.compareTo( a ) );
-			assertEquals( "index " + i, 1, a.compareTo( base ) );
+			assertThat( base ).as( "index " + i ).isNotEqualTo( a );
+			assertThat( base.compareTo( a ) ).as( "index " + i ).isEqualTo( -1 );
+			assertThat( a.compareTo( base ) ).as( "index " + i ).isEqualTo( 1 );
 		}
 	}
 
@@ -63,6 +61,6 @@ public class StateTest extends GdxTest {
 		t.blend.r( 1 );
 
 		// we're now comparing by index, so the change is not noticed
-		assertTrue( s.equals( t ) );
+		assertThat( s ).isEqualTo( t );
 	}
 }

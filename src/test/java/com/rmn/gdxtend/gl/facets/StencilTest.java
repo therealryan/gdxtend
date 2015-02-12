@@ -1,7 +1,6 @@
 package com.rmn.gdxtend.gl.facets;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -29,19 +28,19 @@ public class StencilTest extends FacetTest {
 				.dpfail( StencilOperation.DECR_WRAP )
 				.dppass( StencilOperation.INCR );
 
-		assertTrue( stencil.enabled );
-		assertEquals( ComparisonFunction.GEQUAL, stencil.function );
-		assertEquals( 1, stencil.reference );
-		assertEquals( 2, stencil.testMask );
-		assertEquals( 3, stencil.writeMask );
-		assertEquals( StencilOperation.DECR, stencil.sfail );
-		assertEquals( StencilOperation.DECR_WRAP, stencil.dpfail );
-		assertEquals( StencilOperation.INCR, stencil.dppass );
+		assertThat( stencil.enabled ).isTrue();
+		assertThat( stencil.function ).isEqualTo( ComparisonFunction.GEQUAL );
+		assertThat( stencil.reference ).isEqualTo( 1 );
+		assertThat( stencil.testMask ).isEqualTo( 2 );
+		assertThat( stencil.writeMask ).isEqualTo( 3 );
+		assertThat( stencil.sfail ).isEqualTo( StencilOperation.DECR );
+		assertThat( stencil.dpfail ).isEqualTo( StencilOperation.DECR_WRAP );
+		assertThat( stencil.dppass ).isEqualTo( StencilOperation.INCR );
 	}
 
 	@Test
 	public void same() {
-		assertTrue( stencil.equals( control ) );
+		assertThat( stencil ).isEqualTo( control );
 	}
 
 	@Test
@@ -55,9 +54,13 @@ public class StencilTest extends FacetTest {
 				.dpfail( StencilOperation.DECR_WRAP )
 				.dppass( StencilOperation.INCR );
 
-		Stencil copy = new Stencil().from( stencil );
+		Stencil copy = new Stencil();
 
-		assertTrue( copy.equals( stencil ) );
+		assertThat( copy ).isNotEqualTo( stencil );
+
+		copy.from( stencil );
+
+		assertThat( copy ).isEqualTo( stencil );
 	}
 
 	@Test

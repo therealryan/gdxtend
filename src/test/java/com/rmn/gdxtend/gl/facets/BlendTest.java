@@ -1,7 +1,6 @@
 package com.rmn.gdxtend.gl.facets;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.anyFloat;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.never;
@@ -31,19 +30,19 @@ public class BlendTest extends FacetTest {
 				.dst( DestinationFactor.CONSTANT_COLOR )
 				.equation( BlendEquation.GL_FUNC_SUBTRACT );
 
-		assertTrue( blend.enabled );
-		assertEquals( 0.5f, blend.color.r, 0 );
-		assertEquals( 0.25f, blend.color.g, 0 );
-		assertEquals( 0.125f, blend.color.b, 0 );
-		assertEquals( 0.0625f, blend.color.a, 0 );
-		assertEquals( SourceFactor.CONSTANT_COLOR, blend.srcFactor );
-		assertEquals( DestinationFactor.CONSTANT_COLOR, blend.destFactor );
-		assertEquals( BlendEquation.GL_FUNC_SUBTRACT, blend.equation );
+		assertThat( blend.enabled ).isTrue();
+		assertThat( blend.color.r ).isEqualTo( 0.5f );
+		assertThat( blend.color.g ).isEqualTo( 0.25f );
+		assertThat( blend.color.b ).isEqualTo( 0.125f );
+		assertThat( blend.color.a ).isEqualTo( 0.0625f );
+		assertThat( blend.srcFactor ).isEqualTo( SourceFactor.CONSTANT_COLOR );
+		assertThat( blend.destFactor ).isEqualTo( DestinationFactor.CONSTANT_COLOR );
+		assertThat( blend.equation ).isEqualTo( BlendEquation.GL_FUNC_SUBTRACT );
 	}
 
 	@Test
 	public void same() {
-		assertTrue( blend.equals( control ) );
+		assertThat( blend ).isEqualTo( control );
 	}
 
 	@Test
@@ -57,9 +56,13 @@ public class BlendTest extends FacetTest {
 				.dst( DestinationFactor.CONSTANT_COLOR )
 				.equation( BlendEquation.GL_FUNC_SUBTRACT );
 
-		Blend copy = new Blend().from( blend );
+		Blend copy = new Blend();
 
-		assertTrue( copy.equals( blend ) );
+		assertThat( copy ).isNotEqualTo( blend );
+
+		copy.from( blend );
+
+		assertThat( copy ).isEqualTo( blend );
 	}
 
 	@Test

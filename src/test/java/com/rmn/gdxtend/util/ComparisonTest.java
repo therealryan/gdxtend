@@ -1,5 +1,6 @@
 package com.rmn.gdxtend.util;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
@@ -13,10 +14,10 @@ public class ComparisonTest {
 	 */
 	@Test
 	public void booleanComparison() {
-		assertEquals( 0, cmp.compare( false, false ).result() );
-		assertEquals( -1, cmp.compare( false, true ).result() );
-		assertEquals( 0, cmp.compare( true, true ).result() );
-		assertEquals( 1, cmp.compare( true, false ).result() );
+		assertThat( cmp.compare( false, false ).result() ).isEqualTo( 0 );
+		assertThat( cmp.compare( false, true ).result() ).isEqualTo( -1 );
+		assertThat( cmp.compare( true, true ).result() ).isEqualTo( 0 );
+		assertThat( cmp.compare( true, false ).result() ).isEqualTo( 1 );
 	}
 
 	/**
@@ -24,15 +25,15 @@ public class ComparisonTest {
 	 */
 	@Test
 	public void booleanMinimum() {
-		assertEquals( 0, cmp.compare( false, false, false ).result() );
-		assertEquals( -1, cmp.compare( false, true, false ).result() );
-		assertEquals( 0, cmp.compare( true, true, false ).result() );
-		assertEquals( 1, cmp.compare( true, false, false ).result() );
+		assertThat( cmp.compare( false, false, false ).result() ).isEqualTo( 0 );
+		assertThat( cmp.compare( false, true, false ).result() ).isEqualTo( -1 );
+		assertThat( cmp.compare( true, true, false ).result() ).isEqualTo( 0 );
+		assertThat( cmp.compare( true, false, false ).result() ).isEqualTo( 1 );
 
-		assertEquals( 0, cmp.compare( false, false, true ).result() );
-		assertEquals( 1, cmp.compare( false, true, true ).result() );
-		assertEquals( 0, cmp.compare( true, true, true ).result() );
-		assertEquals( -1, cmp.compare( true, false, true ).result() );
+		assertThat( cmp.compare( false, false, true ).result() ).isEqualTo( 0 );
+		assertThat( cmp.compare( false, true, true ).result() ).isEqualTo( 1 );
+		assertThat( cmp.compare( true, true, true ).result() ).isEqualTo( 0 );
+		assertThat( cmp.compare( true, false, true ).result() ).isEqualTo( -1 );
 	}
 
 	/**
@@ -40,9 +41,9 @@ public class ComparisonTest {
 	 */
 	@Test
 	public void floatComparison() {
-		assertEquals( 0, cmp.compare( 0, 0 ).result() );
-		assertEquals( -1, cmp.compare( 0, 1 ).result() );
-		assertEquals( 1, cmp.compare( 1, 0 ).result() );
+		assertThat( cmp.compare( 0, 0 ).result() ).isEqualTo( 0 );
+		assertThat( cmp.compare( 0, 1 ).result() ).isEqualTo( -1 );
+		assertThat( cmp.compare( 1, 0 ).result() ).isEqualTo( 1 );
 	}
 
 	/**
@@ -50,13 +51,13 @@ public class ComparisonTest {
 	 */
 	@Test
 	public void floatMinimum() {
-		assertEquals( -1, cmp.compare( 9, 12, 10 ).result() );
-		assertEquals( 1, cmp.compare( 12, 9, 10 ).result() );
-		assertEquals( 0, cmp.compare( 9, 9, 10 ).result() );
+		assertThat( cmp.compare( 9, 12, 10 ).result() ).isEqualTo( -1 );
+		assertThat( cmp.compare( 12, 9, 10 ).result() ).isEqualTo( 1 );
+		assertThat( cmp.compare( 9, 9, 10 ).result() ).isEqualTo( 0 );
 
 		// when the two values are equidistant, the smaller is less
-		assertEquals( -1, cmp.compare( 9, 11, 10 ).result() );
-		assertEquals( 1, cmp.compare( 11, 9, 10 ).result() );
+		assertThat( cmp.compare( 9, 11, 10 ).result() ).isEqualTo( -1 );
+		assertThat( cmp.compare( 11, 9, 10 ).result() ).isEqualTo( 1 );
 	}
 
 	private enum Letters {
@@ -68,9 +69,9 @@ public class ComparisonTest {
 	 */
 	@Test
 	public void enumComparison() {
-		assertEquals( 0, cmp.compare( Letters.B, Letters.B ).result() );
-		assertEquals( -1, cmp.compare( Letters.A, Letters.B ).result() );
-		assertEquals( 1, cmp.compare( Letters.B, Letters.A ).result() );
+		assertThat( cmp.compare( Letters.B, Letters.B ).result() ).isEqualTo( 0 );
+		assertThat( cmp.compare( Letters.A, Letters.B ).result() ).isEqualTo( -1 );
+		assertThat( cmp.compare( Letters.B, Letters.A ).result() ).isEqualTo( 1 );
 	}
 
 	/**
@@ -79,13 +80,18 @@ public class ComparisonTest {
 	@Test
 	public void enumMinimum() {
 
-		assertEquals( -1, cmp.compare( Letters.B, Letters.E, Letters.C ).result() );
-		assertEquals( 1, cmp.compare( Letters.E, Letters.B, Letters.C ).result() );
-		assertEquals( 0, cmp.compare( Letters.B, Letters.B, Letters.C ).result() );
+		assertThat( cmp.compare( Letters.B, Letters.E, Letters.C ).result() )
+				.isEqualTo( -1 );
+		assertThat( cmp.compare( Letters.E, Letters.B, Letters.C ).result() )
+				.isEqualTo( 1 );
+		assertThat( cmp.compare( Letters.B, Letters.B, Letters.C ).result() )
+				.isEqualTo( 0 );
 
 		// when the two values are equidistant, the lower ordinal is less
-		assertEquals( -1, cmp.compare( Letters.B, Letters.D, Letters.C ).result() );
-		assertEquals( 1, cmp.compare( Letters.D, Letters.B, Letters.C ).result() );
+		assertThat( cmp.compare( Letters.B, Letters.D, Letters.C ).result() )
+				.isEqualTo( -1 );
+		assertThat( cmp.compare( Letters.D, Letters.B, Letters.C ).result() )
+				.isEqualTo( 1 );
 	}
 
 	private class TestComparable implements Comparable<TestComparable> {
