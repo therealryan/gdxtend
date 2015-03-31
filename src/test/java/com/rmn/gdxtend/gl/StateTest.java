@@ -11,16 +11,15 @@ import com.rmn.gdxtend.gl.shader.None;
 
 public class StateTest extends GdxTest {
 
-	private State base;
-	private State[] altered = new State[ 6 ];
+	private State<None> base;
+	private State<?>[] altered = new State[ 6 ];
 
-	@Override
 	@Before
-	public void before() {
-		base = new State( None.instance );
+	public void build() {
+		base = State.build( None.instance );
 
 		for( int i = 0; i < altered.length; i++ ) {
-			altered[ i ] = new State( None.instance );
+			altered[ i ] = State.build( None.instance );
 		}
 
 		altered[ 0 ].blend.r( 1 );
@@ -34,14 +33,14 @@ public class StateTest extends GdxTest {
 	@Test
 	public void comparison() {
 		{ // same
-			State s = new State( None.instance );
+			State<None> s = State.build( None.instance );
 			assertThat( s ).isEqualTo( base );
 			assertThat( s.compareTo( base ) == 0 );
 		}
 
 		// check altered ordering
 		for( int i = 0; i < altered.length; i++ ) {
-			State a = altered[ i ];
+			State<?> a = altered[ i ];
 
 			assertThat( base ).as( "index " + i ).isNotEqualTo( a );
 			assertThat( base.compareTo( a ) ).as( "index " + i ).isEqualTo( -1 );
@@ -50,10 +49,49 @@ public class StateTest extends GdxTest {
 	}
 
 	@Test
-	public void compiledComparison() {
+	public void compilationSame() {
+		State<None> s = State.build( None.instance );
+		State<None> t = State.build( None.instance );
 
-		State s = new State( None.instance );
-		State t = new State( None.instance );
+		int distinct = State.compile( s, t );
+
+		assertThat( distinct ).isEqualTo( 1 );
+
+		assertThat( s.getCompiledIndex() ).isEqualTo( 0 );
+		assertThat( t.getCompiledIndex() ).isEqualTo( 0 );
+	}
+
+	@Test
+	public void compilationDifferent() {
+		State<None> s = State.build( None.instance );
+		State<None> t = State.build( None.instance );
+		t.blend.r( 0.5f );
+
+		int distinct = State.compile( s, t );
+
+		assertThat( distinct ).isEqualTo( 2 );
+
+		assertThat( s.getCompiledIndex() ).isEqualTo( 0 );
+		assertThat( t.getCompiledIndex() ).isEqualTo( 1 );
+	}
+
+	@Test
+	public void compilationBatch() {
+		State<None> s = State.build( None.instance );
+
+		State.compile( s );
+
+		int batch = s.getCompilationBatch();
+
+		State.compile( s );
+
+		assertThat( s.getCompilationBatch() ).isEqualTo( batch + 1 );
+	}
+
+	@Test
+	public void compiledComparison() {
+		State<None> s = State.build( None.instance );
+		State<None> t = State.build( None.instance );
 
 		State.compile( s, t );
 

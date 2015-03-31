@@ -7,7 +7,6 @@ import static com.rmn.gdxtend.gl.enums.SourceFactor.ONE;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.rmn.gdxtend.gl.Facet;
 import com.rmn.gdxtend.gl.enums.BlendEquation;
 import com.rmn.gdxtend.gl.enums.DestinationFactor;
 import com.rmn.gdxtend.gl.enums.SourceFactor;

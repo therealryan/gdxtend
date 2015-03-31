@@ -4,7 +4,6 @@ import static com.badlogic.gdx.Gdx.gl;
 import static com.rmn.gdxtend.gl.enums.ComparisonFunction.LESS;
 
 import com.badlogic.gdx.graphics.GL20;
-import com.rmn.gdxtend.gl.Facet;
 import com.rmn.gdxtend.gl.enums.ComparisonFunction;
 import com.rmn.gdxtend.util.Comparison;
 

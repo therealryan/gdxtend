@@ -1,4 +1,4 @@
-package com.rmn.gdxtend.gl;
+package com.rmn.gdxtend.gl.facets;
 
 /**
  * Represents some aspect of the rendering state.

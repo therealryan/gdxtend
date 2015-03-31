@@ -5,6 +5,7 @@ import java.util.Arrays;
 import com.rmn.gdxtend.gl.facets.Blend;
 import com.rmn.gdxtend.gl.facets.Clear;
 import com.rmn.gdxtend.gl.facets.Depth;
+import com.rmn.gdxtend.gl.facets.Facet;
 import com.rmn.gdxtend.gl.facets.PolygonOffset;
 import com.rmn.gdxtend.gl.facets.Shader;
 import com.rmn.gdxtend.gl.facets.Stencil;
@@ -14,11 +15,11 @@ import com.rmn.gdxtend.gl.shader.None;
 /**
  * Represents a rendering state
  */
-public class State implements Comparable<State> {
+public class State<T extends Shader> implements Comparable<State<?>> {
 	/**
 	 * The current state of openGL
 	 */
-	private static State currentState = new State( None.instance );
+	private static State<?> currentState = build( None.instance );
 
 	/**
 	 * The {@link State} class mirrors the OpenGL state as much as possible, so
@@ -26,7 +27,7 @@ public class State implements Comparable<State> {
 	 * State is refreshed e.g.: when the display has been (re)created
 	 */
 	public static void stateReset() {
-		currentState = new State( None.instance );
+		currentState = build( None.instance );
 	}
 
 	/**
@@ -43,7 +44,7 @@ public class State implements Comparable<State> {
 	 *          the states to compile
 	 * @return the number of distinct states
 	 */
-	public static int compile( State... states ) {
+	public static int compile( State<?>... states ) {
 		// un-compile so we get the deepCompare()
 		for( int i = 0; i < states.length; i++ ) {
 			states[ i ].compilationBatch = -1;
@@ -54,22 +55,24 @@ public class State implements Comparable<State> {
 		// identical states may have been supplied, we want them to
 		// end up with the same index
 		int compiledIndex = -1;
-		State prev = null;
+		State<?> prev = null;
 
-		for( int i = 0; i < states.length; i++ ) {
-			if( prev == null || !prev.equals( states[ i ] ) ) {
+		for( State<?> s : states ) {
+
+			if( prev == null || !prev.equals( s ) ) {
 				compiledIndex++;
-				prev = states[ i ];
+				prev = s;
 			}
 
-			states[ i ].compiledIndex = compiledIndex;
-			states[ i ].compilationBatch = compilationBatchCount;
+			s.compiledIndex = compiledIndex;
+			s.compilationBatch = compilationBatchCount;
 		}
 
-		return compiledIndex;
+		compilationBatchCount++;
+		return compiledIndex + 1;
 	}
 
-	public final Shader shader;
+	public final T shader;
 
 	public final TextureState texture = new TextureState();
 
@@ -104,13 +107,31 @@ public class State implements Comparable<State> {
 	 */
 	private int compiledIndex = -1;
 
-	public State( Shader shader ) {
+	private State( T shader ) {
 		this.shader = shader;
 		facets = new Facet[] { shader, texture, blend,
 				depthTest, polyOffset, clear, stencil };
 	}
 
-	public State from( State s ) {
+	/**
+	 * Builds a state
+	 * 
+	 * @param shader
+	 *          the shader to use
+	 * @return the state
+	 */
+	public static <S extends Shader> State<S> build( S shader ) {
+		return new State<>( shader );
+	}
+
+	/**
+	 * Alters this state to match that passed in
+	 * 
+	 * @param s
+	 *          the state to copy
+	 * @return this
+	 */
+	public State<T> from( State<?> s ) {
 		if( shader.getClass().equals( s.shader.getClass() ) ) {
 			shader.from( s.shader );
 		}
@@ -156,7 +177,7 @@ public class State implements Comparable<State> {
 	}
 
 	@Override
-	public int compareTo( State o ) {
+	public int compareTo( State<?> o ) {
 		if( compilationBatch >= 0 && compilationBatch == o.compilationBatch ) {
 			// these two states were compiled together
 			return compiledIndex - o.compiledIndex;
@@ -167,7 +188,7 @@ public class State implements Comparable<State> {
 	}
 
 	@SuppressWarnings( "unchecked" )
-	private int deepCompare( State o ) {
+	private int deepCompare( State<?> o ) {
 		for( int i = 0; i < facets.length; i++ ) {
 			int d = facets[ i ].compareTo( o.facets[ i ] );
 
@@ -181,8 +202,8 @@ public class State implements Comparable<State> {
 
 	@Override
 	public boolean equals( Object o ) {
-		if( o instanceof State ) {
-			return compareTo( (State) o ) == 0;
+		if( o instanceof State<?> ) {
+			return compareTo( (State<?>) o ) == 0;
 		}
 
 		return false;

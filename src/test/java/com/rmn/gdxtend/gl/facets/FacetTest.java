@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Assert;
 
 import com.rmn.gdxtend.GdxTest;
-import com.rmn.gdxtend.gl.Facet;
 
 public abstract class FacetTest extends GdxTest {
 

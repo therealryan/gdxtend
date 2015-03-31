@@ -5,7 +5,6 @@ import static com.rmn.gdxtend.gl.enums.ComparisonFunction.ALWAYS;
 import static com.rmn.gdxtend.gl.enums.StencilOperation.KEEP;
 
 import com.badlogic.gdx.graphics.GL20;
-import com.rmn.gdxtend.gl.Facet;
 import com.rmn.gdxtend.gl.enums.ComparisonFunction;
 import com.rmn.gdxtend.gl.enums.StencilOperation;
 import com.rmn.gdxtend.util.Comparison;

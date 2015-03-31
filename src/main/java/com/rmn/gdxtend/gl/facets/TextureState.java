@@ -5,7 +5,6 @@ import static com.badlogic.gdx.Gdx.gl;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
-import com.rmn.gdxtend.gl.Facet;
 import com.rmn.gdxtend.gl.enums.MagFilter;
 import com.rmn.gdxtend.gl.enums.MinFilter;
 import com.rmn.gdxtend.util.Comparison;

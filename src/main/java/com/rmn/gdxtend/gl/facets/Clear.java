@@ -3,7 +3,6 @@ package com.rmn.gdxtend.gl.facets;
 import static com.badlogic.gdx.Gdx.gl;
 
 import com.badlogic.gdx.graphics.Color;
-import com.rmn.gdxtend.gl.Facet;
 import com.rmn.gdxtend.util.Comparison;
 
 /**

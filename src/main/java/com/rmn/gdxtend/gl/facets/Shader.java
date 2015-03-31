@@ -3,7 +3,8 @@ package com.rmn.gdxtend.gl.facets;
 import com.badlogic.gdx.graphics.VertexAttribute;
 import com.badlogic.gdx.graphics.VertexAttributes;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.rmn.gdxtend.gl.Facet;
+import com.badlogic.gdx.math.Matrix4;
+import com.rmn.gdxtend.gl.shader.Programs;
 import com.rmn.gdxtend.util.Comparison;
 
 /**
@@ -15,12 +16,28 @@ public abstract class Shader extends Facet<Shader> {
 	public final VertexAttributes attributes;
 
 	/**
+	 * The camera matrix - combined projection and world matrices
+	 */
+	public final Matrix4 camera = new Matrix4().idt();
+	private int cameraPos = -1;
+
+	/**
+	 * The model transform matrix
+	 */
+	public final Matrix4 model = new Matrix4().idt();
+	private int modelPos = -1;
+
+	/**
 	 * @param p
 	 * @param attributes
 	 */
 	protected Shader( ShaderProgram p, VertexAttribute... attributes ) {
 		this.program = p;
 		this.attributes = new VertexAttributes( attributes );
+
+		if( p != null && !p.isCompiled() ) {
+			throw new RuntimeException( p.getLog() );
+		}
 	}
 
 	@Override
@@ -28,6 +45,9 @@ public abstract class Shader extends Facet<Shader> {
 		if( getClass().equals( toCopy.getClass() ) ) {
 			return uniformFrom( toCopy );
 		}
+
+		camera.set( toCopy.camera );
+		model.set( toCopy.model );
 
 		return this;
 	}
@@ -75,6 +95,16 @@ public abstract class Shader extends Facet<Shader> {
 		else {
 			uniformTransition( from );
 		}
+
+		if( cameraPos == -1 ) {
+			cameraPos = program.getUniformLocation( Programs.uCam );
+		}
+		if( modelPos == -1 ) {
+			modelPos = program.getUniformLocation( Programs.uMod );
+		}
+
+		program.setUniformMatrix( cameraPos, camera );
+		program.setUniformMatrix( modelPos, model );
 	}
 
 	/**
@@ -93,7 +123,8 @@ public abstract class Shader extends Facet<Shader> {
 	 * Implement to set your new uniform values
 	 * 
 	 * @param from
-	 *          the state we're coming from - holds the current values
+	 *          the state we're coming from - holds the current values. You can
+	 *          safely cast to self type
 	 */
 	protected abstract void uniformTransition( Shader from );
 }
