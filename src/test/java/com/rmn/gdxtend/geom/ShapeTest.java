@@ -99,15 +99,17 @@ public class ShapeTest {
 				.col.r( 0.03125f )
 						.g( 0.015625f )
 						.b( 0.0078125f )
-						.a( 0.00390625f ).done();
+						.a( 0.5f ).done();
+
+		Color c = new Color( 0.0f, 1.0f, 0.0f, 0.0f );
+		assertThat( Integer.toHexString( c.toIntBits() ) ).isEqualTo( "ff00" );
+		assertThat( c.toIntBits() ).isEqualTo(
+				0b0000_0000_0000_0000_1111_1111_0000_0000 );
 
 		assertThat( s.vertexData ).isEqualTo( new float[] {
-				Float.intBitsToFloat(
-						Color.rgba8888( Color.RED ) ),
-				Float.intBitsToFloat(
-						Color.rgba8888( 0.5f, 0.25f, 0.125f, 0.0625f ) ),
-				Float.intBitsToFloat(
-						Color.rgba8888( 0.03125f, 0.015625f, 0.0078125f, 0.00390625f ) )
+				Float.intBitsToFloat( 0b1111_1110_0000_0000_0000_0000_1111_1111 ),
+				Float.intBitsToFloat( 0b0000_1110_0001_1111_0011_1111_0111_1111 ),
+				Float.intBitsToFloat( 0b0111_1110_0000_0001_0000_0011_0000_0111 ),
 		} );
 	}
 
@@ -118,12 +120,9 @@ public class ShapeTest {
 				.col.all().set( Color.RED );
 
 		assertThat( s.vertexData ).isEqualTo( new float[] {
-				Float.intBitsToFloat(
-						Color.rgba8888( Color.RED ) ),
-				Float.intBitsToFloat(
-						Color.rgba8888( Color.RED ) ),
-				Float.intBitsToFloat(
-						Color.rgba8888( Color.RED ) )
+				Color.RED.toFloatBits(),
+				Color.RED.toFloatBits(),
+				Color.RED.toFloatBits(),
 		} );
 	}
 
@@ -140,18 +139,15 @@ public class ShapeTest {
 						.r( 0.03125f )
 						.g( 0.015625f )
 						.b( 0.0078125f )
-						.a( 0.00390625f ).done();
+						.a( 0.5f ).done();
 
 		assertThat( s.vertexData ).isEqualTo( new float[] {
 				1, 2, 3,
-				Float.intBitsToFloat(
-						Color.rgba8888( Color.RED ) ),
+				Float.intBitsToFloat( 0b1111_1110_0000_0000_0000_0000_1111_1111 ),
 				4, 5, 6,
-				Float.intBitsToFloat(
-						Color.rgba8888( 0.5f, 0.25f, 0.125f, 0.0625f ) ),
+				Float.intBitsToFloat( 0b0000_1110_0001_1111_0011_1111_0111_1111 ),
 				7, 8, 9,
-				Float.intBitsToFloat(
-						Color.rgba8888( 0.03125f, 0.015625f, 0.0078125f, 0.00390625f ) )
+				Float.intBitsToFloat( 0b0111_1110_0000_0001_0000_0011_0000_0111 ),
 		} );
 
 		// check that global setters only affect their own components
@@ -159,14 +155,39 @@ public class ShapeTest {
 
 		assertThat( s.vertexData ).isEqualTo( new float[] {
 				8, 2, 3,
-				Float.intBitsToFloat(
-						Color.rgba8888( Color.RED ) ),
+				Float.intBitsToFloat( 0b1111_1110_0000_0000_0000_0000_1111_1111 ),
 				8, 5, 6,
-				Float.intBitsToFloat(
-						Color.rgba8888( 0.5f, 0.25f, 0.125f, 0.0625f ) ),
+				Float.intBitsToFloat( 0b0000_1110_0001_1111_0011_1111_0111_1111 ),
 				8, 8, 9,
-				Float.intBitsToFloat(
-						Color.rgba8888( 0.03125f, 0.015625f, 0.0078125f, 0.00390625f ) )
+				Float.intBitsToFloat( 0b0111_1110_0000_0001_0000_0011_0000_0111 ),
+		} );
+	}
+
+	@Test
+	public void transform() {
+		Shape s = new Shape( 3, 0, Position() )
+				.pos.xyz( 1, 2, 3 ).next()
+				.pos.xyz( 4, 5, 6 ).next()
+				.pos.xyz( 7, 8, 9 ).next();
+
+		assertThat( s.vertexData ).isEqualTo( new float[] {
+				1, 2, 3, 4, 5, 6, 7, 8, 9,
+		} );
+
+		s.index( 0 );
+
+		s.pos.scale( 2, 2, 1 ).apply().next();
+		s.pos.scale( 3, 1, 3 ).apply().next();
+		s.pos.scale( 1, 4, 4 ).apply().next();
+
+		assertThat( s.vertexData ).isEqualTo( new float[] {
+				2, 4, 3, 12, 5, 18, 7, 32, 36,
+		} );
+
+		s.pos.all().scale( 2, 2, 2 ).apply();
+
+		assertThat( s.vertexData ).isEqualTo( new float[] {
+				4, 8, 6, 24, 10, 36, 14, 64, 72,
 		} );
 	}
 

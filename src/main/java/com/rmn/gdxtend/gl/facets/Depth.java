@@ -52,16 +52,34 @@ public class Depth extends Facet<Depth> {
 		return this;
 	}
 
+	/**
+	 * {@link GL20#glDepthMask(boolean)}
+	 * 
+	 * @param m
+	 * @return this
+	 */
 	public Depth mask( boolean m ) {
 		mask = m;
 		return this;
 	}
 
+	/**
+	 * {@link GL20#glDepthRangef(float, float)}
+	 * 
+	 * @param n
+	 * @return this
+	 */
 	public Depth near( float n ) {
 		near = n;
 		return this;
 	}
 
+	/**
+	 * {@link GL20#glDepthRangef(float, float)}
+	 * 
+	 * @param f
+	 * @return this
+	 */
 	public Depth far( float f ) {
 		far = f;
 		return this;

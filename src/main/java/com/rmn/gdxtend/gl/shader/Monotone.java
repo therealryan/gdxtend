@@ -6,9 +6,12 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.rmn.gdxtend.gl.facets.Shader;
 import com.rmn.gdxtend.util.Comparison;
 
+/**
+ * Just renders geometry, with uniform colour
+ */
 public class Monotone extends Shader {
 
-	public final Color vertexColour = new Color( Color.WHITE );
+	public final Color colour = new Color( Color.WHITE );
 	private int vcPos = -1;
 
 	public Monotone() {
@@ -22,8 +25,8 @@ public class Monotone extends Shader {
 	@Override
 	protected int uniformCompare( Shader other ) {
 		return Comparison.instance.compare(
-				vertexColour.toIntBits(),
-				( (Monotone) other ).vertexColour.toIntBits() )
+				colour.toIntBits(),
+				( (Monotone) other ).colour.toIntBits() )
 				.result();
 	}
 
@@ -33,13 +36,13 @@ public class Monotone extends Shader {
 			vcPos = program.getUniformLocation( Programs.uColour );
 		}
 
-		program.setUniformf( vcPos, vertexColour );
+		program.setUniformf( vcPos, colour );
 	}
 
 	@Override
 	protected void uniformTransition( Shader from ) {
 		Monotone m = (Monotone) from;
-		if( vertexColour.equals( m.vertexColour ) ) {
+		if( colour.equals( m.colour ) ) {
 			forceUniforms();
 		}
 	}

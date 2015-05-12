@@ -1,5 +1,7 @@
 package com.rmn.gdxtend.geom;
 
+import java.util.Arrays;
+
 import com.badlogic.gdx.graphics.VertexAttribute;
 import com.badlogic.gdx.graphics.VertexAttributes;
 import com.rmn.gdxtend.gl.attribute.Colour;
@@ -10,7 +12,6 @@ import com.rmn.gdxtend.gl.attribute.Position;
  */
 public class Shape {
 	public final Position pos;
-
 	public final Colour col;
 
 	public final VertexAttributes attributes;
@@ -30,7 +31,7 @@ public class Shape {
 	 * @param triangleCount
 	 *          the number of triangles
 	 * @param additional
-	 *          vertex attributes over and above position
+	 *          vertex attributes
 	 */
 	public Shape( int vertexCount, int triangleCount,
 			VertexAttribute... attr ) {
@@ -49,12 +50,43 @@ public class Shape {
 	 * @param t
 	 *          the structure of the geometry
 	 * @param additional
-	 *          vertex attributes over and above position
+	 *          vertex attributes over
 	 */
 	public Shape( int elements, Topology t,
 			VertexAttribute... additional ) {
 		this( t.verticesFor( elements ), t.trianglesFor( elements ), additional );
 		t.define( this );
+	}
+
+	public Shape( Shape... constituents ) {
+		attributes = constituents[ 0 ].attributes;
+		int vc = 0;
+		int ic = 0;
+		for( Shape s : constituents ) {
+			if( !attributes.equals( s.attributes ) ) {
+				throw new IllegalArgumentException( "Different attributes: "
+						+ attributes + " != " + s.attributes );
+			}
+			vc += s.vertexData.length;
+			ic += s.indices.length;
+		}
+		vertexData = new float[ vc ];
+		indices = new short[ ic ];
+		vc = 0;
+		int vi = 0;
+		int ii = 0;
+		for( Shape s : constituents ) {
+			System.arraycopy( s.vertexData, 0, vertexData, vi, s.vertexData.length );
+			vi += s.vertexData.length;
+
+			for( int i = 0; i < s.indices.length; i++ ) {
+				indices[ ii + i ] = (short) ( s.indices[ i ] + vc );
+			}
+
+			vc += s.vertexData.length / ( attributes.vertexSize / 4 );
+		}
+		pos = new Position( this );
+		col = new Colour( this );
 	}
 
 	/**
@@ -109,4 +141,8 @@ public class Shape {
 		return this;
 	}
 
+	@Override
+	public String toString() {
+		return Arrays.toString( vertexData ) + Arrays.toString( indices );
+	}
 }

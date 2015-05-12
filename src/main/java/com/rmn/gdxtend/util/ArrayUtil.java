@@ -72,4 +72,49 @@ public class ArrayUtil {
 		return dest;
 	}
 
+	/**
+	 * Shorthand for simple array copy, avoids cryptic
+	 * {@link System#arraycopy(Object, int, Object, int, int)} arguments
+	 * 
+	 * @param from
+	 *          the source
+	 * @param to
+	 *          the destination
+	 * @return the destination array
+	 */
+	public static float[] copy( float[] from, float[] to ) {
+		System.arraycopy( from, 0, to, 0, from.length );
+		return to;
+	}
+
+	/**
+	 * Shorthand for simple array copy, avoids cryptic
+	 * {@link System#arraycopy(Object, int, Object, int, int)} arguments
+	 * 
+	 * @param from
+	 *          the source
+	 * @param to
+	 *          the destination
+	 * @return the destination array
+	 */
+	public static int[] copy( int[] from, int[] to ) {
+		System.arraycopy( from, 0, to, 0, from.length );
+		return to;
+	}
+
+	/**
+	 * Shorthand for simple array copy, avoids cryptic
+	 * {@link System#arraycopy(Object, int, Object, int, int)} arguments
+	 * 
+	 * @param from
+	 *          the source
+	 * @param to
+	 *          the destination
+	 * @return the destination array
+	 */
+	public static byte[] copy( byte[] from, byte[] to ) {
+		System.arraycopy( from, 0, to, 0, from.length );
+		return to;
+	}
+
 }

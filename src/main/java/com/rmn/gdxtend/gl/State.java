@@ -151,6 +151,10 @@ public class State<T extends Shader> implements Comparable<State<?>> {
 			}
 		}
 
+		// the transforms are going to be changing a lot, so
+		// let's avoid the whole tree-comparison thing
+		shader.updateTransforms();
+
 		currentState = this;
 	}
 

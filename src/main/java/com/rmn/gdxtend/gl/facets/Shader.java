@@ -95,7 +95,12 @@ public abstract class Shader extends Facet<Shader> {
 		else {
 			uniformTransition( from );
 		}
+	}
 
+	/**
+	 * Applies the transform matrices
+	 */
+	public void updateTransforms() {
 		if( cameraPos == -1 ) {
 			cameraPos = program.getUniformLocation( Programs.uCam );
 		}

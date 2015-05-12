@@ -1,5 +1,7 @@
 package com.rmn.gdxtend.gl.attribute;
 
+import java.util.Arrays;
+
 import com.badlogic.gdx.graphics.VertexAttribute;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -13,20 +15,19 @@ import com.rmn.gdxtend.geom.Shape;
  */
 public abstract class Attribute<T extends Attribute<T>> {
 
-	private final Shape s;
+	protected final Shape s;
 	public final VertexAttribute va;
 
 	/**
 	 * Used to keep a very temporary, very unsafe cache of set values
 	 */
 	private static float[] values = new float[ 4 ];
-	private static int element = -1;
-	private static int count = -1;
+	private static boolean[] set = new boolean[ 4 ];
 
 	/**
 	 * Whether or not the next call to {@link #apply()} affects all vertices
 	 */
-	private static boolean toAll = false;
+	protected static boolean toAll = false;
 
 	public Attribute( Shape s, int usage ) {
 		this.va = s.attributes.findByUsage( usage );
@@ -53,42 +54,44 @@ public abstract class Attribute<T extends Attribute<T>> {
 	}
 
 	protected Shape set( float a, float b, float c, float d ) {
-		element = -1;
-		count = 4;
 		values[ 0 ] = a;
 		values[ 1 ] = b;
 		values[ 2 ] = c;
 		values[ 3 ] = d;
+		Arrays.fill( set, true );
 
 		apply();
 		return s;
 	}
 
 	protected Shape set( float a, float b, float c ) {
-		element = -1;
-		count = 3;
 		values[ 0 ] = a;
 		values[ 1 ] = b;
 		values[ 2 ] = c;
+		Arrays.fill( set, true );
+		set[ 3 ] = false;
 
 		apply();
 		return s;
 	}
 
 	protected Shape set( float a, float b ) {
-		element = -1;
-		count = 2;
 		values[ 0 ] = a;
 		values[ 1 ] = b;
+		Arrays.fill( set, true );
+		set[ 2 ] = false;
+		set[ 3 ] = false;
 
 		apply();
 		return s;
 	}
 
 	protected Shape set( float a ) {
-		element = -1;
-		count = 1;
 		values[ 0 ] = a;
+		Arrays.fill( set, true );
+		set[ 1 ] = false;
+		set[ 2 ] = false;
+		set[ 3 ] = false;
 
 		apply();
 		return s;
@@ -102,9 +105,9 @@ public abstract class Attribute<T extends Attribute<T>> {
 	 * @return this
 	 */
 	protected T component( int e, float a ) {
-		element = e;
-		count = 1;
 		values[ e ] = a;
+		Arrays.fill( set, false );
+		set[ e ] = true;
 
 		apply();
 		return self();
@@ -114,23 +117,32 @@ public abstract class Attribute<T extends Attribute<T>> {
 		if( toAll ) {
 			for( int i = 0; i < s.vertices(); i++ ) {
 				s.index( i );
-				applyToVertex();
+				applyToVertex( offset(), values, set );
 			}
 			s.index( 0 );
 		}
 		else {
-			applyToVertex();
+			applyToVertex( offset(), values, set );
 		}
 		toAll = false;
 	}
 
-	private void applyToVertex() {
-		if( element >= 0 ) {
-			System.arraycopy( values, element, s.vertexData, offset() + element,
-					count );
-		}
-		else {
-			System.arraycopy( values, 0, s.vertexData, offset(), count );
+	/**
+	 * Override this to do something custom when copying the data to the vertex
+	 * array.
+	 * 
+	 * @param index
+	 *          The index of the first component to copy to
+	 * @param values
+	 *          The values to copy
+	 * @param set
+	 *          Which values to copy
+	 */
+	protected void applyToVertex( int index, float[] values, boolean[] set ) {
+		for( int i = 0; i < va.numComponents; i++ ) {
+			if( set[ i ] ) {
+				s.vertexData[ index + i ] = values[ i ];
+			}
 		}
 	}
 

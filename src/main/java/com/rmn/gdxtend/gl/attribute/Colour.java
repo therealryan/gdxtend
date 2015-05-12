@@ -2,7 +2,6 @@ package com.rmn.gdxtend.gl.attribute;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
-import com.badlogic.gdx.utils.NumberUtils;
 import com.rmn.gdxtend.geom.Shape;
 
 /**
@@ -16,48 +15,61 @@ public class Colour extends Attribute<Colour> {
 	}
 
 	public Shape rgba( float r, float g, float b, float a ) {
-		return setColour( r, g, b, a ).done();
+		return set( r, g, b, a );
 	}
 
 	public Shape set( Color c ) {
-		return setColour( c ).done();
+		return set( c.r, c.g, c.b, c.a );
 	}
 
 	public Colour r( float r ) {
-		getColour();
-		tmp.set( r, tmp.g, tmp.b, tmp.a );
-		return setColour( tmp );
+		return component( 0, r );
 	}
 
 	public Colour g( float g ) {
-		getColour();
-		tmp.set( tmp.r, g, tmp.b, tmp.a );
-		return setColour( tmp );
+		return component( 1, g );
 	}
 
 	public Colour b( float b ) {
-		getColour();
-		tmp.set( tmp.r, tmp.g, b, tmp.a );
-		return setColour( tmp );
+		return component( 2, b );
 	}
 
 	public Colour a( float a ) {
-		getColour();
-		tmp.set( tmp.r, tmp.g, tmp.b, a );
-		return setColour( tmp );
+		return component( 3, a );
 	}
 
-	private Color getColour() {
-		tmp.set( NumberUtils.floatToIntColor( get() ) );
-		return tmp;
+	/**
+	 * As colours are packed we have to do our own application
+	 */
+	@Override
+	protected void applyToVertex( int index, float[] values, boolean[] set ) {
+		fromPacked( tmp, s.vertexData[ index ] );
+		tmp.set(
+				set[ 0 ] ? values[ 0 ] : tmp.r,
+				set[ 1 ] ? values[ 1 ] : tmp.g,
+				set[ 2 ] ? values[ 2 ] : tmp.b,
+				set[ 3 ] ? values[ 3 ] : tmp.a );
+
+		s.vertexData[ index ] = tmp.toFloatBits();
 	}
 
-	private Colour setColour( Color c ) {
-		return setColour( c.r, c.g, c.b, c.a );
-	}
-
-	private Colour setColour( float r, float g, float b, float a ) {
-		set( Float.intBitsToFloat( Color.rgba8888( r, g, b, a ) ) );
-		return this;
+	/**
+	 * The inverse of {@link Color#toFloatBits()}. Bear in mind that we lost the
+	 * low alpha bit on the way out.
+	 * 
+	 * @param c
+	 *          the {@link Color} to set
+	 * @param packed
+	 *          the packed float agbr value
+	 * @return the altered {@link Color}
+	 */
+	public static Color fromPacked( Color c, float packed ) {
+		int pi = Float.floatToIntBits( packed );
+		int r = ( pi & 0xff ) >>> 0;
+		int g = ( pi & 0xff00 ) >>> 8;
+		int b = ( pi & 0xff0000 ) >>> 16;
+		int a = ( pi & 0xff000000 ) >>> 24;
+		c.set( ( r << 24 ) | ( g << 16 ) | ( b << 8 ) | ( a << 0 ) );
+		return c;
 	}
 }

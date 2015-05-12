@@ -1,5 +1,7 @@
 package com.rmn.gdxtend.gl;
 
+import java.util.Arrays;
+
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Mesh;
 import com.rmn.gdxtend.geom.Shape;
@@ -12,7 +14,14 @@ public class Renderer {
 
 	private int compilationBatch = -2;
 
+	private int initialSize = 100;
+
 	GeometryBatch[] geometry = new GeometryBatch[ 0 ];
+
+	public Renderer withInitialSize( int size ) {
+		initialSize = size;
+		return this;
+	}
 
 	/**
 	 * Adds states to this Renderer's internal ordering.
@@ -34,7 +43,8 @@ public class Renderer {
 
 			// new lists
 			for( State<?> s : states ) {
-				ngl[ s.getCompiledIndex() ] = new GeometryBatch( s, 100, 100 );
+				ngl[ s.getCompiledIndex() ] =
+						new GeometryBatch( s, initialSize, initialSize );
 			}
 
 			// copy old lists - their states know where to go
@@ -100,13 +110,13 @@ public class Renderer {
 	class GeometryBatch {
 
 		public final State<?> state;
-		private float[] vertices;
-		private int vi = 0;
+		float[] vertices;
+		int vi = 0;
 
-		private short[] indices;
-		private int ii = 0;
+		short[] indices;
+		int ii = 0;
 
-		private boolean dirty = true;
+		boolean dirty = true;
 		private Mesh mesh;
 
 		public GeometryBatch( State<?> s, int vertCount, int indexCount ) {
@@ -122,9 +132,15 @@ public class Renderer {
 		}
 
 		public void addGeometry( float[] verts, short[] triangles ) {
+			int existingVertexCount = vi / ( state.shader.attributes.vertexSize / 4 );
 			vertices = ArrayUtil.append( vertices, vi, verts );
-			vi += verts.length;
 			indices = ArrayUtil.append( indices, ii, triangles );
+
+			for( int i = 0; i < triangles.length; i++ ) {
+				indices[ i + ii ] += existingVertexCount;
+			}
+
+			vi += verts.length;
 			ii += triangles.length;
 			dirty = true;
 		}
@@ -145,5 +161,19 @@ public class Renderer {
 			state.apply();
 			mesh.render( state.shader.program, GL20.GL_TRIANGLES );
 		}
+
+		@Override
+		public String toString() {
+			return Arrays.toString( vertices ) + Arrays.toString( indices );
+		}
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for( GeometryBatch gb : geometry ) {
+			sb.append( gb ).append( "\n" );
+		}
+		return sb.toString();
 	}
 }

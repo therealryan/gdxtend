@@ -42,9 +42,6 @@ public class Programs {
 				+ "                                        \n"
 				+ "void main() {                           \n"
 				+ "  v_color = " + uColour + ";            \n"
-				// this is because we have to mask out the high bits when converting
-				// from packed int to float, hence we don't get the full alpha range
-				+ "  v_color.a = v_color.a * (255.0/254.0);\n"
 				+ "  gl_Position =  u_camera               \n"
 				+ "               * u_model                \n"
 				+ "               * " + aPos + ";          \n"

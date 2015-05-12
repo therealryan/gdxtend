@@ -11,12 +11,12 @@ import com.rmn.gdxtend.gl.shader.None;
 
 public class RendererTest extends GdxTest {
 
-	private Renderer r = new Renderer();
-
-	private State<None> state = State.build( None.instance );
-
 	@Test
 	public void grow() {
+		Renderer r = new Renderer();
+
+		State<None> state = State.build( None.instance );
+
 		State<?>[] larger = r.grow( state );
 
 		assertThat( larger ).isEqualTo( new State[] { state } );
@@ -76,15 +76,42 @@ public class RendererTest extends GdxTest {
 
 	@Test
 	public void addTriangles() {
-		Renderer r = new Renderer();
-
-		float[] v = new float[ 9 ];
-		short[] i = new short[ 3 ];
+		Renderer r = new Renderer().withInitialSize( 5 );
+		assertThat( r.geometry ).hasSize( 0 );
 
 		State<None> s = State.build( None.instance );
+
+		float[] v = new float[ 3 ];
 		Arrays.fill( v, 1 );
-		Arrays.fill( i, (short) 2 );
+		short[] i = new short[] { 0, 1, 2 };
 
 		r.addTriangles( s, v, i );
+
+		assertThat( r.geometry ).hasSize( 1 );
+		assertThat( r.geometry[ 0 ].vertices ).isEqualTo( new float[] {
+				1, 1, 1,
+				0, 0, 0,
+				0, 0, 0,
+				0, 0, 0,
+				0, 0, 0,
+		} );
+		assertThat( r.geometry[ 0 ].indices ).isEqualTo( new short[] {
+				0, 1, 2, 0, 0,
+		} );
+
+		Arrays.fill( v, 3 );
+
+		r.addTriangles( s, v, i );
+		assertThat( r.geometry ).hasSize( 1 );
+		assertThat( r.geometry[ 0 ].vertices ).isEqualTo( new float[] {
+				1, 1, 1,
+				3, 3, 3,
+				0, 0, 0,
+				0, 0, 0,
+				0, 0, 0,
+		} );
+		assertThat( r.geometry[ 0 ].indices ).isEqualTo( new short[] {
+				0, 1, 2, 1, 2, 3, 0, 0, 0,
+		} );
 	}
 }

@@ -12,19 +12,19 @@ import com.rmn.gdxtend.gl.facets.Shader;
  * For rendering geometry that has {@link Position} and {@link Colour}
  * attributes
  */
-public class FlatFilled extends Shader {
+public class Blended extends Shader {
 
-	private static FlatFilled instance;
+	private static Blended instance;
 
-	public static FlatFilled instance() {
+	public static Blended instance() {
 		if( instance == null ) {
-			instance = new FlatFilled();
+			instance = new Blended();
 		}
 
 		return instance;
 	}
 
-	private FlatFilled() {
+	private Blended() {
 		super(
 				new ShaderProgram(
 						Programs.Vertex.vertColour,
