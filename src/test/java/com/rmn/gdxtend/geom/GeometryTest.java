@@ -95,7 +95,6 @@ public class GeometryTest {
 		float c = (float) Math.cos( Math.toRadians( 45 ) );
 		float s = (float) Math.sin( Math.toRadians( 45 ) );
 
-		// assertj is a bit lacking for float arrays
 		Assert.assertArrayEquals( new float[] {
 				0, 0, 0,
 				1, 0, 0,
@@ -106,6 +105,34 @@ public class GeometryTest {
 				-c, -s, 0,
 				0, -1, 0,
 				c, -s, 0,
+		}, shape.vertexData, TOLERANCE );
+	}
+
+	/**
+	 * <pre>
+	 *     2
+	 *     3
+	 * 4 5   1 0
+	 *     7
+	 *     6
+	 * </pre>
+	 */
+	@Test
+	public void fourSegmentCircleStrip() {
+		Shape shape = new Shape( 8, 0, Position() );
+		Geometry.circleStrip.withWidth( 0.1f ).define( shape );
+
+		float outer = 1.0f;
+		float inner = 0.9f;
+		Assert.assertArrayEquals( new float[] {
+				outer, 0, 0,
+				inner, 0, 0,
+				0, outer, 0,
+				0, inner, 0,
+				-outer, 0, 0,
+				-inner, 0, 0,
+				0, -outer, 0,
+				0, -inner, 0,
 		}, shape.vertexData, TOLERANCE );
 	}
 

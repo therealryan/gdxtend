@@ -18,6 +18,14 @@ public class Renderer {
 
 	GeometryBatch[] geometry = new GeometryBatch[ 0 ];
 
+	/**
+	 * Sets the initial size of new geometry batches
+	 * 
+	 * @param size
+	 *          The number of vertices and indices that can be accommodated
+	 *          without resizing the buffers
+	 * @return this
+	 */
 	public Renderer withInitialSize( int size ) {
 		initialSize = size;
 		return this;

@@ -65,10 +65,6 @@ public class Triangles {
 
 		// top
 		for( int i = 0; i < 1; i++ ) {
-			float x = 0 - i * 0;
-			if( i >= 6 ) {
-				x -= 0 * 0;
-			}
 			Color c = i % 2 == 0 ? Color.BLUE : Color.RED;
 
 			points.pos.xyz( 1, 2, 3 ).col.set( c ).next();

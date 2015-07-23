@@ -4,12 +4,48 @@ import static com.badlogic.gdx.graphics.VertexAttribute.ColorPacked;
 import static com.badlogic.gdx.graphics.VertexAttribute.Position;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Arrays;
+
 import org.junit.Test;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 
 public class ShapeTest {
+
+	@Test
+	public void meld() {
+		Shape s = new Shape( 3, 1, Position() );
+		Arrays.fill( s.vertexData, 1 );
+		Arrays.fill( s.indices, (short) 2 );
+
+		Shape t = new Shape( 3, 1, Position() );
+		Arrays.fill( t.vertexData, 3 );
+		Arrays.fill( t.indices, (short) 4 );
+
+		assertThat( s.vertexData ).isEqualTo( new float[] {
+				1, 1, 1, 1, 1, 1, 1, 1, 1,
+		} );
+		assertThat( s.indices ).isEqualTo( new short[] {
+				2, 2, 2,
+		} );
+		assertThat( t.vertexData ).isEqualTo( new float[] {
+				3, 3, 3, 3, 3, 3, 3, 3, 3,
+		} );
+		assertThat( t.indices ).isEqualTo( new short[] {
+				4, 4, 4,
+		} );
+
+		Shape u = new Shape( s, t );
+		assertThat( u.vertexData ).isEqualTo( new float[] {
+				1, 1, 1, 1, 1, 1, 1, 1, 1,
+				3, 3, 3, 3, 3, 3, 3, 3, 3,
+		} );
+		assertThat( u.indices ).isEqualTo( new short[] {
+				2, 2, 2,
+				7, 7, 7,
+		} );
+	}
 
 	@Test
 	public void vertexIndex() {

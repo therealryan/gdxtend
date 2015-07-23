@@ -100,14 +100,15 @@ public abstract class Attribute<T extends Attribute<T>> {
 	/**
 	 * Sets a single component
 	 * 
-	 * @param e
-	 * @param a
+	 * @param element
+	 *          index of the component to set
+	 * @param value
 	 * @return this
 	 */
-	protected T component( int e, float a ) {
-		values[ e ] = a;
+	protected T component( int element, float value ) {
+		values[ element ] = value;
 		Arrays.fill( set, false );
-		set[ e ] = true;
+		set[ element ] = true;
 
 		apply();
 		return self();

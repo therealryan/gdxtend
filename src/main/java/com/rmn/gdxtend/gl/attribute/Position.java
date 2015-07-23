@@ -25,12 +25,24 @@ public class Position extends Attribute<Position> {
 		return set( v.x, v.y, v.z );
 	}
 
+	public float x() {
+		return get( 0 );
+	}
+
 	public Position x( float x ) {
 		return component( 0, x );
 	}
 
+	public float y() {
+		return get( 1 );
+	}
+
 	public Position y( float y ) {
 		return component( 1, y );
+	}
+
+	public float z() {
+		return get( 2 );
 	}
 
 	public Position z( float z ) {

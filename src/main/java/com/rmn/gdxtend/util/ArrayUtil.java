@@ -1,5 +1,7 @@
 package com.rmn.gdxtend.util;
 
+import java.util.Arrays;
+
 public class ArrayUtil {
 
 	/**
@@ -114,6 +116,30 @@ public class ArrayUtil {
 	 */
 	public static byte[] copy( byte[] from, byte[] to ) {
 		System.arraycopy( from, 0, to, 0, from.length );
+		return to;
+	}
+
+	/**
+	 * Inverse of {@link Arrays#toString(byte[])}
+	 * 
+	 * @param from
+	 *          the string
+	 * @param to
+	 *          An array to use as the destination. A new array will be created if
+	 *          this proves to be <code>null</code> or too small.
+	 * @return the array
+	 */
+	public static byte[] fromString( String from, byte[] to ) {
+		String[] e = from.substring( 1, from.length() - 1 ).split( ", " );
+
+		if( to == null || to.length < e.length ) {
+			to = new byte[ e.length ];
+		}
+
+		for( int i = 0; i < e.length; i++ ) {
+			to[ i ] = Byte.parseByte( e[ i ] );
+		}
+
 		return to;
 	}
 

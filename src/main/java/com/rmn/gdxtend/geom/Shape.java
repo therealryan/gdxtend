@@ -82,6 +82,7 @@ public class Shape {
 			for( int i = 0; i < s.indices.length; i++ ) {
 				indices[ ii + i ] = (short) ( s.indices[ i ] + vc );
 			}
+			ii += s.indices.length;
 
 			vc += s.vertexData.length / ( attributes.vertexSize / 4 );
 		}

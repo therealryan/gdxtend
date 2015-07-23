@@ -129,6 +129,35 @@ public abstract class Topology {
 	};
 
 	/**
+	 * Looped triangle strip
+	 * 
+	 * <pre>
+	 *   1---3---5---7---1
+	 *  / \ / \ / \ / \ /
+	 * 0---2---4---6---0
+	 * </pre>
+	 */
+	public static final Topology loop = new Topology() {
+
+		@Override
+		protected void define( Shape s, int startIndex ) {
+			strip.define( s, startIndex );
+			s.triangle( s.vertices() - 2, startIndex, s.vertices() - 1 );
+			s.triangle( s.vertices() - 1, startIndex, startIndex + 1 );
+		}
+
+		@Override
+		public int verticesFor( int elements ) {
+			return strip.verticesFor( elements ) - 2;
+		}
+
+		@Override
+		public int trianglesFor( int elements ) {
+			return strip.trianglesFor( elements );
+		}
+	};
+
+	/**
 	 * Triangle fan. e.g.: 0-1-2, 0-2-3, 0-3-4
 	 * 
 	 * <pre>
