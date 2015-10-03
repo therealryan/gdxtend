@@ -2,11 +2,15 @@ package com.rmn.gdxtend.math;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.Rule;
 import org.junit.Test;
 
-import com.rmn.gdxtend.testutil.LineGraph;
+import com.rmn.gdxtend.expect.XYPlotExpect;
 
 public class RangeTest {
+
+	@Rule
+	public XYPlotExpect plot = new XYPlotExpect();
 
 	@Test
 	public void construction() {
@@ -127,16 +131,13 @@ public class RangeTest {
 		assertThat( r.normalise( 50 ) ).isEqualTo( 50 );
 		assertThat( r.normalise( 76 ) ).isEqualTo( 26 );
 
-		LineGraph lg = new LineGraph( "normalisation", 0, 100, 1000 );
-		lg.with( "25-75", new Function() {
+		plot.with( "25-75", new Function() {
 
 			@Override
 			public float map( float f ) {
 				return r.normalise( f );
 			}
-		} );
-
-		lg.generate();
+		} ).check();
 	}
 
 	/**

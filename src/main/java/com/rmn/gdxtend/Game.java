@@ -18,8 +18,7 @@ public abstract class Game extends ApplicationAdapter {
 	/**
 	 * Implement this to build the starting phase for the game
 	 * 
-	 * @param phase
-	 *          the phase to start with
+	 * @return the phase to start with
 	 */
 	protected abstract GamePhase initialPhase();
 

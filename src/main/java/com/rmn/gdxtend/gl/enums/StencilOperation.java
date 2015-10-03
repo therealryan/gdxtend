@@ -2,6 +2,9 @@ package com.rmn.gdxtend.gl.enums;
 
 import com.badlogic.gdx.graphics.GL20;
 
+/**
+ * Operations for stencil test
+ */
 public enum StencilOperation {
 
 	/**
@@ -41,6 +44,9 @@ public enum StencilOperation {
 	 */
 	INVERT( GL20.GL_INVERT );
 
+	/**
+	 * enum value
+	 */
 	public final int value;
 
 	private StencilOperation( int value ) {

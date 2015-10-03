@@ -14,6 +14,9 @@ import com.rmn.gdxtend.gl.shader.None;
 
 /**
  * Represents a rendering state
+ *
+ * @param <T>
+ *          the shader type
  */
 public class State<T extends Shader> implements Comparable<State<?>> {
 	/**

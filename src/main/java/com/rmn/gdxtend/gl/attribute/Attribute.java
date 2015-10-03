@@ -16,7 +16,7 @@ import com.rmn.gdxtend.geom.Shape;
 public abstract class Attribute<T extends Attribute<T>> {
 
 	protected final Shape s;
-	public final VertexAttribute va;
+	protected final VertexAttribute va;
 
 	/**
 	 * Used to keep a very temporary, very unsafe cache of set values
@@ -29,7 +29,7 @@ public abstract class Attribute<T extends Attribute<T>> {
 	 */
 	protected static boolean toAll = false;
 
-	public Attribute( Shape s, int usage ) {
+	protected Attribute( Shape s, int usage ) {
 		this.va = s.attributes.findByUsage( usage );
 		this.s = s;
 	}
@@ -151,16 +151,29 @@ public abstract class Attribute<T extends Attribute<T>> {
 		return s.vertexData[ offset() + e ];
 	}
 
+	/**
+	 * @return the value of the first element of this attribute
+	 */
 	public float get() {
 		return get( 0 );
 	}
 
+	/**
+	 * @param v
+	 *          destination vector
+	 * @return the first two values of this attribute
+	 */
 	public Vector2 get( Vector2 v ) {
 		int o = offset();
 		v.set( s.vertexData[ o ], s.vertexData[ o + 1 ] );
 		return v;
 	}
 
+	/**
+	 * @param v
+	 *          destination vector
+	 * @return the first three values of this attribute
+	 */
 	public Vector3 get( Vector3 v ) {
 		int o = offset();
 		v.set( s.vertexData[ o ], s.vertexData[ o + 1 ], s.vertexData[ o + 2 ] );

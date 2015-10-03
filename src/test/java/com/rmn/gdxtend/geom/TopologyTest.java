@@ -357,6 +357,8 @@ public class TopologyTest {
 
 	/**
 	 * Creates a visualisation of the topolgies
+	 *
+	 * @throws Exception
 	 */
 	@After
 	public void visualise() throws Exception {

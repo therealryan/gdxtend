@@ -9,6 +9,10 @@ public class Range {
 
 	public float from, to;
 
+	public float length() {
+		return Math.abs( to - from );
+	}
+
 	/**
 	 * Copies a range
 	 * 
@@ -186,6 +190,22 @@ public class Range {
 		float count = (float) Math.floor( delta );
 
 		return f -= count * length;
+	}
+
+	/**
+	 * Expands this range to encompass a point
+	 * 
+	 * @param f
+	 * @return this
+	 */
+	public Range include( float f ) {
+		if( after( f ) ) {
+			this.to = f;
+		}
+		else if( before( f ) ) {
+			this.from = f;
+		}
+		return this;
 	}
 
 	@Override

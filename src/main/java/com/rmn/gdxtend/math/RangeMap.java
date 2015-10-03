@@ -14,6 +14,20 @@ public class RangeMap implements Function {
 	private Interpolation interp = Interpolation.linear;
 
 	/**
+	 * Copies the supplied {@link RangeMap} values into this one
+	 * 
+	 * @param rm
+	 *          the map to copy
+	 * @return this
+	 */
+	public RangeMap from( RangeMap rm ) {
+		this.source.from( rm.source );
+		this.destination.from( rm.destination );
+		this.interp = rm.interp;
+		return this;
+	}
+
+	/**
 	 * Sets the source range
 	 * 
 	 * @param from
@@ -52,7 +66,6 @@ public class RangeMap implements Function {
 	 * The inverse of {@link #linearMap(float)}
 	 * 
 	 * @param f
-	 * @return
 	 * @return the value in the source range that corresponds to f's position in
 	 *         the destination map
 	 */

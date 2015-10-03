@@ -14,7 +14,7 @@ public class PolygonOffset extends Facet<PolygonOffset> {
 	public static final float DEFAULT_UNITS = 0;
 
 	/**
-	 * Controls {@link GL11#GL_POLYGON_OFFSET_FILL}
+	 * Controls polygon offset
 	 */
 	boolean enabled = DEFAULT_ENABLED;
 

@@ -16,11 +16,11 @@ import com.rmn.gdxtend.util.Comparison;
  * Controls the blending function
  */
 public class Blend extends Facet<Blend> {
-	public static final DestinationFactor DEFAULT_DEST_FACTOR = ZERO;
-	public static final SourceFactor DEFAULT_SRC_FACTOR = ONE;
-	public static final boolean DEFAULT_ENABLED = false;
-	public static final BlendEquation DEFAULT_EQUATION = GL_FUNC_ADD;
-	public static final int DEFAULT_COLOUR = new Color( 0, 0, 0, 0 ).toIntBits();
+	private static final DestinationFactor DEFAULT_DEST_FACTOR = ZERO;
+	private static final SourceFactor DEFAULT_SRC_FACTOR = ONE;
+	private static final boolean DEFAULT_ENABLED = false;
+	private static final BlendEquation DEFAULT_EQUATION = GL_FUNC_ADD;
+	private static final int DEFAULT_COLOUR = new Color( 0, 0, 0, 0 ).toIntBits();
 
 	/**
 	 * Whether blending is enabled
@@ -47,6 +47,10 @@ public class Blend extends Facet<Blend> {
 	 */
 	DestinationFactor destFactor = DEFAULT_DEST_FACTOR;
 
+	/**
+	 * @param e
+	 * @return this
+	 */
 	public Blend enabled( boolean e ) {
 		enabled = e;
 		return this;

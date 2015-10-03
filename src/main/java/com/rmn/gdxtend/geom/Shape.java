@@ -30,7 +30,7 @@ public class Shape {
 	 *          the number of vertices
 	 * @param triangleCount
 	 *          the number of triangles
-	 * @param additional
+	 * @param attr
 	 *          vertex attributes
 	 */
 	public Shape( int vertexCount, int triangleCount,
@@ -109,9 +109,7 @@ public class Shape {
 	}
 
 	/**
-	 * Gets the index of the current vertex
-	 * 
-	 * @return
+	 * @return the index of the current vertex
 	 */
 	public int index() {
 		return vi;

@@ -10,30 +10,64 @@ import com.rmn.gdxtend.geom.Shape;
 public class Colour extends Attribute<Colour> {
 	private static final Color tmp = new Color();
 
+	/**
+	 * @param s
+	 */
 	public Colour( Shape s ) {
 		super( s, Usage.ColorPacked );
 	}
 
+	/**
+	 * @param r
+	 * @param g
+	 * @param b
+	 * @param a
+	 * @return the shape
+	 */
 	public Shape rgba( float r, float g, float b, float a ) {
 		return set( r, g, b, a );
 	}
 
+	/**
+	 * @param c
+	 * @return the shape
+	 */
 	public Shape set( Color c ) {
 		return set( c.r, c.g, c.b, c.a );
 	}
 
+	/**
+	 * @param r
+	 *          red component
+	 * @return the shape
+	 */
 	public Colour r( float r ) {
 		return component( 0, r );
 	}
 
+	/**
+	 * @param g
+	 *          green component
+	 * @return the shape
+	 */
 	public Colour g( float g ) {
 		return component( 1, g );
 	}
 
+	/**
+	 * @param b
+	 *          blue component
+	 * @return the shape
+	 */
 	public Colour b( float b ) {
 		return component( 2, b );
 	}
 
+	/**
+	 * @param a
+	 *          alpha component
+	 * @return the shape
+	 */
 	public Colour a( float a ) {
 		return component( 3, a );
 	}

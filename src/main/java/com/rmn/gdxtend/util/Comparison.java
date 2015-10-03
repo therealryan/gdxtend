@@ -34,7 +34,7 @@ public class Comparison {
 	 * @param minimum
 	 *          the minimum value - comparison will rank according to distance
 	 *          from this value
-	 * @return
+	 * @return this
 	 */
 	public Comparison compare( boolean a, boolean b, boolean minimum ) {
 		return compare( a != minimum, b != minimum );

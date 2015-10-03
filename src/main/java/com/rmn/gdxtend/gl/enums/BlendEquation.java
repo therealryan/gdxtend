@@ -2,6 +2,9 @@ package com.rmn.gdxtend.gl.enums;
 
 import com.badlogic.gdx.graphics.GL20;
 
+/**
+ * OpenGL blend equations
+ */
 public enum BlendEquation {
 
 	/**
@@ -17,6 +20,9 @@ public enum BlendEquation {
 	 */
 	GL_FUNC_REVERSE_SUBTRACT( GL20.GL_FUNC_REVERSE_SUBTRACT );
 
+	/**
+	 * enum value
+	 */
 	public final int value;
 
 	private BlendEquation( int value ) {
