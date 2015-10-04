@@ -27,4 +27,9 @@ public class Position {
 		this.scale = p.scale;
 		return this;
 	}
+
+	@Override
+	public String toString() {
+		return position.toString();
+	}
 }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.rmn.gdxtend.geom.Shape;
+import com.rmn.gdxtend.math.Range;
 
 /**
  * Controls the vertex positions
@@ -154,4 +155,46 @@ public class Position extends Attribute<Position> {
 		return s;
 	}
 
+	/**
+	 * @param s
+	 *          a shape
+	 * @param dst
+	 *          destination range
+	 * @return the extent of the shape on the x axis
+	 */
+	public static Range xExtent( Shape s, Range dst ) {
+		return extent( s, 0, dst );
+	}
+
+	/**
+	 * @param s
+	 *          a shape
+	 * @param dst
+	 *          destination range
+	 * @return the extent of the shape on the y axis
+	 */
+	public static Range yExtent( Shape s, Range dst ) {
+		return extent( s, 1, dst );
+	}
+
+	/**
+	 * @param s
+	 *          a shape
+	 * @param dst
+	 *          destination range
+	 * @return the extent of the shape on the z axis
+	 */
+	public static Range zExtent( Shape s, Range dst ) {
+		return extent( s, 2, dst );
+	}
+
+	private static Range extent( Shape s, int ci, Range dst ) {
+		float min = Float.MAX_VALUE, max = -Float.MAX_VALUE;
+		for( int i = 0; i < s.vertices(); i++ ) {
+			s.index( i );
+			min = Math.min( min, s.pos.get( ci ) );
+			max = Math.max( max, s.pos.get( ci ) );
+		}
+		return dst.from( min ).to( max );
+	}
 }

@@ -8,13 +8,12 @@ import com.rmn.gdxtend.math.Range;
 /**
  * A straight-line track between two positions
  */
-public class LinearPath extends Path {
+public class LinearPath extends Path<LinearPath> {
 
 	private Interpolation interp = Interpolation.linear;
 
 	@Override
-	public Position forTime( float t, Position dest ) {
-
+	protected Position compute( float t, Position dest ) {
 		float tq = interp.apply( duration.unlerp( t ) );
 
 		// position

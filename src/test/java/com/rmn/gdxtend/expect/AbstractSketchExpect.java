@@ -1,5 +1,7 @@
 package com.rmn.gdxtend.expect;
 
+import java.awt.Color;
+
 import org.jfree.graphics2d.svg.SVGGraphics2D;
 
 /**
@@ -13,6 +15,13 @@ public class AbstractSketchExpect<T extends AbstractSketchExpect<T>> extends
 
 	public AbstractSketchExpect() {
 		super( ".svg" );
+	}
+
+	public SVGGraphics2D create( int width, int height ) {
+		SVGGraphics2D g = new SVGGraphics2D( width, height );
+		g.setColor( Color.BLACK );
+		g.drawRect( 0, 0, width, height );
+		return g;
 	}
 
 	/**

@@ -1,6 +1,7 @@
 package com.rmn.gdxtend.geom;
 
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 public class LineSegment {
@@ -49,6 +50,14 @@ public class LineSegment {
 	public LineSegment inDirection( float x, float y, float z ) {
 		end.set( start ).add( x, y, z );
 		return this;
+	}
+
+	/**
+	 * @param dst
+	 * @return the normalised direction of this line segment in the xy plane
+	 */
+	public Vector2 direction( Vector2 dst ) {
+		return dst.set( end.x, end.y ).sub( start.x, start.y ).nor();
 	}
 
 	/**

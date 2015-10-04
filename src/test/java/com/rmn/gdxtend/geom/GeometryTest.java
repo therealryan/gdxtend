@@ -3,9 +3,15 @@ package com.rmn.gdxtend.geom;
 import static com.badlogic.gdx.graphics.VertexAttribute.Position;
 
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
 
+import com.rmn.gdxtend.expect.ShapeExpect;
+
 public class GeometryTest {
+
+	@Rule
+	public ShapeExpect expect = new ShapeExpect().scale( 100 );
 
 	private static final float TOLERANCE = 0.000001f;
 
@@ -18,16 +24,17 @@ public class GeometryTest {
 	 */
 	@Test
 	public void fourSegmentCirle() {
-		Shape s = new Shape( 4, 0, Position() );
+		Shape s = new Shape( 4, Topology.fan, Position() );
 		Geometry.circle.define( s );
 
-		// assertj is a bit lacking for float arrays
 		Assert.assertArrayEquals( new float[] {
 				1, 0, 0,
 				0, 1, 0,
 				-1, 0, 0,
 				0, -1, 0,
 		}, s.vertexData, TOLERANCE );
+
+		expect.check( s );
 	}
 
 	/**
@@ -39,10 +46,9 @@ public class GeometryTest {
 	 */
 	@Test
 	public void fourSegmentCenteredCirle() {
-		Shape s = new Shape( 5, 0, Position() );
+		Shape s = new Shape( 4, Topology.radial, Position() );
 		Geometry.centeredCircle.define( s );
 
-		// assertj is a bit lacking for float arrays
 		Assert.assertArrayEquals( new float[] {
 				0, 0, 0,
 				1, 0, 0,
@@ -50,6 +56,8 @@ public class GeometryTest {
 				-1, 0, 0,
 				0, -1, 0,
 		}, s.vertexData, TOLERANCE );
+
+		expect.check( s );
 	}
 
 	/**
@@ -61,13 +69,12 @@ public class GeometryTest {
 	 */
 	@Test
 	public void eightSegmentCirle() {
-		Shape shape = new Shape( 8, 0, Position() );
+		Shape shape = new Shape( 8, Topology.fan, Position() );
 		Geometry.circle.define( shape );
 
 		float c = (float) Math.cos( Math.toRadians( 45 ) );
 		float s = (float) Math.sin( Math.toRadians( 45 ) );
 
-		// assertj is a bit lacking for float arrays
 		Assert.assertArrayEquals( new float[] {
 				1, 0, 0,
 				c, s, 0,
@@ -78,6 +85,8 @@ public class GeometryTest {
 				0, -1, 0,
 				c, -s, 0,
 		}, shape.vertexData, TOLERANCE );
+
+		expect.check( shape );
 	}
 
 	/**
@@ -89,7 +98,7 @@ public class GeometryTest {
 	 */
 	@Test
 	public void eightSegmentCenteredCirle() {
-		Shape shape = new Shape( 9, 0, Position() );
+		Shape shape = new Shape( 8, Topology.radial, Position() );
 		Geometry.centeredCircle.define( shape );
 
 		float c = (float) Math.cos( Math.toRadians( 45 ) );
@@ -106,6 +115,8 @@ public class GeometryTest {
 				0, -1, 0,
 				c, -s, 0,
 		}, shape.vertexData, TOLERANCE );
+
+		expect.check( shape );
 	}
 
 	/**
@@ -119,11 +130,11 @@ public class GeometryTest {
 	 */
 	@Test
 	public void fourSegmentCircleStrip() {
-		Shape shape = new Shape( 8, 0, Position() );
-		Geometry.circleStrip.withWidth( 0.1f ).define( shape );
+		Shape shape = new Shape( 8, Topology.loop, Position() );
+		Geometry.circleStrip.withWidth( 0.25f ).define( shape );
 
 		float outer = 1.0f;
-		float inner = 0.9f;
+		float inner = 0.75f;
 		Assert.assertArrayEquals( new float[] {
 				outer, 0, 0,
 				inner, 0, 0,
@@ -134,6 +145,8 @@ public class GeometryTest {
 				0, -outer, 0,
 				0, -inner, 0,
 		}, shape.vertexData, TOLERANCE );
+
+		expect.check( shape );
 	}
 
 }
