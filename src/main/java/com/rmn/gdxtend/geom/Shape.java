@@ -101,6 +101,7 @@ public class Shape {
 	 * Sets the index of the vertex that will be subject to setter calls
 	 * 
 	 * @param i
+	 *          vertex index
 	 * @return this
 	 */
 	public Shape index( int i ) {
@@ -129,8 +130,11 @@ public class Shape {
 	 * Adds a triangle by indexing vertices
 	 * 
 	 * @param a
+	 *          vertex index
 	 * @param b
+	 *          vertex index
 	 * @param c
+	 *          vertex index
 	 * @return this
 	 */
 	public Shape triangle( int a, int b, int c ) {

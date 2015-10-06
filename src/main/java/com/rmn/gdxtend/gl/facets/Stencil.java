@@ -34,6 +34,7 @@ public class Stencil extends Facet<Stencil> {
 
 	/**
 	 * @param e
+	 *          <code>true</code> to enable stencil test
 	 * @return this
 	 */
 	public Stencil enabled( boolean e ) {
@@ -45,6 +46,7 @@ public class Stencil extends Facet<Stencil> {
 	 * Specifies the test function
 	 * 
 	 * @param f
+	 *          new test function
 	 * @return this
 	 */
 	public Stencil function( ComparisonFunction f ) {
@@ -58,6 +60,7 @@ public class Stencil extends Facet<Stencil> {
 	 * The initial value is 0.
 	 * 
 	 * @param r
+	 *          new reference value
 	 * @return this
 	 */
 	public Stencil reference( int r ) {
@@ -70,6 +73,7 @@ public class Stencil extends Facet<Stencil> {
 	 * stencil value when the test is done. The initial value is all 1's.
 	 * 
 	 * @param m
+	 *          new mask value
 	 * @return this
 	 */
 	public Stencil testMask( int m ) {
@@ -82,6 +86,7 @@ public class Stencil extends Facet<Stencil> {
 	 * the stencil planes. Initially, the mask is all 1's.
 	 * 
 	 * @param m
+	 *          new mask value
 	 * @return this
 	 */
 	public Stencil writeMask( int m ) {
@@ -93,6 +98,7 @@ public class Stencil extends Facet<Stencil> {
 	 * Specifies the action to take when the stencil test fails.
 	 * 
 	 * @param s
+	 *          new operation
 	 * @return this
 	 */
 	public Stencil sfail( StencilOperation s ) {
@@ -105,6 +111,7 @@ public class Stencil extends Facet<Stencil> {
 	 * test fails.
 	 * 
 	 * @param s
+	 *          new operation
 	 * @return this
 	 */
 	public Stencil dpfail( StencilOperation s ) {
@@ -118,6 +125,7 @@ public class Stencil extends Facet<Stencil> {
 	 * or depth testing is not enabled.
 	 * 
 	 * @param s
+	 *          new operation
 	 * @return this
 	 */
 	public Stencil dppass( StencilOperation s ) {

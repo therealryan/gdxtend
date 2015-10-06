@@ -108,6 +108,7 @@ public class Oscillator implements Function {
 	 * Sets the input offset
 	 * 
 	 * @param o
+	 *          new offset - will be added to input values
 	 * @return this
 	 */
 	public Oscillator offset( float o ) {

@@ -68,6 +68,7 @@ public class Renderer {
 
 	/**
 	 * @param additional
+	 *          list of states to add to the compilation batch
 	 * @return an array containing all of the currently-known states and the
 	 *         additional ones
 	 */
@@ -91,8 +92,11 @@ public class Renderer {
 	 * Adds triangles to be rendered
 	 * 
 	 * @param state
+	 *          rendering state
 	 * @param vertices
+	 *          packed vertex data
 	 * @param indices
+	 *          triangle indices
 	 */
 	public void addTriangles( State<?> state, float[] vertices, short[] indices ) {
 		if( state.getCompilationBatch() != compilationBatch ) {

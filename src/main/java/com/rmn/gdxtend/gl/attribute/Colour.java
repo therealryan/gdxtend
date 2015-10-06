@@ -12,6 +12,7 @@ public class Colour extends Attribute<Colour> {
 
 	/**
 	 * @param s
+	 *          The shape whose colours this object will control
 	 */
 	public Colour( Shape s ) {
 		super( s, Usage.ColorPacked );
@@ -19,9 +20,13 @@ public class Colour extends Attribute<Colour> {
 
 	/**
 	 * @param r
+	 *          red component
 	 * @param g
+	 *          green component
 	 * @param b
+	 *          blue component
 	 * @param a
+	 *          alpha component
 	 * @return the shape
 	 */
 	public Shape rgba( float r, float g, float b, float a ) {
@@ -30,6 +35,7 @@ public class Colour extends Attribute<Colour> {
 
 	/**
 	 * @param c
+	 *          new colour
 	 * @return the shape
 	 */
 	public Shape set( Color c ) {

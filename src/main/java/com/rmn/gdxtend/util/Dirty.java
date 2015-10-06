@@ -23,6 +23,7 @@ public class Dirty {
 	 * Sets names for the values
 	 * 
 	 * @param names
+	 *          list of names for the values
 	 * @return this
 	 */
 	public Dirty named( String... names ) {

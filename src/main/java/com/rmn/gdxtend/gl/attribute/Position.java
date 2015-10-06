@@ -16,6 +16,7 @@ public class Position extends Attribute<Position> {
 
 	/**
 	 * @param s
+	 *          The shape whose vertex positions this object will control
 	 */
 	public Position( Shape s ) {
 		super( s, Usage.Position );
@@ -23,8 +24,11 @@ public class Position extends Attribute<Position> {
 
 	/**
 	 * @param x
+	 *          new position component
 	 * @param y
+	 *          new position component
 	 * @param z
+	 *          new position component
 	 * @return the shape
 	 */
 	public Shape xyz( float x, float y, float z ) {
@@ -33,6 +37,7 @@ public class Position extends Attribute<Position> {
 
 	/**
 	 * @param v
+	 *          new position
 	 * @return the shape
 	 */
 	public Shape set( Vector3 v ) {
@@ -91,8 +96,11 @@ public class Position extends Attribute<Position> {
 	 * Adds a translation to the transform
 	 * 
 	 * @param x
+	 *          translation component
 	 * @param y
+	 *          translation component
 	 * @param z
+	 *          translation component
 	 * @return this
 	 */
 	public Position translate( float x, float y, float z ) {
@@ -104,8 +112,11 @@ public class Position extends Attribute<Position> {
 	 * Adds a rotation to the transform
 	 * 
 	 * @param x
+	 *          rotation center
 	 * @param y
+	 *          rotation center
 	 * @param z
+	 *          rotation center
 	 * @param r
 	 *          in radians
 	 * @return this
@@ -120,8 +131,11 @@ public class Position extends Attribute<Position> {
 	 * Adds a scale to the transform
 	 * 
 	 * @param x
+	 *          scale component
 	 * @param y
+	 *          scale component
 	 * @param z
+	 *          scale component
 	 * @return this
 	 */
 	public Position scale( float x, float y, float z ) {

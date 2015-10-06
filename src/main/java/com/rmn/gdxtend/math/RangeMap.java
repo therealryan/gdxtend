@@ -31,7 +31,9 @@ public class RangeMap implements Function {
 	 * Sets the source range
 	 * 
 	 * @param from
+	 *          minimum input value
 	 * @param to
+	 *          maximum input value
 	 * @return this
 	 */
 	public RangeMap source( float from, float to ) {
@@ -43,7 +45,9 @@ public class RangeMap implements Function {
 	 * Sets the destination range
 	 * 
 	 * @param from
+	 *          minimum output value
 	 * @param to
+	 *          maximum output value
 	 * @return this
 	 */
 	public RangeMap destination( float from, float to ) {
@@ -55,6 +59,7 @@ public class RangeMap implements Function {
 	 * Computes the linear map from the source to destination map
 	 * 
 	 * @param f
+	 *          input value
 	 * @return the value in the destination range that corresponds to f's position
 	 *         in the source map
 	 */
@@ -66,6 +71,7 @@ public class RangeMap implements Function {
 	 * The inverse of {@link #linearMap(float)}
 	 * 
 	 * @param f
+	 *          output value
 	 * @return the value in the source range that corresponds to f's position in
 	 *         the destination map
 	 */
@@ -77,6 +83,7 @@ public class RangeMap implements Function {
 	 * Sets the interpolation function used in {@link #map(float)} calls
 	 * 
 	 * @param i
+	 *          new {@link Interpolation} function
 	 * @return this
 	 */
 	public RangeMap via( Interpolation i ) {

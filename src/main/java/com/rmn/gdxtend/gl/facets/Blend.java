@@ -49,6 +49,7 @@ public class Blend extends Facet<Blend> {
 
 	/**
 	 * @param e
+	 *          <code>true</code> to enable blending
 	 * @return this
 	 */
 	public Blend enabled( boolean e ) {

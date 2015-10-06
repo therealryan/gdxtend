@@ -82,6 +82,7 @@ public class Mask {
 	 * Applies the masks
 	 * 
 	 * @param in
+	 *          unmasked string
 	 * @return masked string
 	 */
 	public String apply( String in ) {

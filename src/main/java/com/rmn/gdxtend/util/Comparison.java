@@ -16,7 +16,9 @@ public class Comparison {
 	 * Updates the comparison
 	 * 
 	 * @param a
+	 *          left value
 	 * @param b
+	 *          right value
 	 * @return this
 	 */
 	public Comparison compare( boolean a, boolean b ) {
@@ -30,7 +32,9 @@ public class Comparison {
 	 * Updates the comparison
 	 * 
 	 * @param a
+	 *          left value
 	 * @param b
+	 *          right value
 	 * @param minimum
 	 *          the minimum value - comparison will rank according to distance
 	 *          from this value
@@ -44,7 +48,9 @@ public class Comparison {
 	 * Updates the comparison
 	 * 
 	 * @param a
+	 *          left value
 	 * @param b
+	 *          right value
 	 * @return this
 	 */
 	public Comparison compare( float a, float b ) {
@@ -58,7 +64,9 @@ public class Comparison {
 	 * Updates the comparison
 	 * 
 	 * @param a
+	 *          left value
 	 * @param b
+	 *          right value
 	 * @param min
 	 *          the minimum value - comparison will rank according to distance
 	 *          from this value
@@ -78,7 +86,9 @@ public class Comparison {
 	 * Updates the comparison
 	 * 
 	 * @param a
+	 *          left value
 	 * @param b
+	 *          right value
 	 * @return this
 	 */
 	public <E extends Enum<E>> Comparison compare( E a, E b ) {
@@ -89,7 +99,9 @@ public class Comparison {
 	 * Updates the comparison
 	 * 
 	 * @param a
+	 *          left value
 	 * @param b
+	 *          right value
 	 * @param min
 	 *          comparison will rank according to distance from this value
 	 * @return this
@@ -102,7 +114,9 @@ public class Comparison {
 	 * Updates the comparison
 	 * 
 	 * @param a
+	 *          left value
 	 * @param b
+	 *          right value
 	 * @return this
 	 */
 	public <C extends Comparable<C>> Comparison compare( C a, C b ) {

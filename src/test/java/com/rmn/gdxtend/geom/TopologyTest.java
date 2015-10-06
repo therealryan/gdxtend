@@ -357,39 +357,42 @@ public class TopologyTest {
 
 	/**
 	 * Creates a visualisation of the topolgies
-	 *
-	 * @throws Exception
 	 */
 	@After
-	public void visualise() throws Exception {
-		File dir = new File( "generated" );
-		dir.mkdirs();
+	public void visualise() {
+		try {
+			File dir = new File( "generated" );
+			dir.mkdirs();
 
-		FileWriter out =
-				new FileWriter( "generated/" + name.getMethodName() + ".html" );
-		out.write( "<html>\n\t<head>\n\t\t<title>" );
-		out.write( name.getMethodName() );
-		out.write( "</title>\n" );
-		out.write( "\t\t<script type=\"text/javascript\" src=\"../src/test/resources/vis.min.js\"></script>\n" );
-		out.write( "\t\t<link href=\"../src/test/resources/vis.min.css\" rel=\"stylesheet\" type=\"text/css\" />\n" );
-		out.write( "\t</head>\n\t<body>\n\t\t<div id=\"mynetwork\"></div>\n" );
-		out.write( "\t\t<script type=\"text/javascript\">\n" );
-		out.write( "var container = document.getElementById('mynetwork');\n" );
-		out.write( "var data = { dot: 'digraph {" );
-		String alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLIMNOPQRSTUVXYZ";
-		for( int i = 0; i < s.indices.length; i += 3 ) {
-			char label = alphabet.charAt( ( i / 3 ) % alphabet.length() );
-			out.write( s.indices[ i ] + " -> " + s.indices[ i + 1 ]
-					+ "[label=" + label + "];" );
-			out.write( s.indices[ i + 1 ] + " -> " + s.indices[ i + 2 ]
-					+ "[label=" + label + "];" );
-			out.write( s.indices[ i + 2 ] + " -> " + s.indices[ i ]
-					+ "[label=" + label + "];" );
+			FileWriter out =
+					new FileWriter( "generated/" + name.getMethodName() + ".html" );
+			out.write( "<html>\n\t<head>\n\t\t<title>" );
+			out.write( name.getMethodName() );
+			out.write( "</title>\n" );
+			out.write( "\t\t<script type=\"text/javascript\" src=\"../src/test/resources/vis.min.js\"></script>\n" );
+			out.write( "\t\t<link href=\"../src/test/resources/vis.min.css\" rel=\"stylesheet\" type=\"text/css\" />\n" );
+			out.write( "\t</head>\n\t<body>\n\t\t<div id=\"mynetwork\"></div>\n" );
+			out.write( "\t\t<script type=\"text/javascript\">\n" );
+			out.write( "var container = document.getElementById('mynetwork');\n" );
+			out.write( "var data = { dot: 'digraph {" );
+			String alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLIMNOPQRSTUVXYZ";
+			for( int i = 0; i < s.indices.length; i += 3 ) {
+				char label = alphabet.charAt( ( i / 3 ) % alphabet.length() );
+				out.write( s.indices[ i ] + " -> " + s.indices[ i + 1 ]
+						+ "[label=" + label + "];" );
+				out.write( s.indices[ i + 1 ] + " -> " + s.indices[ i + 2 ]
+						+ "[label=" + label + "];" );
+				out.write( s.indices[ i + 2 ] + " -> " + s.indices[ i ]
+						+ "[label=" + label + "];" );
+			}
+			out.write( "}' };\n" );
+			out.write( "var network = new vis.Network(container, data);\n" );
+			out.write( "\t\t</script>\n\t</body>\n</html>" );
+
+			out.close();
 		}
-		out.write( "}' };\n" );
-		out.write( "var network = new vis.Network(container, data);\n" );
-		out.write( "\t\t</script>\n\t</body>\n</html>" );
-
-		out.close();
+		catch( Exception e ) {
+			e.printStackTrace();
+		}
 	}
 }

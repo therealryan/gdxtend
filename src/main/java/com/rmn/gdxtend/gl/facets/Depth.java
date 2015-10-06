@@ -56,6 +56,7 @@ public class Depth extends Facet<Depth> {
 	 * {@link GL20#glDepthMask(boolean)}
 	 * 
 	 * @param m
+	 *          <code>true</code> to enable depth masking
 	 * @return this
 	 */
 	public Depth mask( boolean m ) {
@@ -67,6 +68,7 @@ public class Depth extends Facet<Depth> {
 	 * {@link GL20#glDepthRangef(float, float)}
 	 * 
 	 * @param n
+	 *          new near value
 	 * @return this
 	 */
 	public Depth near( float n ) {
@@ -78,6 +80,7 @@ public class Depth extends Facet<Depth> {
 	 * {@link GL20#glDepthRangef(float, float)}
 	 * 
 	 * @param f
+	 *          new far value
 	 * @return this
 	 */
 	public Depth far( float f ) {

@@ -29,7 +29,9 @@ public abstract class Shader extends Facet<Shader> {
 
 	/**
 	 * @param p
+	 *          the shader program
 	 * @param attributes
+	 *          vertex attributes used by the program
 	 */
 	protected Shader( ShaderProgram p, VertexAttribute... attributes ) {
 		this.program = p;
@@ -56,6 +58,7 @@ public abstract class Shader extends Facet<Shader> {
 	 * Override to copy uniform values - you can safely cast to self type
 	 * 
 	 * @param toCopy
+	 *          The shader to copy
 	 * @return this
 	 */
 	public Shader uniformFrom( Shader toCopy ) {

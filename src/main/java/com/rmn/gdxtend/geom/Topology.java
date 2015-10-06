@@ -25,6 +25,7 @@ public abstract class Topology {
 	 * Override to build the triangle structure of the shape
 	 * 
 	 * @param s
+	 *          the shape to add triangles to
 	 */
 	public void define( Shape s ) {
 		define( s, 0 );

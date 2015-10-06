@@ -38,6 +38,7 @@ public abstract class Path<T extends Path<T>> {
 	 * Sets whether or not this path is limited to the time range
 	 * 
 	 * @param c
+	 *          <code>true</code> to clamp time values to the {@link #duration}
 	 * @return this
 	 */
 	public T clamp( boolean c ) {
@@ -49,6 +50,7 @@ public abstract class Path<T extends Path<T>> {
 	 * Computes the position for a given time
 	 * 
 	 * @param time
+	 *          The time for which to compute the position
 	 * @param dest
 	 *          the {@link Position} to populate
 	 * @return the computed {@link Position}
@@ -64,6 +66,7 @@ public abstract class Path<T extends Path<T>> {
 	 * Implement this to compute a position on the path for a given time
 	 * 
 	 * @param time
+	 *          The time
 	 * @param dest
 	 *          the {@link Position} to populate
 	 * @return the computed {@link Position}

@@ -14,6 +14,7 @@ public class LineSegment {
 	 * Copy setter
 	 * 
 	 * @param other
+	 *          the {@link LineSegment} to copy
 	 * @return this
 	 */
 	public LineSegment from( LineSegment other ) {
@@ -43,8 +44,11 @@ public class LineSegment {
 	 * vector
 	 * 
 	 * @param x
+	 *          direction x component
 	 * @param y
+	 *          direction y component
 	 * @param z
+	 *          direction z component
 	 * @return this
 	 */
 	public LineSegment inDirection( float x, float y, float z ) {
@@ -54,6 +58,7 @@ public class LineSegment {
 
 	/**
 	 * @param dst
+	 *          The direction will be stored in this {@link Vector2}
 	 * @return the normalised direction of this line segment in the xy plane
 	 */
 	public Vector2 direction( Vector2 dst ) {
@@ -62,6 +67,7 @@ public class LineSegment {
 
 	/**
 	 * @param dst
+	 *          The direction will be stored in this {@link Vector3}
 	 * @return the normalised direction of this line segment
 	 */
 	public Vector3 direction( Vector3 dst ) {

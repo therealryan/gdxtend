@@ -64,6 +64,7 @@ public class Range {
 	 * Linearly interpolates over the range
 	 * 
 	 * @param a
+	 *          input value
 	 * @return the interpolated value
 	 */
 	public float lerp( float a ) {
@@ -115,6 +116,7 @@ public class Range {
 	 * Interpolates over the range
 	 * 
 	 * @param a
+	 *          input value
 	 * @param i
 	 *          how to interpolate
 	 * @return the interpolated value
@@ -196,6 +198,7 @@ public class Range {
 	 * Expands this range to encompass a point
 	 * 
 	 * @param f
+	 *          value to expand to cover
 	 * @return this
 	 */
 	public Range include( float f ) {

@@ -103,6 +103,7 @@ public abstract class Attribute<T extends Attribute<T>> {
 	 * @param element
 	 *          index of the component to set
 	 * @param value
+	 *          the new value
 	 * @return this
 	 */
 	protected T component( int element, float value ) {
