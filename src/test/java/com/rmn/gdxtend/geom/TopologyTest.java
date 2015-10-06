@@ -18,8 +18,14 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 
+/**
+ * Tests for triangle structures created by {@link Topology} classes
+ */
 public class TopologyTest {
 
+	/**
+	 * Used to name the generated visualisations
+	 */
 	@Rule
 	public TestName name = new TestName();
 

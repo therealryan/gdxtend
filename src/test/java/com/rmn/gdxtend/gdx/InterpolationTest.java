@@ -13,40 +13,58 @@ import com.rmn.gdxtend.math.Function;
  */
 public class InterpolationTest {
 
+	/**
+	 * Produces the plot results
+	 */
 	@Rule
 	public XYPlotExpect plot = new XYPlotExpect();
 
+	/**
+	 * These didn't fit in any other plot
+	 */
 	@Test
-	public void misc() throws Exception {
+	public void misc() {
 		graph( "linear", Interpolation.linear );
 		graph( "fade", Interpolation.fade );
 		plot.check();
 	}
 
+	/**
+	 * Bounce functions
+	 */
 	@Test
-	public void bounce() throws Exception {
+	public void bounce() {
 		graph( Interpolation.bounce,
 				Interpolation.bounceIn,
 				Interpolation.bounceOut );
 	}
 
+	/**
+	 * Circle functions
+	 */
 	@Test
-	public void circle() throws Exception {
+	public void circle() {
 		graph( "circle", Interpolation.circle );
 		graph( "circleIn", Interpolation.circleIn );
 		graph( "circleOut", Interpolation.circleOut );
 		plot.check();
 	}
 
+	/**
+	 * Elastic functions
+	 */
 	@Test
-	public void elastic() throws Exception {
+	public void elastic() {
 		graph( Interpolation.elastic,
 				Interpolation.elasticIn,
 				Interpolation.elasticOut );
 	}
 
+	/**
+	 * Exponential functions
+	 */
 	@Test
-	public void exponent() throws Exception {
+	public void exponent() {
 		graph( "exp10", Interpolation.exp10 );
 		graph( "exp10In", Interpolation.exp10In );
 		graph( "exp10Out", Interpolation.exp10Out );
@@ -56,8 +74,11 @@ public class InterpolationTest {
 		plot.check();
 	}
 
+	/**
+	 * Power functions
+	 */
 	@Test
-	public void power() throws Exception {
+	public void power() {
 		graph( "pow2", Interpolation.pow2 );
 		graph( "pow3", Interpolation.pow3 );
 		graph( "pow4", Interpolation.pow4 );
@@ -65,21 +86,27 @@ public class InterpolationTest {
 		plot.check();
 	}
 
+	/**
+	 * sine functions
+	 */
 	@Test
-	public void sine() throws Exception {
+	public void sine() {
 		graph( Interpolation.sine,
 				Interpolation.sineIn,
 				Interpolation.sineOut );
 	}
 
+	/**
+	 * swing functions
+	 */
 	@Test
-	public void swing() throws Exception {
+	public void swing() {
 		graph( Interpolation.swing,
 				Interpolation.swingIn,
 				Interpolation.swingOut );
 	}
 
-	public void graph( String name, final Interpolation i ) {
+	private void graph( String name, final Interpolation i ) {
 		plot.with( name, new Function() {
 
 			@Override
@@ -89,8 +116,7 @@ public class InterpolationTest {
 		} );
 	}
 
-	public void graph( Interpolation... interpolators )
-			throws Exception {
+	private void graph( Interpolation... interpolators ) {
 
 		for( final Interpolation i : interpolators ) {
 			graph( i.getClass().getSimpleName(), i );

@@ -9,12 +9,21 @@ import com.rmn.gdxtend.util.Comparison;
 
 /**
  * Controls depth state
+ * 
+ * @see <a href="http://docs.gl/es2/glDepthFunc">glDepthFunc</a>
+ * @see <a href="http://docs.gl/es2/glDepthMask">geDepthMask</a>
+ * @see <a href="http://docs.gl/es2/glDepthRangef">glDepthRangef</a>
  */
 public class Depth extends Facet<Depth> {
+	/** OpenGL default value */
 	public static final boolean DEFAULT_MASK = true;
+	/** OpenGL default value */
 	public static final ComparisonFunction DEFAULT_FUNCTION = LESS;
+	/** OpenGL default value */
 	public static final boolean DEFAULT_ENABLED = false;
+	/** OpenGL default value */
 	public static final int DEFAULT_NEAR = 0;
+	/** OpenGL default value */
 	public static final int DEFAULT_FAR = 1;
 
 	/**
@@ -42,11 +51,21 @@ public class Depth extends Facet<Depth> {
 	 */
 	float far = DEFAULT_FAR;
 
+	/**
+	 * @param e
+	 *          true to enable depth test
+	 * @return this
+	 */
 	public Depth enabled( boolean e ) {
 		enabled = e;
 		return this;
 	}
 
+	/**
+	 * @param f
+	 *          new test function
+	 * @return this
+	 */
 	public Depth function( ComparisonFunction f ) {
 		func = f;
 		return this;

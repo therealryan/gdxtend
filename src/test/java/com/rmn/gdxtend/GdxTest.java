@@ -1,8 +1,6 @@
 package com.rmn.gdxtend;
 
-import org.assertj.core.api.JUnitSoftAssertions;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -10,15 +8,21 @@ import org.mockito.MockitoAnnotations;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 
+/**
+ * Allows test that require opengl
+ */
 @RunWith( GdxTestRunner.class )
 public abstract class GdxTest {
 
-	@Rule
-	public final JUnitSoftAssertions softly = new JUnitSoftAssertions();
-
+	/**
+	 * Mock gl context
+	 */
 	@Mock
 	public GL20 gl;
 
+	/**
+	 * Initialises the mock and injects it into {@link Gdx}
+	 */
 	@Before
 	public void before() {
 

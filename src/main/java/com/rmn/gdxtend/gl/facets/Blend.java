@@ -14,13 +14,22 @@ import com.rmn.gdxtend.util.Comparison;
 
 /**
  * Controls the blending function
+ * 
+ * @see <a href="http://docs.gl/es2/glBlendFunc">glBlendFunc</a>
+ * @see <a href="http://docs.gl/es2/glBlendColor">glBlendColor</a>
+ * @see <a href="http://docs.gl/es2/glBlendEquation">glBlendEquation</a>
  */
 public class Blend extends Facet<Blend> {
-	private static final DestinationFactor DEFAULT_DEST_FACTOR = ZERO;
-	private static final SourceFactor DEFAULT_SRC_FACTOR = ONE;
-	private static final boolean DEFAULT_ENABLED = false;
-	private static final BlendEquation DEFAULT_EQUATION = GL_FUNC_ADD;
-	private static final int DEFAULT_COLOUR = new Color( 0, 0, 0, 0 ).toIntBits();
+	/** OpenGL default value */
+	public static final DestinationFactor DEFAULT_DEST_FACTOR = ZERO;
+	/** OpenGL default value */
+	public static final SourceFactor DEFAULT_SRC_FACTOR = ONE;
+	/** OpenGL default value */
+	public static final boolean DEFAULT_ENABLED = false;
+	/** OpenGL default value */
+	public static final BlendEquation DEFAULT_EQUATION = GL_FUNC_ADD;
+	/** OpenGL default value */
+	public static final int DEFAULT_COLOUR = new Color( 0, 0, 0, 0 ).toIntBits();
 
 	/**
 	 * Whether blending is enabled
@@ -57,41 +66,81 @@ public class Blend extends Facet<Blend> {
 		return this;
 	}
 
+	/**
+	 * @param f
+	 *          new source factor
+	 * @return this
+	 */
 	public Blend src( SourceFactor f ) {
 		srcFactor = f;
 		return this;
 	}
 
+	/**
+	 * @param f
+	 *          new destination factor
+	 * @return this
+	 */
 	public Blend dst( DestinationFactor f ) {
 		destFactor = f;
 		return this;
 	}
 
+	/**
+	 * @param e
+	 *          new blend equation
+	 * @return this
+	 */
 	public Blend equation( BlendEquation e ) {
 		equation = e;
 		return this;
 	}
 
+	/**
+	 * @param r
+	 *          new blend colour red component
+	 * @return this
+	 */
 	public Blend r( float r ) {
 		color.set( r, color.g, color.b, color.a );
 		return this;
 	}
 
+	/**
+	 * @param g
+	 *          new blend colour green component
+	 * @return this
+	 */
 	public Blend g( float g ) {
 		color.set( color.r, g, color.b, color.a );
 		return this;
 	}
 
+	/**
+	 * @param b
+	 *          new blend colour blue component
+	 * @return this
+	 */
 	public Blend b( float b ) {
 		color.set( color.r, color.g, b, color.a );
 		return this;
 	}
 
+	/**
+	 * @param a
+	 *          new blend colour alpha component
+	 * @return this
+	 */
 	public Blend a( float a ) {
 		color.set( color.r, color.g, color.b, a );
 		return this;
 	}
 
+	/**
+	 * @param c
+	 *          new blend colour
+	 * @return this
+	 */
 	public Blend color( Color c ) {
 		color.set( c );
 		return this;

@@ -12,7 +12,14 @@ import com.rmn.gdxtend.util.Comparison;
  */
 public abstract class Shader extends Facet<Shader> {
 
+	/**
+	 * The shader program
+	 */
 	public final ShaderProgram program;
+
+	/**
+	 * The vertex attributes used by the program
+	 */
 	public final VertexAttributes attributes;
 
 	/**

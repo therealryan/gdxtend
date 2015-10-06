@@ -8,8 +8,14 @@ import org.junit.Test;
 
 import com.badlogic.gdx.graphics.Color;
 
+/**
+ * Triangle construction tests
+ */
 public class Triangles {
 
+	/**
+	 * Base - just one triangle
+	 */
 	@Test
 	public void one() {
 
@@ -30,6 +36,9 @@ public class Triangles {
 		} );
 	}
 
+	/**
+	 * Two triangles
+	 */
 	@Test
 	public void two() {
 
@@ -56,23 +65,9 @@ public class Triangles {
 		} );
 	}
 
-	@Test
-	public void lots() {
-
-		Shape points = new Shape( 1, Topology.triangles,
-				Position(),
-				ColorPacked() );
-
-		// top
-		for( int i = 0; i < 1; i++ ) {
-			Color c = i % 2 == 0 ? Color.BLUE : Color.RED;
-
-			points.pos.xyz( 1, 2, 3 ).col.set( c ).next();
-			points.pos.xyz( 4, 5, 6 ).col.set( c ).next();
-			points.pos.xyz( 7, 8, 9 ).col.set( c ).next();
-		}
-	}
-
+	/**
+	 * Melding two triangles into one shape
+	 */
 	public void join() {
 
 		Color c = Color.BLUE;

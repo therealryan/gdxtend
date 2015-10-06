@@ -10,6 +10,9 @@ import com.rmn.gdxtend.gl.facets.Shader;
  */
 public class None extends Shader {
 
+	/**
+	 * Only one instance required
+	 */
 	public static final None instance = new None();
 
 	private None() {

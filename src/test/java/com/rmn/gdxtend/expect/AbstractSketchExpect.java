@@ -13,10 +13,19 @@ import org.jfree.graphics2d.svg.SVGGraphics2D;
 public class AbstractSketchExpect<T extends AbstractSketchExpect<T>> extends
 		AbstractExpect<T> {
 
-	public AbstractSketchExpect() {
+	protected AbstractSketchExpect() {
 		super( ".svg" );
 	}
 
+	/**
+	 * Creates a new SVG context and sets the paint to black
+	 * 
+	 * @param width
+	 *          width of resultant sketch
+	 * @param height
+	 *          height of resultant sketch
+	 * @return the context
+	 */
 	public SVGGraphics2D create( int width, int height ) {
 		SVGGraphics2D g = new SVGGraphics2D( width, height );
 		g.setColor( Color.BLACK );

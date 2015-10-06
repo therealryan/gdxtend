@@ -16,6 +16,11 @@ public class Blended extends Shader {
 
 	private static Blended instance;
 
+	/**
+	 * There are no parameters, so we only need one instance
+	 * 
+	 * @return the {@link Blended} instance
+	 */
 	public static Blended instance() {
 		if( instance == null ) {
 			instance = new Blended();

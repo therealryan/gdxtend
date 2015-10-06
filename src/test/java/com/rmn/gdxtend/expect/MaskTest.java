@@ -11,6 +11,9 @@ import org.junit.Test;
  */
 public class MaskTest {
 
+	/**
+	 * Simple replacement case
+	 */
 	@Test
 	public void replacement() {
 		Mask m = new Mask()
@@ -19,6 +22,9 @@ public class MaskTest {
 				.isEqualTo( "baz bar bar" );
 	}
 
+	/**
+	 * Regex match flags can be supplied
+	 */
 	@Test
 	public void flag() {
 		Mask m = new Mask().mask( "f.oo" ).with( "bar" );
@@ -30,6 +36,9 @@ public class MaskTest {
 		assertThat( m.apply( "f\noo fpoo" ) ).isEqualTo( "bar bar" );
 	}
 
+	/**
+	 * Captured groups are masked
+	 */
 	@Test
 	public void capture() {
 		Mask m = new Mask()
@@ -51,6 +60,9 @@ public class MaskTest {
 				.isEqualTo( "foo_1 foo_2" );
 	}
 
+	/**
+	 * Multiple groups in the same regex can be masked
+	 */
 	@Test
 	public void multicapture() {
 		Mask m = new Mask()

@@ -11,8 +11,14 @@ import org.junit.Test;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 
+/**
+ * Tests for {@link Shape} manipulation
+ */
 public class ShapeTest {
 
+	/**
+	 * Joining two shapes together
+	 */
 	@Test
 	public void meld() {
 		Shape s = new Shape( 3, 1, Position() );
@@ -47,6 +53,9 @@ public class ShapeTest {
 		} );
 	}
 
+	/**
+	 * Vertex addressing
+	 */
 	@Test
 	public void vertexIndex() {
 		Shape s = new Shape( 3, 0, Position() );
@@ -73,6 +82,9 @@ public class ShapeTest {
 				4, 0, 0 } );
 	}
 
+	/**
+	 * Position setters
+	 */
 	@Test
 	public void position() {
 		Shape s = new Shape( 5, 0, Position() )
@@ -90,6 +102,9 @@ public class ShapeTest {
 				7, 8, 9 } );
 	}
 
+	/**
+	 * Setting all positions in one fell swoop
+	 */
 	@Test
 	public void allPosition() {
 
@@ -126,6 +141,9 @@ public class ShapeTest {
 				7, 8, 9, } );
 	}
 
+	/**
+	 * Colour setters
+	 */
 	@Test
 	public void colour() {
 		Shape s =
@@ -149,8 +167,11 @@ public class ShapeTest {
 		} );
 	}
 
+	/**
+	 * Setting all vertex colours in one fell swoop
+	 */
 	@Test
-	public void globalColour() {
+	public void allColour() {
 		Shape s =
 				new Shape( 3, 0, ColorPacked() )
 				.col.all().set( Color.RED );
@@ -162,6 +183,9 @@ public class ShapeTest {
 		} );
 	}
 
+	/**
+	 * Setting position and colour
+	 */
 	@Test
 	public void colourAndPosition() {
 		Shape s = new Shape( 3, 0, Position(), ColorPacked() )
@@ -199,6 +223,9 @@ public class ShapeTest {
 		} );
 	}
 
+	/**
+	 * Position transform
+	 */
 	@Test
 	public void transform() {
 		Shape s = new Shape( 3, 0, Position() )
@@ -227,6 +254,9 @@ public class ShapeTest {
 		} );
 	}
 
+	/**
+	 * Attempting to use an attribute that the shape does not have
+	 */
 	@Test( expected = NullPointerException.class )
 	public void missing() {
 		Shape s = new Shape( 3, 1, Position() );

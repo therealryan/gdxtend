@@ -75,18 +75,39 @@ public class State<T extends Shader> implements Comparable<State<?>> {
 		return compiledIndex + 1;
 	}
 
+	/**
+	 * The shader
+	 */
 	public final T shader;
 
+	/**
+	 * The texture
+	 */
 	public final TextureState texture = new TextureState();
 
+	/**
+	 * The blend parameters
+	 */
 	public final Blend blend = new Blend();
 
+	/**
+	 * The depth test parameters
+	 */
 	public final Depth depthTest = new Depth();
 
+	/**
+	 * Polygon offset parameters
+	 */
 	public final PolygonOffset polyOffset = new PolygonOffset();
 
+	/**
+	 * Clear colour
+	 */
 	public final Clear clear = new Clear();
 
+	/**
+	 * Stencil test
+	 */
 	public final Stencil stencil = new Stencil();
 
 	/**

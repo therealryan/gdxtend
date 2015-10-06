@@ -8,8 +8,9 @@ import static com.badlogic.gdx.graphics.glutils.ShaderProgram.POSITION_ATTRIBUTE
  */
 public class Programs {
 
-	public static final String aPos = POSITION_ATTRIBUTE;
-	public static final String aCol = COLOR_ATTRIBUTE;
+	private static final String aPos = POSITION_ATTRIBUTE;
+	private static final String aCol = COLOR_ATTRIBUTE;
+
 	/**
 	 * The uniform name under which the camera matrix will be passed
 	 */
@@ -26,6 +27,9 @@ public class Programs {
 	private Programs() {
 	}
 
+	/**
+	 * Holds vertex shader code
+	 */
 	public static class Vertex {
 		private Vertex() {
 		}
@@ -68,6 +72,9 @@ public class Programs {
 				+ "}                                       \n";
 	}
 
+	/**
+	 * Holds fragment shader code
+	 */
 	public static class Fragment {
 
 		private Fragment() {

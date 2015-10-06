@@ -8,10 +8,19 @@ import com.badlogic.gdx.math.Vector3;
  */
 public class Position {
 
+	/**
+	 * Position
+	 */
 	public final Vector3 position = new Vector3();
 
+	/**
+	 * Orientation
+	 */
 	public final Quaternion rotation = new Quaternion( 0, 0, 1, 0 );
 
+	/**
+	 * Scale
+	 */
 	public float scale = 1;
 
 	/**

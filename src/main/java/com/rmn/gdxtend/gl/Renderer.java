@@ -84,6 +84,14 @@ public class Renderer {
 		return larger;
 	}
 
+	/**
+	 * Adds a shape to bne rendered
+	 * 
+	 * @param gls
+	 *          the state to render with
+	 * @param shape
+	 *          the geometry
+	 */
 	public void add( State<?> gls, Shape shape ) {
 		addTriangles( gls, shape.vertexData, shape.indices );
 	}

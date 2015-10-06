@@ -22,27 +22,52 @@ public class TextureState extends Facet<TextureState> {
 	TextureWrap s = TextureWrap.Repeat;
 	TextureWrap t = TextureWrap.Repeat;
 
+	/**
+	 * @param t
+	 *          the new texture
+	 * @return this
+	 */
 	public TextureState with( Texture t ) {
 		texture = t;
 		return this;
 	}
 
+	/**
+	 * @param f
+	 *          the new minification filter
+	 * @return this
+	 */
 	public TextureState min( MinFilter f ) {
 		min = f;
 		return this;
 	}
 
+	/**
+	 * @param f
+	 *          new magnification filter
+	 * @return this
+	 */
 	public TextureState mag( MagFilter f ) {
 		mag = f;
 
 		return this;
 	}
 
+	/**
+	 * @param w
+	 *          new horizontal wrap function
+	 * @return this
+	 */
 	public TextureState s( TextureWrap w ) {
 		s = w;
 		return this;
 	}
 
+	/**
+	 * @param w
+	 *          new vertical wrap function
+	 * @return this
+	 */
 	public TextureState t( TextureWrap w ) {
 		t = w;
 		return this;

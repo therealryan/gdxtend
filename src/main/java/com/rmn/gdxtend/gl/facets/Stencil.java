@@ -11,13 +11,22 @@ import com.rmn.gdxtend.util.Comparison;
 
 /**
  * Controls stencil test state
+ * 
+ * @see <a href="http://docs.gl/es2/glStencilFunc">glStencilFunc</a>
+ * @see <a href="http://docs.gl/es2/glStencilMask">glStencilMask</a>
+ * @see <a href="http://docs.gl/es2/glStencilOp">glStencilOpc</a>
  */
 public class Stencil extends Facet<Stencil> {
 
+	/** OpenGL default value */
 	public static final boolean DEFAULT_ENABLED = false;
+	/** OpenGL default value */
 	public static final ComparisonFunction DEFAULT_FUNCTION = ALWAYS;
+	/** OpenGL default value */
 	public static final int DEFAULT_REF = 0;
+	/** OpenGL default value */
 	public static final int DEFAULT_MASK = 0xFF_FF_FF_FF;
+	/** OpenGL default value */
 	public static final StencilOperation DEFAULT_OPERATION = KEEP;
 
 	boolean enabled = DEFAULT_ENABLED;

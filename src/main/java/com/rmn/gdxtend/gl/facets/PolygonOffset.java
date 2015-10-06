@@ -7,10 +7,16 @@ import com.rmn.gdxtend.util.Comparison;
 
 /**
  * Controls polygon offset state
+ * 
+ * @see <a href="http://docs.gl/es2/glPolygonOffset">glPolygonOffset</a>
  */
 public class PolygonOffset extends Facet<PolygonOffset> {
+
+	/** OpenGL default value */
 	public static final boolean DEFAULT_ENABLED = false;
+	/** OpenGL default value */
 	public static final float DEFAULT_FACTOR = 0;
+	/** OpenGL default value */
 	public static final float DEFAULT_UNITS = 0;
 
 	/**
@@ -30,16 +36,31 @@ public class PolygonOffset extends Facet<PolygonOffset> {
 	 */
 	float units = DEFAULT_UNITS;
 
+	/**
+	 * @param e
+	 *          <code>true</code> to enable polygon offset
+	 * @return this
+	 */
 	public PolygonOffset enabled( boolean e ) {
 		enabled = e;
 		return this;
 	}
 
+	/**
+	 * @param f
+	 *          new offset factor
+	 * @return this
+	 */
 	public PolygonOffset factor( float f ) {
 		factor = f;
 		return this;
 	}
 
+	/**
+	 * @param u
+	 *          new offset units
+	 * @return this
+	 */
 	public PolygonOffset units( float u ) {
 		units = u;
 		return this;

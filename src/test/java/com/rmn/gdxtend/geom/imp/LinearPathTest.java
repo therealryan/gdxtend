@@ -6,8 +6,14 @@ import org.junit.Test;
 
 import com.rmn.gdxtend.geom.Position;
 
+/**
+ * tests for {@link LinearPath}
+ */
 public class LinearPathTest {
 
+	/**
+	 * Simple clamped and unclamped path tes
+	 */
 	@Test
 	public void diagonal() {
 		LinearPath clamped = new LinearPath();

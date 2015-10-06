@@ -2,6 +2,9 @@ package com.rmn.gdxtend.util;
 
 import java.util.Arrays;
 
+/**
+ * Utility methods for working with arrays
+ */
 public class ArrayUtil {
 
 	/**

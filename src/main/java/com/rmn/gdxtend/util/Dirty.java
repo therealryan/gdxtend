@@ -7,6 +7,8 @@ import com.badlogic.gdx.utils.ObjectIntMap;
 /**
  * Convenient way to maintain a dirty-checking set of values
  */
+
+@SuppressWarnings( "javadoc" )
 public class Dirty {
 
 	private final float[] current;
@@ -15,6 +17,10 @@ public class Dirty {
 	private byte[] letters = null;
 	private ObjectIntMap<String> names = null;
 
+	/**
+	 * @param initial
+	 *          initial values
+	 */
 	public Dirty( float... initial ) {
 		this.current = initial;
 	}

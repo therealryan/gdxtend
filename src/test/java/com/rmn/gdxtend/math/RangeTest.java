@@ -7,11 +7,20 @@ import org.junit.Test;
 
 import com.rmn.gdxtend.expect.XYPlotExpect;
 
+/**
+ * Tests for {@link Range}
+ */
 public class RangeTest {
 
+	/**
+	 * Plots the results
+	 */
 	@Rule
 	public XYPlotExpect plot = new XYPlotExpect();
 
+	/**
+	 * Range construction
+	 */
 	@Test
 	public void construction() {
 		Range r = new Range();
@@ -35,6 +44,9 @@ public class RangeTest {
 		assertThat( t.to ).isEqualTo( 9 );
 	}
 
+	/**
+	 * Linear interpolation
+	 */
 	@Test
 	public void lerp() {
 		Range r = new Range().from( 25 ).to( 75 );
@@ -50,6 +62,9 @@ public class RangeTest {
 		assertThat( r.lerp( 2 ) ).isEqualTo( 125 );
 	}
 
+	/**
+	 * Inverse interpolation
+	 */
 	@Test
 	public void unlerp() {
 		Range r = new Range().from( 25 ).to( 75 );
@@ -65,6 +80,9 @@ public class RangeTest {
 		assertThat( r.unlerp( 125 ) ).isEqualTo( 2 );
 	}
 
+	/**
+	 * Contains checks
+	 */
 	@Test
 	public void contains() {
 		Range r = new Range().from( 25 ).to( 75 );
@@ -76,6 +94,9 @@ public class RangeTest {
 		assertThat( r.contains( 75.0001f ) ).isFalse();
 	}
 
+	/**
+	 * Before checks
+	 */
 	@Test
 	public void before() {
 		Range r = new Range().from( 25 ).to( 75 );
@@ -87,6 +108,9 @@ public class RangeTest {
 		assertThat( s.before( 75 ) ).isFalse();
 	}
 
+	/**
+	 * After checks
+	 */
 	@Test
 	public void after() {
 		Range r = new Range().from( 25 ).to( 75 );
@@ -98,6 +122,9 @@ public class RangeTest {
 		assertThat( s.after( 25 ) ).isFalse();
 	}
 
+	/**
+	 * Range clamping
+	 */
 	@Test
 	public void clamp() {
 		Range r = new Range().from( 25 ).to( 75 );
@@ -109,8 +136,11 @@ public class RangeTest {
 		assertThat( r.clamp( 76 ) ).isEqualTo( 75 );
 	}
 
+	/**
+	 * Normalisation
+	 */
 	@Test
-	public void normalise() throws Exception {
+	public void normalise() {
 		final Range r = new Range().from( 0 ).to( 1 );
 
 		assertThat( r.normalise( 0.125f ) ).isEqualTo( 0.125f );
@@ -131,7 +161,7 @@ public class RangeTest {
 		assertThat( r.normalise( 50 ) ).isEqualTo( 50 );
 		assertThat( r.normalise( 76 ) ).isEqualTo( 26 );
 
-		plot.with( "25-75", new Function() {
+		plot.range( 0, 100 ).with( "25-75", new Function() {
 
 			@Override
 			public float map( float f ) {

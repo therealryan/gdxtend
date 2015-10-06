@@ -7,8 +7,14 @@ import com.badlogic.gdx.math.Interpolation;
  */
 public class RangeMap implements Function {
 
+	/**
+	 * Range of input values
+	 */
 	public final Range source = new Range();
 
+	/**
+	 * Range of output values
+	 */
 	public final Range destination = new Range();
 
 	private Interpolation interp = Interpolation.linear;

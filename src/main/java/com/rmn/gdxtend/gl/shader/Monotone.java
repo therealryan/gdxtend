@@ -7,13 +7,19 @@ import com.rmn.gdxtend.gl.facets.Shader;
 import com.rmn.gdxtend.util.Comparison;
 
 /**
- * Just renders geometry, with uniform colour
+ * Just renders geometry with uniform colour
  */
 public class Monotone extends Shader {
 
+	/**
+	 * The colour to render with
+	 */
 	public final Color colour = new Color( Color.WHITE );
 	private int vcPos = -1;
 
+	/**
+	 * COnstructs a new {@link Monotone} shader
+	 */
 	public Monotone() {
 		super(
 				new ShaderProgram(

@@ -5,6 +5,9 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+/**
+ * Tests for {@link Comparison} utility
+ */
 public class ComparisonTest {
 
 	private Comparison cmp = Comparison.instance;

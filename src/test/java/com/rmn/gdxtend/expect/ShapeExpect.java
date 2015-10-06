@@ -6,15 +6,29 @@ import org.jfree.graphics2d.svg.SVGGraphics2D;
 
 import com.rmn.gdxtend.geom.Shape;
 
+/**
+ * Results in a sketch of the triangle structure of a shape
+ */
 public class ShapeExpect extends AbstractSketchExpect<ShapeExpect> {
 
 	private float scale = 1;
 
+	/**
+	 * @param s
+	 *          scaling factor for the sketch
+	 * @return this
+	 */
 	public ShapeExpect scale( float s ) {
 		this.scale = s;
 		return this;
 	}
 
+	/**
+	 * Produces a result file containing a sketch of a shape
+	 * 
+	 * @param shape
+	 *          the shape to draw
+	 */
 	public void check( Shape shape ) {
 		shape = new Shape( shape ).pos.all().scale( scale, scale, scale ).apply();
 

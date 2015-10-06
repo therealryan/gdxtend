@@ -7,8 +7,14 @@ import java.util.Random;
 
 import org.junit.Test;
 
+/**
+ * Tests for {@link ArrayUtil}
+ */
 public class ArrayUtilTest {
 
+	/**
+	 * Tests for parsing string to array
+	 */
 	@Test
 	public void bytesFromString() {
 		byte[] input = new byte[ 1000 ];

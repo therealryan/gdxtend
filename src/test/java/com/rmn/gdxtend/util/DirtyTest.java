@@ -11,6 +11,9 @@ import org.junit.Test;
  */
 public class DirtyTest {
 
+	/**
+	 * Single value
+	 */
 	@Test
 	public void basic() {
 		Dirty d = new Dirty( 0 );
@@ -34,6 +37,9 @@ public class DirtyTest {
 		assertThat( d.value() ).isEqualTo( 2 );
 	}
 
+	/**
+	 * Multiple values
+	 */
 	@Test
 	public void multiple() {
 		Dirty d = new Dirty( 1, 2, 3 );
@@ -50,6 +56,9 @@ public class DirtyTest {
 		assertThat( d.get() ).isEqualTo( new float[] { 4, 5, 6 } );
 	}
 
+	/**
+	 * Named values
+	 */
 	@Test
 	public void named() {
 		Dirty d = new Dirty( 1, 2, 3 ).named( "foo", "bar", "baz" );
@@ -66,6 +75,9 @@ public class DirtyTest {
 		assertThat( d.get() ).isEqualTo( new float[] { 4, 5, 6 } );
 	}
 
+	/**
+	 * Single-letter names
+	 */
 	@Test
 	public void lettered() {
 		Dirty d = new Dirty( 1, 2, 3 ).named( "a", "b", "c" );
@@ -80,6 +92,12 @@ public class DirtyTest {
 		assertThat( d.get() ).isEqualTo( new float[] { 4, 5, 6 } );
 	}
 
+	/**
+	 * Exercises all letters
+	 * 
+	 * @throws Exception
+	 *           if the reflection goes wrong
+	 */
 	@Test
 	public void allLetters() throws Exception {
 		String alpha = "abcdefghijklmnopqrstuvxwy";

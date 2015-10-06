@@ -8,8 +8,14 @@ import org.junit.Test;
 
 import com.rmn.gdxtend.expect.ShapeExpect;
 
+/**
+ * Tests for {@link Geometry} classes
+ */
 public class GeometryTest {
 
+	/**
+	 * Produces the shape sketches
+	 */
 	@Rule
 	public ShapeExpect expect = new ShapeExpect().scale( 100 );
 

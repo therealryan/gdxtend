@@ -7,8 +7,18 @@ import com.badlogic.gdx.math.Interpolation;
  */
 public class Range {
 
-	public float from, to;
+	/**
+	 * start value
+	 */
+	public float from;
+	/**
+	 * end value
+	 */
+	public float to;
 
+	/**
+	 * @return distance between the start and end of the range
+	 */
 	public float length() {
 		return Math.abs( to - from );
 	}
@@ -180,12 +190,24 @@ public class Range {
 	 * 
 	 * @param f
 	 *          the input value
-	 * @return the normailsed value
+	 * @return the normalised value
 	 */
 	public float normalise( float f ) {
 		return normalise( f, from, to );
 	}
 
+	/**
+	 * Shifts a value by multiples of the range length so that it lies within the
+	 * range
+	 * 
+	 * @param f
+	 *          the input value
+	 * @param from
+	 *          range start
+	 * @param to
+	 *          range end
+	 * @return the normalised value
+	 */
 	public static float normalise( float f, float from, float to ) {
 		float length = to - from;
 		float delta = ( f - from ) / length;

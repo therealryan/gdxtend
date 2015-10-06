@@ -10,8 +10,17 @@ import com.rmn.gdxtend.math.Range;
  */
 public abstract class Path<T extends Path<T>> {
 
+	/**
+	 * Start point
+	 */
 	public final Position start = new Position();
+	/**
+	 * End point
+	 */
 	public final Position end = new Position();
+	/**
+	 * Time duration
+	 */
 	public final Range duration = new Range();
 
 	/**

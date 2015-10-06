@@ -20,6 +20,12 @@ public class GdxTestRunner extends BlockJUnit4ClassRunner implements
 
 	private Map<FrameworkMethod, RunNotifier> invokeInRender = new HashMap<>();
 
+	/**
+	 * @param c
+	 *          The test class to run
+	 * @throws InitializationError
+	 *           ruh-roh
+	 */
 	@SuppressWarnings( "unused" )
 	public GdxTestRunner( Class<?> c ) throws InitializationError {
 		super( c );
@@ -40,8 +46,8 @@ public class GdxTestRunner extends BlockJUnit4ClassRunner implements
 	@Override
 	public void render() {
 		synchronized( invokeInRender ) {
-			for( Map.Entry<FrameworkMethod, RunNotifier> each : 
-				invokeInRender					.entrySet() ) {
+			for( Map.Entry<FrameworkMethod, RunNotifier> each : invokeInRender
+					.entrySet() ) {
 				super.runChild( each.getKey(), each.getValue() );
 			}
 			invokeInRender.clear();

@@ -33,7 +33,7 @@ public abstract class AbstractExpect<T extends AbstractExpect<T>> extends
 	 */
 	private static final String REGEN_PROPERTY = "regenerate";
 
-	public static enum Dir {
+	private static enum Dir {
 		/**
 		 * Test expectations
 		 */
@@ -58,7 +58,7 @@ public abstract class AbstractExpect<T extends AbstractExpect<T>> extends
 
 	private SoftAssertions softly = new SoftAssertions();
 
-	public AbstractExpect() {
+	protected AbstractExpect() {
 		this( ".expect" );
 	}
 

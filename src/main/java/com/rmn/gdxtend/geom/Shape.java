@@ -11,16 +11,31 @@ import com.rmn.gdxtend.gl.attribute.Position;
  * A polygonal shape with some number of vertex attributes
  */
 public class Shape {
+	/**
+	 * Controls for vertex position
+	 */
 	public final Position pos;
+	/**
+	 * Controls for vertx colour
+	 */
 	public final Colour col;
 
+	/**
+	 * Vertex attributes
+	 */
 	public final VertexAttributes attributes;
 
+	/**
+	 * Packed vertex data
+	 */
 	public final float[] vertexData;
 
 	protected int vi = 0;
 	private int tii = 0;
 
+	/**
+	 * Triangle indices
+	 */
 	public final short[] indices;
 
 	/**
@@ -58,6 +73,12 @@ public class Shape {
 		t.define( this );
 	}
 
+	/**
+	 * Constructs a gestalt shape
+	 * 
+	 * @param constituents
+	 *          the shapes to combine
+	 */
 	public Shape( Shape... constituents ) {
 		attributes = constituents[ 0 ].attributes;
 		int vc = 0;
