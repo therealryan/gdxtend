@@ -17,6 +17,10 @@ public class ColourTest {
 
 	private Shape s = new Shape( 1, 0, ColorPacked() );
 
+	/**
+	 * Demonstrates the effect of setting a vertex colour from a {@link Color}
+	 * object
+	 */
 	@Test
 	public void fromColour() {
 		s.col.set( new Color( 0, 0, 0, 0 ) );
@@ -33,6 +37,9 @@ public class ColourTest {
 		check( 0b1111_1110_1111_1111_1111_1111_1111_1111 );
 	}
 
+	/**
+	 * Demonstrates the effect of setting a vertex colour via components
+	 */
 	@Test
 	public void fromComponents() {
 		s.col.rgba( 0, 0, 0, 0 );
@@ -51,6 +58,9 @@ public class ColourTest {
 		check( 0b1111_1110_1111_1111_1111_1111_1111_1111 );
 	}
 
+	/**
+	 * Sets individual components
+	 */
 	@Test
 	public void individual() {
 		s.col.rgba( 0, 0, 0, 0 );
@@ -93,6 +103,9 @@ public class ColourTest {
 				.isEqualTo( expected );
 	}
 
+	/**
+	 * Tests applying comonent sets over all vertices
+	 */
 	@Test
 	public void all() {
 		Shape t = new Shape( 3, 0, ColorPacked() )
@@ -115,6 +128,9 @@ public class ColourTest {
 		} );
 	}
 
+	/**
+	 * Conversion between {@link Color} and packed float values
+	 */
 	@Test
 	public void get() {
 		checkGet( Color.WHITE );

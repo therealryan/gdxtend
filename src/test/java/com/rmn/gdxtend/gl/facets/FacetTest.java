@@ -6,7 +6,7 @@ import org.junit.Assert;
 
 import com.rmn.gdxtend.GdxTest;
 
-public abstract class FacetTest extends GdxTest {
+abstract class FacetTest extends GdxTest {
 
 	/**
 	 * Asserts the facets are order correctly, more-default state to before

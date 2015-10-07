@@ -12,11 +12,17 @@ import com.badlogic.gdx.graphics.GL20;
 import com.rmn.gdxtend.gl.enums.ComparisonFunction;
 import com.rmn.gdxtend.gl.enums.StencilOperation;
 
+/**
+ * Tests for {@link Stencil}
+ */
 public class StencilTest extends FacetTest {
 
 	private Stencil stencil = new Stencil();
 	private Stencil control = new Stencil();
 
+	/**
+	 * Fields are set correctly
+	 */
 	@Test
 	public void construction() {
 		stencil.enabled( true )
@@ -38,11 +44,17 @@ public class StencilTest extends FacetTest {
 		assertThat( stencil.dppass ).isEqualTo( StencilOperation.INCR );
 	}
 
+	/**
+	 * Comparison of identical states
+	 */
 	@Test
 	public void same() {
 		assertThat( stencil ).isEqualTo( control );
 	}
 
+	/**
+	 * Fields are copied correctly
+	 */
 	@Test
 	public void copy() {
 		stencil.enabled( true )
@@ -63,46 +75,74 @@ public class StencilTest extends FacetTest {
 		assertThat( copy ).isEqualTo( stencil );
 	}
 
+	/**
+	 * ENabled state sorts to after disabled
+	 */
 	@Test
 	public void enabledComparison() {
 		comparisonOrder( control, stencil.enabled( true ) );
 	}
 
+	/**
+	 * Altered function sorts to after default
+	 */
 	@Test
 	public void functionComparison() {
 		comparisonOrder( control, stencil.function( ComparisonFunction.GEQUAL ) );
 	}
 
+	/**
+	 * Altered reference sorts to after default
+	 */
 	@Test
 	public void referenceComparison() {
 		comparisonOrder( control, stencil.reference( 3 ) );
 	}
 
+	/**
+	 * Altered test mask sorts to after default
+	 */
 	@Test
 	public void testMaskComparison() {
 		comparisonOrder( control, stencil.testMask( 3 ) );
 	}
 
+	/**
+	 * Altered write mask sorts to after default
+	 */
 	@Test
 	public void writeMaskComparison() {
 		comparisonOrder( control, stencil.writeMask( 3 ) );
 	}
 
+	/**
+	 * Altered sfail operation sorts to after default
+	 */
 	@Test
 	public void sFailCmparison() {
 		comparisonOrder( control, stencil.sfail( StencilOperation.DECR ) );
 	}
 
+	/**
+	 * Altered dpFail operation sorts to after default
+	 */
 	@Test
 	public void dpFailComparison() {
 		comparisonOrder( control, stencil.dpfail( StencilOperation.DECR ) );
 	}
 
+	/**
+	 * Altered dpPass operation sorts to after default
+	 */
 	@Test
 	public void dpPassComparison() {
 		comparisonOrder( control, stencil.dppass( StencilOperation.DECR ) );
 	}
 
+	/**
+	 * Transition between identical states results in no GL calls
+	 */
+	@Test
 	public void noopTransition() {
 		stencil.transition( control );
 
@@ -113,6 +153,9 @@ public class StencilTest extends FacetTest {
 		verify( Gdx.gl, never() ).glStencilMask( anyInt() );
 	}
 
+	/**
+	 * Parameters are set correctly
+	 */
 	@Test
 	public void transition() {
 

@@ -9,11 +9,17 @@ import com.rmn.gdxtend.GdxTest;
 import com.rmn.gdxtend.gl.enums.MagFilter;
 import com.rmn.gdxtend.gl.shader.None;
 
+/**
+ * Tests for {@link State} comparison and compilation
+ */
 public class StateTest extends GdxTest {
 
 	private State<None> base;
 	private State<?>[] altered = new State[ 6 ];
 
+	/**
+	 * Builds a typical state
+	 */
 	@Before
 	public void build() {
 		base = State.build( None.instance );
@@ -30,6 +36,9 @@ public class StateTest extends GdxTest {
 		altered[ 5 ].texture.mag( MagFilter.NEAREST );
 	}
 
+	/**
+	 * State comparison
+	 */
 	@Test
 	public void comparison() {
 		{ // same
@@ -48,6 +57,9 @@ public class StateTest extends GdxTest {
 		}
 	}
 
+	/**
+	 * Compile two identical states - they end up with the same index
+	 */
 	@Test
 	public void compilationSame() {
 		State<None> s = State.build( None.instance );
@@ -61,6 +73,9 @@ public class StateTest extends GdxTest {
 		assertThat( t.getCompiledIndex() ).isEqualTo( 0 );
 	}
 
+	/**
+	 * Compile two different states, the get different indices
+	 */
 	@Test
 	public void compilationDifferent() {
 		State<None> s = State.build( None.instance );
@@ -75,6 +90,9 @@ public class StateTest extends GdxTest {
 		assertThat( t.getCompiledIndex() ).isEqualTo( 1 );
 	}
 
+	/**
+	 * Compile two states, they get the same compilation batch id
+	 */
 	@Test
 	public void compilationBatch() {
 		State<None> s = State.build( None.instance );
@@ -88,6 +106,10 @@ public class StateTest extends GdxTest {
 		assertThat( s.getCompilationBatch() ).isEqualTo( batch + 1 );
 	}
 
+	/**
+	 * Comparison of compiled states is on the basis of index rather than their
+	 * actual values
+	 */
 	@Test
 	public void compiledComparison() {
 		State<None> s = State.build( None.instance );

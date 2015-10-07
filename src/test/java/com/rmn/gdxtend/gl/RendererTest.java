@@ -9,8 +9,14 @@ import org.junit.Test;
 import com.rmn.gdxtend.GdxTest;
 import com.rmn.gdxtend.gl.shader.None;
 
+/**
+ * Tests for {@link Renderer} operation
+ */
 public class RendererTest extends GdxTest {
 
+	/**
+	 * State array grows as needed
+	 */
 	@Test
 	public void grow() {
 		Renderer r = new Renderer();
@@ -22,6 +28,9 @@ public class RendererTest extends GdxTest {
 		assertThat( larger ).isEqualTo( new State[] { state } );
 	}
 
+	/**
+	 * Adds a single state to the renderer
+	 */
 	@Test
 	public void withOne() {
 		Renderer r = new Renderer();
@@ -36,6 +45,9 @@ public class RendererTest extends GdxTest {
 		assertThat( r.geometry[ 0 ].state ).isEqualTo( s );
 	}
 
+	/**
+	 * Add two identical states to a renderer - end up with one vertex batch
+	 */
 	@Test
 	public void withSame() {
 
@@ -54,6 +66,9 @@ public class RendererTest extends GdxTest {
 		assertThat( r.geometry[ 0 ].state ).isEqualTo( s );
 	}
 
+	/**
+	 * Add two different states - end up with two batches
+	 */
 	@Test
 	public void withTwo() {
 
@@ -74,6 +89,9 @@ public class RendererTest extends GdxTest {
 		assertThat( r.geometry[ 1 ].state ).isEqualTo( t );
 	}
 
+	/**
+	 * Adds geometry to the renderer
+	 */
 	@Test
 	public void addTriangles() {
 		Renderer r = new Renderer().withInitialSize( 5 );

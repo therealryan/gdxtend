@@ -10,10 +10,16 @@ import org.junit.Test;
 
 import com.badlogic.gdx.Gdx;
 
+/**
+ * Test for {@link Clear}
+ */
 public class ClearTest extends FacetTest {
 	private final Clear clear = new Clear();
 	private final Clear control = new Clear();
 
+	/**
+	 * Fields are set properly
+	 */
 	@Test
 	public void construction() {
 		clear.r( 0.5f )
@@ -31,11 +37,17 @@ public class ClearTest extends FacetTest {
 		assertThat( clear.stencil ).isEqualTo( 3 );
 	}
 
+	/**
+	 * Comparison of identical states
+	 */
 	@Test
 	public void same() {
 		assertThat( clear ).isEqualTo( control );
 	}
 
+	/**
+	 * Fields are copied correctly
+	 */
 	@Test
 	public void copy() {
 		clear.r( 0.5f )
@@ -53,21 +65,33 @@ public class ClearTest extends FacetTest {
 		assertThat( copy ).isEqualTo( clear );
 	}
 
+	/**
+	 * Altered colour sorts to after default
+	 */
 	@Test
 	public void colorComparison() {
 		comparisonOrder( control, clear.r( 1 ) );
 	}
 
+	/**
+	 * Altered depth sorts to after default
+	 */
 	@Test
 	public void depthComparison() {
 		comparisonOrder( control, clear.depth( 1 ) );
 	}
 
+	/**
+	 * Altered stencil sorts to after default
+	 */
 	@Test
 	public void stencilComparison() {
 		comparisonOrder( control, clear.stencil( 1 ) );
 	}
 
+	/**
+	 * Transition between identical states results in no GL calls
+	 */
 	@Test
 	public void noopTransition() {
 		clear.transition( control );
@@ -78,6 +102,9 @@ public class ClearTest extends FacetTest {
 		verify( Gdx.gl, never() ).glClearStencil( anyInt() );
 	}
 
+	/**
+	 * Parameters are set correctly on transition
+	 */
 	@Test
 	public void transition() {
 		clear.r( 0.5f ).g( 0.25f ).b( 0.125f ).a( 0.0625f ).depth( 2 ).stencil( 3 );

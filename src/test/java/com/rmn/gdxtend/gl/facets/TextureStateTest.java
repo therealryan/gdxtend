@@ -18,6 +18,9 @@ import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.rmn.gdxtend.gl.enums.MagFilter;
 import com.rmn.gdxtend.gl.enums.MinFilter;
 
+/**
+ * Tests for {@link TextureState}
+ */
 public class TextureStateTest extends FacetTest {
 
 	private TextureState tex = new TextureState();
@@ -29,6 +32,9 @@ public class TextureStateTest extends FacetTest {
 	@Mock
 	private Texture imageB;
 
+	/**
+	 * Fields are set correctly
+	 */
 	@Test
 	public void construction() {
 		tex.with( imageA );
@@ -42,11 +48,17 @@ public class TextureStateTest extends FacetTest {
 		assertThat( tex.t ).isEqualTo( TextureWrap.ClampToEdge );
 	}
 
+	/**
+	 * Comparison of identical states
+	 */
 	@Test
 	public void same() {
 		assertThat( tex ).isEqualTo( control );
 	}
 
+	/**
+	 * Fields are copied correctly
+	 */
 	@Test
 	public void copy() {
 		tex.with( imageA );
@@ -62,31 +74,49 @@ public class TextureStateTest extends FacetTest {
 		assertThat( copy ).isEqualTo( tex );
 	}
 
+	/**
+	 * Altered texture id sorts to after default
+	 */
 	@Test
 	public void idComparison() {
 		comparisonOrder( control, tex.with( imageA ) );
 	}
 
+	/**
+	 * Altered minification filter sorts to after default
+	 */
 	@Test
 	public void minComparison() {
 		comparisonOrder( control, tex.min( MinFilter.LINEAR_MIPMAP_LINEAR ) );
 	}
 
+	/**
+	 * Altered magnification sorts to after default
+	 */
 	@Test
 	public void magComparison() {
 		comparisonOrder( control, tex.mag( MagFilter.NEAREST ) );
 	}
 
+	/**
+	 * Altered horizontal texture wrap sorts to after default
+	 */
 	@Test
 	public void sComparison() {
 		comparisonOrder( control, tex.s( TextureWrap.MirroredRepeat ) );
 	}
 
+	/**
+	 * Altered vertical texture wrap sorts to after default
+	 */
 	@Test
 	public void tComparison() {
 		comparisonOrder( control, tex.t( TextureWrap.MirroredRepeat ) );
 	}
 
+	/**
+	 * Transition between identical states results in no GL calls
+	 */
 	@Test
 	public void noopTransition() {
 		tex.transition( control );
@@ -96,6 +126,9 @@ public class TextureStateTest extends FacetTest {
 		verify( Gdx.gl, never() ).glTexParameterf( anyInt(), anyInt(), anyFloat() );
 	}
 
+	/**
+	 * Transition to enabled states causes all parameters to be set
+	 */
 	@Test
 	public void enableTransition() {
 		tex.with( imageA )
@@ -115,6 +148,9 @@ public class TextureStateTest extends FacetTest {
 				.unsafeSetWrap( TextureWrap.MirroredRepeat, TextureWrap.ClampToEdge );
 	}
 
+	/**
+	 * Parameters are set correctly on transition
+	 */
 	@Test
 	public void paramTransition() {
 		tex.with( imageA );
@@ -135,6 +171,9 @@ public class TextureStateTest extends FacetTest {
 				.unsafeSetWrap( TextureWrap.ClampToEdge, TextureWrap.Repeat );
 	}
 
+	/**
+	 * Parameters are set correctly on texture disable
+	 */
 	@Test
 	public void disableTransition() {
 

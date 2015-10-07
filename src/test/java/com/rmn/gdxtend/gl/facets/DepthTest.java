@@ -13,11 +13,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.rmn.gdxtend.gl.enums.ComparisonFunction;
 
+/**
+ * Tests for {@link Depth}
+ */
 public class DepthTest extends FacetTest {
 
-	public Depth depth = new Depth();
-	public Depth control = new Depth();
+	private Depth depth = new Depth();
+	private Depth control = new Depth();
 
+	/**
+	 * Fields are set correctly
+	 */
 	@Test
 	public void construction() {
 		depth.enabled( true )
@@ -33,11 +39,17 @@ public class DepthTest extends FacetTest {
 		assertThat( depth.far ).isEqualTo( 0.25f );
 	}
 
+	/**
+	 * Comparison of identical states
+	 */
 	@Test
 	public void same() {
 		assertThat( depth ).isEqualTo( control );
 	}
 
+	/**
+	 * Fields are copied correctly
+	 */
 	@Test
 	public void copy() {
 		depth.enabled( true )
@@ -55,31 +67,49 @@ public class DepthTest extends FacetTest {
 		assertThat( copy ).isEqualTo( depth );
 	}
 
+	/**
+	 * Enabled state sorts to after disabled
+	 */
 	@Test
 	public void enabledComparison() {
 		comparisonOrder( control, depth.enabled( true ) );
 	}
 
+	/**
+	 * Altered function sorts to after default
+	 */
 	@Test
 	public void functionComparison() {
 		comparisonOrder( control, depth.function( ComparisonFunction.ALWAYS ) );
 	}
 
+	/**
+	 * Altered mask sorts to after default
+	 */
 	@Test
 	public void maskComparison() {
 		comparisonOrder( control, depth.mask( false ) );
 	}
 
+	/**
+	 * Altered near value sorts to after default
+	 */
 	@Test
 	public void nearComparison() {
 		comparisonOrder( control, depth.near( 0.5f ) );
 	}
 
+	/**
+	 * Altered far value sorts to after default
+	 */
 	@Test
 	public void farComparison() {
 		comparisonOrder( control, depth.far( 1.5f ) );
 	}
 
+	/**
+	 * Transition between identical states results in no GL calls
+	 */
 	@Test
 	public void noopTransition() {
 		depth.transition( control );
@@ -91,6 +121,9 @@ public class DepthTest extends FacetTest {
 		verify( Gdx.gl, never() ).glDepthRangef( anyFloat(), anyFloat() );
 	}
 
+	/**
+	 * Parameters are set correctly on transition
+	 */
 	@Test
 	public void transition() {
 		depth.enabled( true )
