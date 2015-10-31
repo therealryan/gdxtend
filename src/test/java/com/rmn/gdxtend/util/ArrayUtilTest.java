@@ -41,4 +41,44 @@ public class ArrayUtilTest {
 			assertThat( output ).isSameAs( dest );
 		}
 	}
+
+	/**
+	 * Tests for printing multidimensional object arrays
+	 */
+	@Test
+	public void objectToString() {
+		assertThat( ArrayUtil.toString( new String[] { "a", "b", "c" } ) )
+				.isEqualTo( "[a, b, c]" );
+		assertThat(
+				ArrayUtil.toString( new String[][] { { "a" }, { "b" }, { "c" } } ) )
+				.isEqualTo( "[[a], [b], [c]]" );
+
+		assertThat(
+				ArrayUtil.toString( new Object[] { null,
+						new String[] { "a", "b", null }, "c" } ) )
+				.isEqualTo( "[null, [a, b, null], c]" );
+	}
+
+	/**
+	 * Tests for printing multidimensional primitive arrays
+	 */
+	@Test
+	public void primitiveToString() {
+		assertThat( ArrayUtil.toString(
+				new Object[] { new int[] { 1 }, new int[] { 2 }, new int[] { 3 } } ) )
+				.isEqualTo( "[[1], [2], [3]]" );
+
+		assertThat(
+				ArrayUtil.toString( new Object[] {
+						new boolean[] { true },
+						new byte[] { 1 },
+						new short[] { 2 },
+						new char[] { 'a' },
+						new int[] { 3 },
+						new float[] { 4.5f },
+						new long[] { 6 },
+						new double[] { 7.8 },
+				} ) )
+				.isEqualTo( "[[true], [1], [2], [a], [3], [4.5], [6], [7.8]]" );
+	}
 }

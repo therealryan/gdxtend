@@ -5,7 +5,8 @@ package com.rmn.gdxtend.geom;
  */
 public abstract class Geometry {
 
-	protected float width = 0.0f;
+	protected float height = 0;
+	protected float width = 0;
 
 	/**
 	 * Sets the vertex positions
@@ -27,13 +28,28 @@ public abstract class Geometry {
 		return this;
 	}
 
+	/**
+	 * Sets the height property
+	 * 
+	 * @param h
+	 *          the new height
+	 * @return this
+	 */
+	public Geometry withHeight( float h ) {
+		this.height = h;
+		return this;
+	}
+
 	protected void resetParameters() {
 		width = 0;
+		height = 0;
 	}
 
 	/**
 	 * 1-radius circle centred on the z-axis, anticlockwise when viewing in the
 	 * negative-z direction.
+	 * 
+	 * @see Topology#fan
 	 */
 	public static Geometry circle = new Geometry() {
 
@@ -56,6 +72,8 @@ public abstract class Geometry {
 	/**
 	 * 1-radius circle centred on the z-axis, anticlockwise when viewing in the
 	 * negative-z direction. The first vertex is at (0, 0)
+	 * 
+	 * @see Topology#radial
 	 */
 	public static Geometry centeredCircle = new Geometry() {
 
@@ -77,7 +95,10 @@ public abstract class Geometry {
 	};
 
 	/**
+	 * A 1-radius circular strip of quads centered on the z-axis, anticlockwise
+	 * when viewing in the negative z direction.
 	 * 
+	 * @see Topology#loop
 	 */
 	public static Geometry circleStrip = new Geometry() {
 
@@ -98,6 +119,28 @@ public abstract class Geometry {
 						.y( (float) Math.sin( i * inc ) * ( 1 - width ) )
 						.done()
 						.next();
+			}
+
+			resetParameters();
+		}
+	};
+
+	/**
+	 * A sequence of quads.
+	 * 
+	 * @see Topology#quads
+	 */
+	public static Geometry quads = new Geometry() {
+
+		@Override
+		public void define( Shape s ) {
+			int quads = ( s.vertices() - s.index() ) / 4;
+
+			for( int i = 0; i < quads; i++ ) {
+				s.pos.x( 0 ).y( 0 ).done().next();
+				s.pos.x( 0 ).y( 1 ).done().next();
+				s.pos.x( 1 ).y( 0 ).done().next();
+				s.pos.x( 1 ).y( 1 ).done().next();
 			}
 
 			resetParameters();

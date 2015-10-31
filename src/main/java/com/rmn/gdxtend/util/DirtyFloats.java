@@ -7,9 +7,8 @@ import com.badlogic.gdx.utils.ObjectIntMap;
 /**
  * Convenient way to maintain a dirty-checking set of values
  */
-
 @SuppressWarnings( "javadoc" )
-public class Dirty {
+public class DirtyFloats {
 
 	private final float[] current;
 	private boolean dirty = false;
@@ -21,18 +20,18 @@ public class Dirty {
 	 * @param initial
 	 *          initial values
 	 */
-	public Dirty( float... initial ) {
+	public DirtyFloats( float... initial ) {
 		this.current = initial;
 	}
 
 	/**
 	 * Sets names for the values
-	 * 
+	 *
 	 * @param names
 	 *          list of names for the values
 	 * @return this
 	 */
-	public Dirty named( String... names ) {
+	public DirtyFloats named( String... names ) {
 		letters = new byte[ 26 ];
 		Arrays.fill( letters, (byte) -1 );
 		this.names = new ObjectIntMap<>();
@@ -52,14 +51,14 @@ public class Dirty {
 
 	/**
 	 * Sets a new value
-	 * 
+	 *
 	 * @param index
 	 *          the index of the field
 	 * @param value
 	 *          the new value
 	 * @return this
 	 */
-	public Dirty set( int index, float value ) {
+	public DirtyFloats set( int index, float value ) {
 		if( current[ index ] != value ) {
 			dirty = true;
 			current[ index ] = value;
@@ -70,12 +69,12 @@ public class Dirty {
 
 	/**
 	 * Shorthand for single-element sets
-	 * 
+	 *
 	 * @param value
 	 *          the new value
 	 * @return this
 	 */
-	public Dirty set( float value ) {
+	public DirtyFloats set( float value ) {
 		return set( 0, value );
 	}
 
@@ -88,7 +87,7 @@ public class Dirty {
 
 	/**
 	 * Shorthand for single-element sets
-	 * 
+	 *
 	 * @return the first value
 	 */
 	public float value() {
@@ -107,14 +106,14 @@ public class Dirty {
 
 	/**
 	 * Sets a named value
-	 * 
+	 *
 	 * @param name
 	 *          the name of the field
 	 * @param value
 	 *          the new value
 	 * @return this
 	 */
-	public Dirty set( String name, float value ) {
+	public DirtyFloats set( String name, float value ) {
 		if( isLetter( name ) ) {
 			return set( letters[ name.charAt( 0 ) - 'a' ], value );
 		}
@@ -123,107 +122,107 @@ public class Dirty {
 		}
 	}
 
-	public Dirty a( float value ) {
+	public DirtyFloats a( float value ) {
 		return set( letters[ 0 ], value );
 	}
 
-	public Dirty b( float value ) {
+	public DirtyFloats b( float value ) {
 		return set( letters[ 1 ], value );
 	}
 
-	public Dirty c( float value ) {
+	public DirtyFloats c( float value ) {
 		return set( letters[ 2 ], value );
 	}
 
-	public Dirty d( float value ) {
+	public DirtyFloats d( float value ) {
 		return set( letters[ 3 ], value );
 	}
 
-	public Dirty e( float value ) {
+	public DirtyFloats e( float value ) {
 		return set( letters[ 4 ], value );
 	}
 
-	public Dirty f( float value ) {
+	public DirtyFloats f( float value ) {
 		return set( letters[ 5 ], value );
 	}
 
-	public Dirty g( float value ) {
+	public DirtyFloats g( float value ) {
 		return set( letters[ 6 ], value );
 	}
 
-	public Dirty h( float value ) {
+	public DirtyFloats h( float value ) {
 		return set( letters[ 7 ], value );
 	}
 
-	public Dirty i( float value ) {
+	public DirtyFloats i( float value ) {
 		return set( letters[ 8 ], value );
 	}
 
-	public Dirty j( float value ) {
+	public DirtyFloats j( float value ) {
 		return set( letters[ 9 ], value );
 	}
 
-	public Dirty k( float value ) {
+	public DirtyFloats k( float value ) {
 		return set( letters[ 10 ], value );
 	}
 
-	public Dirty l( float value ) {
+	public DirtyFloats l( float value ) {
 		return set( letters[ 11 ], value );
 	}
 
-	public Dirty m( float value ) {
+	public DirtyFloats m( float value ) {
 		return set( letters[ 12 ], value );
 	}
 
-	public Dirty n( float value ) {
+	public DirtyFloats n( float value ) {
 		return set( letters[ 13 ], value );
 	}
 
-	public Dirty o( float value ) {
+	public DirtyFloats o( float value ) {
 		return set( letters[ 14 ], value );
 	}
 
-	public Dirty p( float value ) {
+	public DirtyFloats p( float value ) {
 		return set( letters[ 15 ], value );
 	}
 
-	public Dirty q( float value ) {
+	public DirtyFloats q( float value ) {
 		return set( letters[ 16 ], value );
 	}
 
-	public Dirty r( float value ) {
+	public DirtyFloats r( float value ) {
 		return set( letters[ 17 ], value );
 	}
 
-	public Dirty s( float value ) {
+	public DirtyFloats s( float value ) {
 		return set( letters[ 18 ], value );
 	}
 
-	public Dirty t( float value ) {
+	public DirtyFloats t( float value ) {
 		return set( letters[ 19 ], value );
 	}
 
-	public Dirty u( float value ) {
+	public DirtyFloats u( float value ) {
 		return set( letters[ 20 ], value );
 	}
 
-	public Dirty v( float value ) {
+	public DirtyFloats v( float value ) {
 		return set( letters[ 21 ], value );
 	}
 
-	public Dirty w( float value ) {
+	public DirtyFloats w( float value ) {
 		return set( letters[ 22 ], value );
 	}
 
-	public Dirty x( float value ) {
+	public DirtyFloats x( float value ) {
 		return set( letters[ 23 ], value );
 	}
 
-	public Dirty y( float value ) {
+	public DirtyFloats y( float value ) {
 		return set( letters[ 24 ], value );
 	}
 
-	public Dirty z( float value ) {
+	public DirtyFloats z( float value ) {
 		return set( letters[ 25 ], value );
 	}
 

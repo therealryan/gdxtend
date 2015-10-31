@@ -92,7 +92,7 @@ public class RangeMap implements Function {
 	 *          new {@link Interpolation} function
 	 * @return this
 	 */
-	public RangeMap via( Interpolation i ) {
+	public RangeMap by( Interpolation i ) {
 		interp = i;
 
 		// avoid null interpolator

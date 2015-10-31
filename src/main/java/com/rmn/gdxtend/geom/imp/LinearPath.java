@@ -1,33 +1,19 @@
 package com.rmn.gdxtend.geom.imp;
 
-import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.Vector3;
 import com.rmn.gdxtend.geom.Path;
-import com.rmn.gdxtend.geom.Position;
 import com.rmn.gdxtend.math.Range;
 
 /**
- * A straight-line track between two positions
+ * A straight-line track between two points
  */
 public class LinearPath extends Path<LinearPath> {
 
-	private Interpolation interp = Interpolation.linear;
-
 	@Override
-	protected Position compute( float t, Position dest ) {
-		float tq = interp.apply( duration.unlerp( t ) );
-
-		// position
-		dest.position.x = Range.lerp( tq, start.position.x, end.position.x );
-		dest.position.y = Range.lerp( tq, start.position.y, end.position.y );
-		dest.position.z = Range.lerp( tq, start.position.z, end.position.z );
-
-		// rotation
-		dest.rotation.set( start.rotation );
-		dest.rotation.slerp( end.rotation, tq );
-
-		// scale
-		dest.scale = Range.lerp( tq, start.scale, end.scale );
-
-		return dest;
+	public Vector3 forProgress( float p, Vector3 dest ) {
+		float x = Range.lerp( p, start.x, end.x );
+		float y = Range.lerp( p, start.y, end.y );
+		float z = Range.lerp( p, start.z, end.z );
+		return dest.set( x, y, z );
 	}
 }

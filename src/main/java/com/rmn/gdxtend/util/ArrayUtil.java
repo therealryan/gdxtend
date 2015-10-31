@@ -146,4 +146,57 @@ public class ArrayUtil {
 		return to;
 	}
 
+	/**
+	 * Prints a (possibly multidimensional) array to a string
+	 * 
+	 * @param a
+	 *          the array
+	 * @return the string
+	 */
+	public static String toString( Object[] a ) {
+		StringBuilder sb = new StringBuilder( "[" );
+		boolean first = true;
+
+		for( Object o : a ) {
+			if( !first ) {
+				sb.append( ", " );
+			}
+			first = false;
+			if( o == null ) {
+				sb.append( String.valueOf( o ) );
+			}
+			else if( o instanceof boolean[] ) {
+				sb.append( Arrays.toString( (boolean[]) o ) );
+			}
+			else if( o instanceof byte[] ) {
+				sb.append( Arrays.toString( (byte[]) o ) );
+			}
+			else if( o instanceof short[] ) {
+				sb.append( Arrays.toString( (short[]) o ) );
+			}
+			else if( o instanceof char[] ) {
+				sb.append( Arrays.toString( (char[]) o ) );
+			}
+			else if( o instanceof int[] ) {
+				sb.append( Arrays.toString( (int[]) o ) );
+			}
+			else if( o instanceof float[] ) {
+				sb.append( Arrays.toString( (float[]) o ) );
+			}
+			else if( o instanceof long[] ) {
+				sb.append( Arrays.toString( (long[]) o ) );
+			}
+			else if( o instanceof double[] ) {
+				sb.append( Arrays.toString( (double[]) o ) );
+			}
+			else if( o.getClass().isArray() ) {
+				sb.append( toString( (Object[]) o ) );
+			}
+			else {
+				sb.append( String.valueOf( o ) );
+			}
+		}
+
+		return sb.append( "]" ).toString();
+	}
 }

@@ -7,16 +7,16 @@ import java.lang.reflect.Method;
 import org.junit.Test;
 
 /**
- * Demonstrates usage of {@link Dirty}
+ * Demonstrates usage of {@link DirtyFloats}
  */
-public class DirtyTest {
+public class DirtyFloatsTest {
 
 	/**
 	 * Single value
 	 */
 	@Test
 	public void basic() {
-		Dirty d = new Dirty( 0 );
+		DirtyFloats d = new DirtyFloats( 0 );
 
 		assertThat( d.changed() ).isFalse();
 
@@ -42,7 +42,7 @@ public class DirtyTest {
 	 */
 	@Test
 	public void multiple() {
-		Dirty d = new Dirty( 1, 2, 3 );
+		DirtyFloats d = new DirtyFloats( 1, 2, 3 );
 
 		d.set( 0, 4 );
 		assertThat( d.changed() ).isTrue();
@@ -61,7 +61,7 @@ public class DirtyTest {
 	 */
 	@Test
 	public void named() {
-		Dirty d = new Dirty( 1, 2, 3 ).named( "foo", "bar", "baz" );
+		DirtyFloats d = new DirtyFloats( 1, 2, 3 ).named( "foo", "bar", "baz" );
 
 		d.set( "foo", 4 );
 		assertThat( d.changed() ).isTrue();
@@ -80,7 +80,7 @@ public class DirtyTest {
 	 */
 	@Test
 	public void lettered() {
-		Dirty d = new Dirty( 1, 2, 3 ).named( "a", "b", "c" );
+		DirtyFloats d = new DirtyFloats( 1, 2, 3 ).named( "a", "b", "c" );
 
 		d.a( 4 );
 		assertThat( d.changed() ).isTrue();
@@ -105,12 +105,12 @@ public class DirtyTest {
 		for( int i = 0; i < alpha.length(); i++ ) {
 			String letter = alpha.substring( i, i + 1 );
 
-			Dirty d = new Dirty( 0 ).named( letter );
+			DirtyFloats d = new DirtyFloats( 0 ).named( letter );
 
 			d.set( letter, 1 );
 			assertThat( d.changed() ).isTrue();
 
-			Method m = Dirty.class.getMethod( letter, float.class );
+			Method m = DirtyFloats.class.getMethod( letter, float.class );
 
 			m.invoke( d, new Float( 2 ) );
 

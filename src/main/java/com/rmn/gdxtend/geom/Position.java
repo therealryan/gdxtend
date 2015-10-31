@@ -16,7 +16,8 @@ public class Position {
 	/**
 	 * Orientation
 	 */
-	public final Quaternion rotation = new Quaternion( 0, 0, 1, 0 );
+	public final Quaternion rotation =
+			new Quaternion( new Vector3( 0, 0, 1 ), 0 );
 
 	/**
 	 * Scale
@@ -25,7 +26,7 @@ public class Position {
 
 	/**
 	 * Copy setter
-	 * 
+	 *
 	 * @param p
 	 *          the {@link Position} to cope
 	 * @return this
@@ -37,8 +38,35 @@ public class Position {
 		return this;
 	}
 
+	/**
+	 * @param p
+	 *          the position to add
+	 * @return this
+	 */
+	public Position add( Position p ) {
+		position.add( p.position );
+		rotation.mul( p.rotation );
+		scale *= p.scale;
+		return this;
+	}
+
+	@Override
+	public boolean equals( Object obj ) {
+		if( obj == this ) {
+			return true;
+		}
+		else if( obj instanceof Position ) {
+			Position p = (Position) obj;
+			return position.equals( p.position )
+					&& rotation.equals( p.rotation )
+					&& scale == p.scale;
+		}
+
+		return false;
+	}
+
 	@Override
 	public String toString() {
-		return position.toString();
+		return position + " " + rotation + " " + scale;
 	}
 }

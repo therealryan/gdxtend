@@ -6,7 +6,10 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
+import com.badlogic.gdx.graphics.VertexAttribute;
 import com.rmn.gdxtend.GdxTest;
+import com.rmn.gdxtend.geom.Shape;
+import com.rmn.gdxtend.geom.Topology;
 import com.rmn.gdxtend.gl.shader.None;
 
 /**
@@ -130,6 +133,32 @@ public class RendererTest extends GdxTest {
 		} );
 		assertThat( r.geometry[ 0 ].indices ).isEqualTo( new short[] {
 				0, 1, 2, 1, 2, 3, 0, 0, 0,
+		} );
+	}
+
+	/**
+	 * Exercises applying a transform as geometry is added
+	 */
+	@Test
+	public void transformedTriangle() {
+		Renderer r = new Renderer().withInitialSize( 5 );
+		r.transform.translate( 10, 20, 30 );
+
+		Shape triangle =
+				new Shape( 1, Topology.triangles, VertexAttribute.Position() )
+				.pos.xyz( 1, 2, 3 ).next()
+				.pos.xyz( 4, 5, 6 ).next()
+				.pos.xyz( 7, 8, 9 );
+
+		r.add( State.build( None.instance ), triangle );
+
+		assertThat( r.geometry ).hasSize( 1 );
+		assertThat( r.geometry[ 0 ].vertices ).isEqualTo( new float[] {
+				11, 22, 33,
+				14, 25, 36,
+				17, 28, 39,
+				0, 0, 0,
+				0, 0, 0,
 		} );
 	}
 }

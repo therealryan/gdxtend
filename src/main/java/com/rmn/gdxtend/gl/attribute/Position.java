@@ -112,18 +112,17 @@ public class Position extends Attribute<Position> {
 	 * Adds a rotation to the transform
 	 * 
 	 * @param x
-	 *          rotation center
+	 *          rotation axis
 	 * @param y
-	 *          rotation center
+	 *          rotation axis
 	 * @param z
-	 *          rotation center
+	 *          rotation axis
 	 * @param r
 	 *          in radians
 	 * @return this
 	 */
 	public Position rotate( float x, float y, float z, float r ) {
-		tmpv.set( x, y, z );
-		tmpm.rotate( tmpv, r );
+		tmpm.rotate( x, y, z, r );
 		return this;
 	}
 

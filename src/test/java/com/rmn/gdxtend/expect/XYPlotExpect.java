@@ -37,6 +37,9 @@ public class XYPlotExpect extends AbstractSketchExpect<XYPlotExpect> {
 	private int width = 400;
 	private int height = 400;
 
+	private String xLabel = "x";
+	private String yLabel = "y";
+
 	@Override
 	protected void finished( Description description ) {
 		super.finished( description );
@@ -46,7 +49,7 @@ public class XYPlotExpect extends AbstractSketchExpect<XYPlotExpect> {
 	/**
 	 * Sets the default config that will be returned to after each test and call
 	 * to {@link #reset()}
-	 * 
+	 *
 	 * @param gr
 	 *          A {@link XYPlotExpect}, configured as desired
 	 * @return this
@@ -67,7 +70,7 @@ public class XYPlotExpect extends AbstractSketchExpect<XYPlotExpect> {
 
 	/**
 	 * Sets the range over which the functions are evaluated
-	 * 
+	 *
 	 * @param from
 	 *          the minimum x value
 	 * @param to
@@ -110,8 +113,28 @@ public class XYPlotExpect extends AbstractSketchExpect<XYPlotExpect> {
 	}
 
 	/**
+	 * @param label
+	 *          name for the x axis
+	 * @return this
+	 */
+	public XYPlotExpect x( String label ) {
+		this.xLabel = label;
+		return self();
+	}
+
+	/**
+	 * @param label
+	 *          name for the y axis
+	 * @return this
+	 */
+	public XYPlotExpect y( String label ) {
+		this.yLabel = label;
+		return self();
+	}
+
+	/**
 	 * Adds a plot to the next graph to be checked
-	 * 
+	 *
 	 * @param name
 	 *          a name
 	 * @param f
@@ -129,6 +152,37 @@ public class XYPlotExpect extends AbstractSketchExpect<XYPlotExpect> {
 		}
 
 		plots.addSeries( s );
+		return self();
+	}
+
+	/**
+	 * Adds a number of plots to the graph to be checked
+	 *
+	 * @param f
+	 *          the functions
+	 * @return this
+	 */
+	public XYPlotExpect with( Functions f ) {
+		XYSeries[] sa = new XYSeries[ f.names().length ];
+		for( int i = 0; i < sa.length; i++ ) {
+			sa[ i ] = new XYSeries( f.names()[ i ] );
+		}
+
+		float lastX = pointsToXValue.destination.from;
+		for( int i = 0; i <= pointsToXValue.source.to; i++ ) {
+			float x = pointsToXValue.linearMap( i );
+			float[] y = f.map( x, x - lastX );
+			lastX = x;
+
+			for( int j = 0; j < sa.length; j++ ) {
+				sa[ j ].add( x, y[ j ] );
+			}
+		}
+
+		for( XYSeries s : sa ) {
+			plots.addSeries( s );
+		}
+
 		return self();
 	}
 
@@ -152,7 +206,7 @@ public class XYPlotExpect extends AbstractSketchExpect<XYPlotExpect> {
 	 */
 	public void check() {
 		JFreeChart jfc = ChartFactory.createXYLineChart(
-				resultName(), "x", "y", plots,
+				resultName(), xLabel, yLabel, plots,
 				PlotOrientation.VERTICAL, true, true, false );
 
 		jfc.setBackgroundPaint( Color.white );
@@ -167,5 +221,25 @@ public class XYPlotExpect extends AbstractSketchExpect<XYPlotExpect> {
 		check( g );
 
 		plots = new XYSeriesCollection();
+	}
+
+	/**
+	 * Sometime you want to plot multiple values while only advancing a system
+	 * once
+	 */
+	public interface Functions {
+		/**
+		 * @return An array of plot names
+		 */
+		public String[] names();
+
+		/**
+		 * @param f
+		 *          the input value
+		 * @param d
+		 *          The delta from the last input value
+		 * @return An array of plot values
+		 */
+		public float[] map( float f, float d );
 	}
 }

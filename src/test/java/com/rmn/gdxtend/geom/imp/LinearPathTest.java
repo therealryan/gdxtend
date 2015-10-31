@@ -4,7 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Test;
 
-import com.rmn.gdxtend.geom.Position;
+import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.Vector3;
 
 /**
  * tests for {@link LinearPath}
@@ -12,31 +13,32 @@ import com.rmn.gdxtend.geom.Position;
 public class LinearPathTest {
 
 	/**
-	 * Simple clamped and unclamped path tes
+	 * Simple clamped and unclamped path test
 	 */
 	@Test
 	public void diagonal() {
-		LinearPath clamped = new LinearPath();
-		clamped.duration.from( 0 ).to( 1 );
-		clamped.start.position.set( 0, 0, 0 );
-		clamped.end.position.set( 1, 1, 1 );
+		LinearPath clamped = new LinearPath()
+				.by( Interpolation.linear );
+		clamped.now( 0 ).over( 1 );
+		clamped.start.set( 0, 0, 0 );
+		clamped.end.set( 1, 1, 1 );
 
 		LinearPath unclamped = new LinearPath()
 				.from( clamped )
 				.clamp( false );
 
-		Position p = new Position();
+		Vector3 p = new Vector3();
 		float t = -1;
 		while( t < 2 ) {
-			unclamped.forTime( t, p );
-			assertThat( p.position.x ).isEqualTo( t );
-			assertThat( p.position.y ).isEqualTo( t );
-			assertThat( p.position.z ).isEqualTo( t );
+			unclamped.now( t ).get( p );
+			assertThat( p.x ).isEqualTo( t );
+			assertThat( p.y ).isEqualTo( t );
+			assertThat( p.z ).isEqualTo( t );
 
-			clamped.forTime( t, p );
-			assertThat( p.position.x ).isEqualTo( t < 0 ? 0 : t > 1 ? 1 : t );
-			assertThat( p.position.y ).isEqualTo( t < 0 ? 0 : t > 1 ? 1 : t );
-			assertThat( p.position.z ).isEqualTo( t < 0 ? 0 : t > 1 ? 1 : t );
+			clamped.now( t ).get( p );
+			assertThat( p.x ).isEqualTo( t < 0 ? 0 : t > 1 ? 1 : t );
+			assertThat( p.y ).isEqualTo( t < 0 ? 0 : t > 1 ? 1 : t );
+			assertThat( p.z ).isEqualTo( t < 0 ? 0 : t > 1 ? 1 : t );
 
 			t += 0.125f;
 		}

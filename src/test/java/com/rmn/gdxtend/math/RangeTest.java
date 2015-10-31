@@ -26,7 +26,7 @@ public class RangeTest {
 		Range r = new Range();
 
 		assertThat( r.from ).isEqualTo( 0 );
-		assertThat( r.to ).isEqualTo( 0 );
+		assertThat( r.to ).isEqualTo( Float.MIN_VALUE );
 
 		r.from( 4 ).to( 7 );
 

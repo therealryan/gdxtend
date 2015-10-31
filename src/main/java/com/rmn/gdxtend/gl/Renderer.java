@@ -4,7 +4,10 @@ import java.util.Arrays;
 
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Mesh;
+import com.badlogic.gdx.graphics.VertexAttribute;
+import com.badlogic.gdx.math.Vector3;
 import com.rmn.gdxtend.geom.Shape;
+import com.rmn.gdxtend.geom.TransformStack;
 import com.rmn.gdxtend.util.ArrayUtil;
 
 /**
@@ -17,6 +20,11 @@ public class Renderer {
 	private int initialSize = 100;
 
 	GeometryBatch[] geometry = new GeometryBatch[ 0 ];
+
+	/**
+	 * The transform that is applied to geometry as it is added
+	 */
+	public final TransformStack transform = new TransformStack();
 
 	/**
 	 * Sets the initial size of new geometry batches
@@ -85,7 +93,7 @@ public class Renderer {
 	}
 
 	/**
-	 * Adds a shape to bne rendered
+	 * Adds a shape to be rendered
 	 * 
 	 * @param gls
 	 *          the state to render with
@@ -115,13 +123,14 @@ public class Renderer {
 	}
 
 	/**
-	 * Draws all geometry
+	 * Draws all geometry. All geometry is flushed and the transform is reset
 	 */
 	public void render() {
 		for( GeometryBatch b : geometry ) {
 			b.render();
 			b.reset();
 		}
+		transform.clear();
 	}
 
 	/**
@@ -155,6 +164,23 @@ public class Renderer {
 			int existingVertexCount = vi / ( state.shader.attributes.vertexSize / 4 );
 			vertices = ArrayUtil.append( vertices, vi, verts );
 			indices = ArrayUtil.append( indices, ii, triangles );
+
+			if( !transform.identity() ) {
+				int vertexSize = state.shader.attributes.vertexSize / 4;
+				int positionOffset = state.shader.attributes.getOffset(
+						VertexAttribute.Position().usage ) / 4;
+
+				for( int i = 0; i < verts.length; i += vertexSize ) {
+					int xi = i + vi + positionOffset + 0;
+					int yi = xi + 1;
+					int zi = yi + 1;
+					Vector3 v = transform.transform(
+							vertices[ xi ], vertices[ yi ], vertices[ zi ] );
+					vertices[ xi ] = v.x;
+					vertices[ yi ] = v.y;
+					vertices[ zi ] = v.z;
+				}
+			}
 
 			for( int i = 0; i < triangles.length; i++ ) {
 				indices[ i + ii ] += existingVertexCount;

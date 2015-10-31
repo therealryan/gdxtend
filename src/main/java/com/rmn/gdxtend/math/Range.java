@@ -10,22 +10,15 @@ public class Range {
 	/**
 	 * start value
 	 */
-	public float from;
+	public float from = 0;
 	/**
 	 * end value
 	 */
-	public float to;
-
-	/**
-	 * @return distance between the start and end of the range
-	 */
-	public float length() {
-		return Math.abs( to - from );
-	}
+	public float to = Float.MIN_VALUE;
 
 	/**
 	 * Copies a range
-	 * 
+	 *
 	 * @param r
 	 *          the {@link Range} to copy
 	 * @return this
@@ -36,7 +29,7 @@ public class Range {
 
 	/**
 	 * Sets the start of the range
-	 * 
+	 *
 	 * @param f
 	 *          the start of the range
 	 * @return this
@@ -48,7 +41,7 @@ public class Range {
 
 	/**
 	 * Sets the end of the range
-	 * 
+	 *
 	 * @param f
 	 *          the end of the range
 	 * @return this
@@ -60,19 +53,36 @@ public class Range {
 
 	/**
 	 * Sets the end of the range based on the start
-	 * 
+	 *
 	 * @param f
 	 *          the delta from the start of the range
 	 * @return this
 	 */
 	public Range lasting( float f ) {
-		to = from + f;
-		return this;
+		return to( from + f );
+	}
+
+	/**
+	 * @return distance between the start and end of the range
+	 */
+	public float length() {
+		return length( from, to );
+	}
+
+	/**
+	 * @param from
+	 *          start
+	 * @param to
+	 *          end
+	 * @return distance between the start and end of the range
+	 */
+	public static float length( float from, float to ) {
+		return Math.abs( to - from );
 	}
 
 	/**
 	 * Linearly interpolates over the range
-	 * 
+	 *
 	 * @param a
 	 *          input value
 	 * @return the interpolated value
@@ -83,7 +93,7 @@ public class Range {
 
 	/**
 	 * Linearly interpolates over a range
-	 * 
+	 *
 	 * @param f
 	 *          the input value
 	 * @param from
@@ -98,7 +108,7 @@ public class Range {
 
 	/**
 	 * Reverses linear interpolation
-	 * 
+	 *
 	 * @param f
 	 *          a value in this range
 	 * @return the position of the value in the range
@@ -109,7 +119,7 @@ public class Range {
 
 	/**
 	 * Reverses linear interpolation
-	 * 
+	 *
 	 * @param f
 	 *          a value in the range
 	 * @param from
@@ -119,12 +129,16 @@ public class Range {
 	 * @return the position of the value in the range
 	 */
 	public float unlerp( float f, float from, float to ) {
+		if( from == to ) {
+			return 0.5f;
+		}
+
 		return ( f - from ) / ( to - from );
 	}
 
 	/**
 	 * Interpolates over the range
-	 * 
+	 *
 	 * @param a
 	 *          input value
 	 * @param i
@@ -159,7 +173,7 @@ public class Range {
 	 * @return <code>true</code> if the value falls within this range
 	 */
 	public boolean contains( float f ) {
-		return ( from <= f && f <= to ) || ( from >= f && f >= to );
+		return from <= f && f <= to || from >= f && f >= to;
 	}
 
 	/**
@@ -187,7 +201,7 @@ public class Range {
 	/**
 	 * Shifts the value by multiples of the range length so that it lies within
 	 * this range
-	 * 
+	 *
 	 * @param f
 	 *          the input value
 	 * @return the normalised value
@@ -199,7 +213,7 @@ public class Range {
 	/**
 	 * Shifts a value by multiples of the range length so that it lies within the
 	 * range
-	 * 
+	 *
 	 * @param f
 	 *          the input value
 	 * @param from
@@ -218,7 +232,7 @@ public class Range {
 
 	/**
 	 * Expands this range to encompass a point
-	 * 
+	 *
 	 * @param f
 	 *          value to expand to cover
 	 * @return this

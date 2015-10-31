@@ -97,18 +97,10 @@ public abstract class AbstractExpect<T extends AbstractExpect<T>> extends
 			// we'll just ignore that for now.
 			Method m = c.getMethod( description.getMethodName() );
 
-			boolean regenAll = "true".equals( System.getProperty( REGEN_PROPERTY ) )
+			regenerate = m.isAnnotationPresent( Regenerate.class )
+					|| "true".equals( System.getProperty( REGEN_PROPERTY ) )
 					|| c.isAnnotationPresent( Regenerate.class )
 					|| c.getPackage().isAnnotationPresent( Regenerate.class );
-
-			regenerate = m.isAnnotationPresent( Regenerate.class )
-					|| regenAll;
-
-			if( regenAll ) {
-				// everything is being regenerated anyway, let's take the opportunity to
-				// clean out any orphan result files
-				delete( getTestDir( Dir.EXPECT ) );
-			}
 		}
 		catch( Exception e ) {
 			e.printStackTrace();
@@ -145,7 +137,7 @@ public abstract class AbstractExpect<T extends AbstractExpect<T>> extends
 	 * expect file does not exist or if the regenerate property is set or the
 	 * {@link Regenerate} annotation is present, then the expected result file
 	 * will be overwritten with the actual result
-	 * 
+	 *
 	 * @param actual
 	 *          the result
 	 */
@@ -153,7 +145,7 @@ public abstract class AbstractExpect<T extends AbstractExpect<T>> extends
 
 		File expectFile = getFile( Dir.EXPECT );
 
-		if( !expectFile.exists() || regenerate ) {
+		if( regenerate ) {
 			// write the file
 			expectFile.getParentFile().mkdirs();
 			try {
@@ -175,7 +167,7 @@ public abstract class AbstractExpect<T extends AbstractExpect<T>> extends
 					getFile( Dir.ACTUAL ).getParentFile().mkdirs();
 					Files.write( getFile( Dir.ACTUAL ).toPath(), actual.getBytes() );
 
-					// signal failure
+					// signal failure. SoftAssertions doesn't have a fail method
 					softly.assertThat(
 							"diff " + expectFile + " " + getFile( Dir.ACTUAL ) )
 							.isEqualTo( "Files matched" );
@@ -219,19 +211,6 @@ public abstract class AbstractExpect<T extends AbstractExpect<T>> extends
 	@SuppressWarnings( "unchecked" )
 	protected T self() {
 		return (T) this;
-	}
-
-	private static boolean delete( File f ) {
-		if( f.isDirectory() ) {
-			boolean success = true;
-			for( File g : f.listFiles() ) {
-				success &= deleteEmptyDirs( g );
-			}
-			return success && f.delete();
-		}
-		else {
-			return f.delete();
-		}
 	}
 
 	private static boolean deleteEmptyDirs( File f ) {
