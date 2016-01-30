@@ -7,15 +7,17 @@ import static org.mockito.Mockito.verify;
 
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
-import com.rmn.gdxtend.GdxTest;
+import com.rmn.gdxtend.GdxTestRunner;
 
 /**
  * Tests for {@link TransformStack}
  */
-public class TransformStackTest extends GdxTest {
+@RunWith( GdxTestRunner.class )
+public class TransformStackTest {
 
 	private static SoftAssertions softly = new SoftAssertions();
 

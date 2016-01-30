@@ -190,6 +190,7 @@ public abstract class AbstractExpect<T extends AbstractExpect<T>> extends
 	private File getTestDir( Dir type ) {
 		StringBuilder path = new StringBuilder( type.path );
 
+		assert testClass != null : "You've failed to @Rule the Expect object";
 		for( String s : testClass.split( "\\." ) ) {
 			path.append( "/" ).append( s );
 		}

@@ -5,12 +5,15 @@ import static com.badlogic.gdx.graphics.VertexAttribute.Position;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
+import com.rmn.gdxtend.GdxTestRunner;
 import com.rmn.gdxtend.expect.ShapeExpect;
 
 /**
  * Tests for {@link Geometry} classes
  */
+@RunWith( GdxTestRunner.class )
 public class GeometryTest {
 
 	/**
@@ -155,4 +158,18 @@ public class GeometryTest {
 		expect.check( shape );
 	}
 
+	/**
+	 * Rounded quad
+	 */
+	@Test
+	public void roundedQuad() {
+		Shape s = new Shape( 16, Topology.fan, Position() );
+		Geometry.roundedQuad
+				.withWidth( 5 )
+				.withHeight( 5 )
+				.withRadius( 1 )
+				.define( s );
+
+		expect.check( s );
+	}
 }

@@ -94,7 +94,7 @@ public class Position extends Attribute<Position> {
 
 	/**
 	 * Adds a translation to the transform
-	 * 
+	 *
 	 * @param x
 	 *          translation component
 	 * @param y
@@ -104,13 +104,13 @@ public class Position extends Attribute<Position> {
 	 * @return this
 	 */
 	public Position translate( float x, float y, float z ) {
-		tmpm.trn( x, y, z );
+		tmpm.translate( x, y, z );
 		return this;
 	}
 
 	/**
 	 * Adds a rotation to the transform
-	 * 
+	 *
 	 * @param x
 	 *          rotation axis
 	 * @param y
@@ -128,7 +128,7 @@ public class Position extends Attribute<Position> {
 
 	/**
 	 * Adds a scale to the transform
-	 * 
+	 *
 	 * @param x
 	 *          scale component
 	 * @param y
@@ -138,13 +138,13 @@ public class Position extends Attribute<Position> {
 	 * @return this
 	 */
 	public Position scale( float x, float y, float z ) {
-		tmpm.scl( x, y, z );
+		tmpm.scale( x, y, z );
 		return this;
 	}
 
 	/**
 	 * Applies and resets the transform
-	 * 
+	 *
 	 * @return the shape
 	 */
 	public Shape apply() {

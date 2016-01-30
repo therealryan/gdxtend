@@ -45,6 +45,7 @@ public class FloatVariable extends TimeVariable<FloatVariable> {
 	 */
 	public FloatVariable to( float target ) {
 		value.from( get() ).to( target );
+		span.from( time );
 		return this;
 	}
 

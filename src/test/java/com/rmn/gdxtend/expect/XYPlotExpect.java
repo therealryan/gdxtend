@@ -2,6 +2,8 @@ package com.rmn.gdxtend.expect;
 
 import java.awt.Color;
 import java.awt.geom.Rectangle2D;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
@@ -39,6 +41,8 @@ public class XYPlotExpect extends AbstractSketchExpect<XYPlotExpect> {
 
 	private String xLabel = "x";
 	private String yLabel = "y";
+
+	private final SortedMap<Float, CallBack> triggers = new TreeMap<>();
 
 	@Override
 	protected void finished( Description description ) {
@@ -133,6 +137,20 @@ public class XYPlotExpect extends AbstractSketchExpect<XYPlotExpect> {
 	}
 
 	/**
+	 * Registers a callback for the next plot
+	 *
+	 * @param value
+	 *          the value to trigger at
+	 * @param cb
+	 *          what to do when we reach the value
+	 * @return this
+	 */
+	public XYPlotExpect at( float value, CallBack cb ) {
+		triggers.put( new Float( value ), cb );
+		return self();
+	}
+
+	/**
 	 * Adds a plot to the next graph to be checked
 	 *
 	 * @param name
@@ -146,10 +164,17 @@ public class XYPlotExpect extends AbstractSketchExpect<XYPlotExpect> {
 
 		for( int i = 0; i <= pointsToXValue.source.to; i++ ) {
 			float x = pointsToXValue.linearMap( i );
+
+			if( !triggers.isEmpty() && triggers.firstKey().floatValue() <= x ) {
+				triggers.remove( triggers.firstKey() ).trigger( x );
+			}
+
 			float y = f.map( x );
 
 			s.add( x, y );
 		}
+
+		triggers.clear();
 
 		plots.addSeries( s );
 		return self();
@@ -171,6 +196,11 @@ public class XYPlotExpect extends AbstractSketchExpect<XYPlotExpect> {
 		float lastX = pointsToXValue.destination.from;
 		for( int i = 0; i <= pointsToXValue.source.to; i++ ) {
 			float x = pointsToXValue.linearMap( i );
+
+			if( !triggers.isEmpty() && triggers.firstKey().floatValue() <= x ) {
+				triggers.remove( triggers.firstKey() ).trigger( x );
+			}
+
 			float[] y = f.map( x, x - lastX );
 			lastX = x;
 
@@ -178,6 +208,8 @@ public class XYPlotExpect extends AbstractSketchExpect<XYPlotExpect> {
 				sa[ j ].add( x, y[ j ] );
 			}
 		}
+
+		triggers.clear();
 
 		for( XYSeries s : sa ) {
 			plots.addSeries( s );
@@ -227,7 +259,7 @@ public class XYPlotExpect extends AbstractSketchExpect<XYPlotExpect> {
 	 * Sometime you want to plot multiple values while only advancing a system
 	 * once
 	 */
-	public interface Functions {
+	public static interface Functions {
 		/**
 		 * @return An array of plot names
 		 */
@@ -241,5 +273,18 @@ public class XYPlotExpect extends AbstractSketchExpect<XYPlotExpect> {
 		 * @return An array of plot values
 		 */
 		public float[] map( float f, float d );
+	}
+
+	/**
+	 * Callback interface for altering something mid-plot
+	 */
+	public static interface CallBack {
+		/**
+		 * Called during plot generation
+		 *
+		 * @param f
+		 *          plot input value
+		 */
+		public void trigger( float f );
 	}
 }
