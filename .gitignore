@@ -1,3 +1,8 @@
 bin/
 build/
 generated/
+src/test/resources/actual
+
+.project
+.classpath
+.settings
