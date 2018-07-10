@@ -31,11 +31,11 @@ public class Blended extends Shader {
 
 	private Blended() {
 		super(
-				new ShaderProgram(
-						Programs.Vertex.vertColour,
-						Programs.Fragment.passthrough ),
-				Position(),
-				ColorPacked() );
+		    new ShaderProgram(
+		        Programs.Vertex.vertColour,
+		        Programs.Fragment.passthrough ),
+		    Position(),
+		    ColorPacked() );
 	}
 
 	@Override

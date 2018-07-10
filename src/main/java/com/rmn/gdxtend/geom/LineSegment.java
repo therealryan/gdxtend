@@ -142,9 +142,9 @@ public class LineSegment {
 	 */
 	public float length() {
 		return Vector3.len(
-				end.x - start.x,
-				end.y - start.y,
-				end.z - start.z );
+		    end.x - start.x,
+		    end.y - start.y,
+		    end.z - start.z );
 	}
 
 	@Override

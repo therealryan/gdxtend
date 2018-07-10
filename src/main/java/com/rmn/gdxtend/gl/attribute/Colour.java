@@ -85,10 +85,10 @@ public class Colour extends Attribute<Colour> {
 	protected void applyToVertex( int index, float[] values, boolean[] set ) {
 		fromPacked( tmp, s.vertexData[ index ] );
 		tmp.set(
-				set[ 0 ] ? values[ 0 ] : tmp.r,
-				set[ 1 ] ? values[ 1 ] : tmp.g,
-				set[ 2 ] ? values[ 2 ] : tmp.b,
-				set[ 3 ] ? values[ 3 ] : tmp.a );
+		    set[ 0 ] ? values[ 0 ] : tmp.r,
+		    set[ 1 ] ? values[ 1 ] : tmp.g,
+		    set[ 2 ] ? values[ 2 ] : tmp.b,
+		    set[ 3 ] ? values[ 3 ] : tmp.a );
 
 		s.vertexData[ index ] = tmp.toFloatBits();
 	}

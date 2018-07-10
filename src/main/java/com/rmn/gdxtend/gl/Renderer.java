@@ -60,7 +60,7 @@ public class Renderer {
 			// new lists
 			for( State<?> s : states ) {
 				ngl[ s.getCompiledIndex() ] =
-						new GeometryBatch( s, initialSize, initialSize );
+				    new GeometryBatch( s, initialSize, initialSize );
 			}
 
 			// copy old lists - their states know where to go
@@ -168,14 +168,14 @@ public class Renderer {
 			if( !transform.identity() ) {
 				int vertexSize = state.shader.attributes.vertexSize / 4;
 				int positionOffset = state.shader.attributes.getOffset(
-						VertexAttribute.Position().usage ) / 4;
+				    VertexAttribute.Position().usage ) / 4;
 
 				for( int i = 0; i < verts.length; i += vertexSize ) {
 					int xi = i + vi + positionOffset + 0;
 					int yi = xi + 1;
 					int zi = yi + 1;
 					Vector3 v = transform.transform(
-							vertices[ xi ], vertices[ yi ], vertices[ zi ] );
+					    vertices[ xi ], vertices[ yi ], vertices[ zi ] );
 					vertices[ xi ] = v.x;
 					vertices[ yi ] = v.y;
 					vertices[ zi ] = v.z;
@@ -193,8 +193,8 @@ public class Renderer {
 
 		public void render() {
 			if( mesh == null
-					|| mesh.getMaxVertices() < vi
-					|| mesh.getMaxIndices() < ii ) {
+			    || mesh.getMaxVertices() < vi
+			    || mesh.getMaxIndices() < ii ) {
 				mesh = new Mesh( false, vi, ii, state.shader.attributes );
 				dirty = true;
 			}

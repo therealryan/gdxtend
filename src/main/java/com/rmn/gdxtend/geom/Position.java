@@ -17,7 +17,7 @@ public class Position {
 	 * Orientation
 	 */
 	public final Quaternion rotation =
-			new Quaternion( new Vector3( 0, 0, 1 ), 0 );
+	    new Quaternion( new Vector3( 0, 0, 1 ), 0 );
 
 	/**
 	 * Scale
@@ -58,8 +58,8 @@ public class Position {
 		else if( obj instanceof Position ) {
 			Position p = (Position) obj;
 			return position.equals( p.position )
-					&& rotation.equals( p.rotation )
-					&& scale == p.scale;
+			    && rotation.equals( p.rotation )
+			    && scale == p.scale;
 		}
 
 		return false;

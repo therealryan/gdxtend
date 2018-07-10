@@ -134,7 +134,7 @@ public class State<T extends Shader> implements Comparable<State<?>> {
 	private State( T shader ) {
 		this.shader = shader;
 		facets = new Facet[] { shader, texture, blend,
-				depthTest, polyOffset, clear, stencil };
+		    depthTest, polyOffset, clear, stencil };
 	}
 
 	/**

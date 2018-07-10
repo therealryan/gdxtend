@@ -205,8 +205,8 @@ public class Position extends Attribute<Position> {
 		float min = Float.MAX_VALUE, max = -Float.MAX_VALUE;
 		for( int i = 0; i < s.vertices(); i++ ) {
 			s.index( i );
-			min = Math.min( min, s.pos.get( ci ) );
-			max = Math.max( max, s.pos.get( ci ) );
+			min = Math.min( min, s.pos().get( ci ) );
+			max = Math.max( max, s.pos().get( ci ) );
 		}
 		return dst.from( min ).to( max );
 	}

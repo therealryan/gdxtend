@@ -76,8 +76,8 @@ public class TextureState extends Facet<TextureState> {
 	@Override
 	public TextureState from( TextureState t ) {
 		return with( t.texture )
-				.min( t.min ).mag( t.mag )
-				.s( t.s ).t( t.t );
+		    .min( t.min ).mag( t.mag )
+		    .s( t.s ).t( t.t );
 	}
 
 	@Override
@@ -101,19 +101,19 @@ public class TextureState extends Facet<TextureState> {
 	@Override
 	public int compareTo( TextureState other ) {
 		return Comparison.instance
-				.compare(
-						System.identityHashCode( texture ),
-						System.identityHashCode( other.texture ) )
-				.compare( min, other.min )
-				.compare( other.mag, mag )
-				.compare( other.s, s )
-				.compare( other.t, t )
-				.result();
+		    .compare(
+		        System.identityHashCode( texture ),
+		        System.identityHashCode( other.texture ) )
+		    .compare( min, other.min )
+		    .compare( other.mag, mag )
+		    .compare( other.s, s )
+		    .compare( other.t, t )
+		    .result();
 	}
 
 	@Override
 	public String toString() {
 		return "Texture " + texture + " min:" + min + " mag:" + mag + " s:" + s
-				+ " t:" + t;
+		    + " t:" + t;
 	}
 }

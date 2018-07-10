@@ -78,8 +78,8 @@ public class Comparison {
 
 		// first compare on distance to minimum
 		return compare( Math.abs( da ), Math.abs( db ) )
-				// if they're equidistant, just go for the smaller value
-				.compare( da, db );
+		    // if they're equidistant, just go for the smaller value
+		    .compare( da, db );
 	}
 
 	/**

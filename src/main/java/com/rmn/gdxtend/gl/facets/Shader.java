@@ -76,9 +76,9 @@ public abstract class Shader extends Facet<Shader> {
 	public final int compareTo( Shader s ) {
 
 		int cc = Comparison.instance.compare(
-				getClass().getName(),
-				s.getClass().getName() )
-				.result();
+		    getClass().getName(),
+		    s.getClass().getName() )
+		    .result();
 
 		if( cc == 0 ) {
 			cc = uniformCompare( s );

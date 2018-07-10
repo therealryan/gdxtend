@@ -38,38 +38,38 @@ public class Programs {
 		 * Colour is passed in a uniform, camera and model matrices
 		 */
 		public static final String monotone = ""
-				+ "attribute vec4 " + aPos + ";            \n"
-				+ "uniform mat4 " + uCam + ";              \n"
-				+ "uniform mat4 " + uMod + ";              \n"
-				+ "uniform vec4 " + uColour + ";           \n"
-				+ "varying vec4 v_color;                   \n"
-				+ "                                        \n"
-				+ "void main() {                           \n"
-				+ "  v_color = " + uColour + ";            \n"
-				+ "  gl_Position =  u_camera               \n"
-				+ "               * u_model                \n"
-				+ "               * " + aPos + ";          \n"
-				+ "}                                       \n";
+		    + "attribute vec4 " + aPos + ";            \n"
+		    + "uniform mat4 " + uCam + ";              \n"
+		    + "uniform mat4 " + uMod + ";              \n"
+		    + "uniform vec4 " + uColour + ";           \n"
+		    + "varying vec4 v_color;                   \n"
+		    + "                                        \n"
+		    + "void main() {                           \n"
+		    + "  v_color = " + uColour + ";            \n"
+		    + "  gl_Position =  u_camera               \n"
+		    + "               * u_model                \n"
+		    + "               * " + aPos + ";          \n"
+		    + "}                                       \n";
 
 		/**
 		 * Standard position/colour shader with camera and model matrices
 		 */
 		public static final String vertColour = ""
-				+ "attribute vec4 " + aPos + ";            \n"
-				+ "attribute vec4 " + aCol + ";            \n"
-				+ "uniform mat4 " + uCam + ";              \n"
-				+ "uniform mat4 " + uMod + ";              \n"
-				+ "varying vec4 v_color;                   \n"
-				+ "                                        \n"
-				+ "void main() {                           \n"
-				+ "  v_color = " + aCol + ";               \n"
+		    + "attribute vec4 " + aPos + ";            \n"
+		    + "attribute vec4 " + aCol + ";            \n"
+		    + "uniform mat4 " + uCam + ";              \n"
+		    + "uniform mat4 " + uMod + ";              \n"
+		    + "varying vec4 v_color;                   \n"
+		    + "                                        \n"
+		    + "void main() {                           \n"
+		    + "  v_color = " + aCol + ";               \n"
 				// this is because we have to mask out the high bits when converting
 				// from packed int to float, hence we don't get the full alpha range
-				+ "  v_color.a = v_color.a * (255.0/254.0);\n"
-				+ "  gl_Position =  u_camera               \n"
-				+ "               * u_model                \n"
-				+ "               * " + aPos + ";          \n"
-				+ "}                                       \n";
+		    + "  v_color.a = v_color.a * (255.0/254.0);\n"
+		    + "  gl_Position =  u_camera               \n"
+		    + "               * u_model                \n"
+		    + "               * " + aPos + ";          \n"
+		    + "}                                       \n";
 	}
 
 	/**
@@ -84,16 +84,16 @@ public class Programs {
 		 * Standard vertex colour interpolation
 		 */
 		public static final String passthrough = ""
-				+ "#ifdef GL_ES                  \n"
-				+ "#define LOWP lowp             \n"
-				+ "precision mediump float;      \n"
-				+ "#else                         \n"
-				+ "#define LOWP                  \n"
-				+ "#endif                        \n"
-				+ "varying LOWP vec4 v_color;    \n"
-				+ "void main() {                 \n"
-				+ "  gl_FragColor = v_color;     \n"
-				+ "}                             \n";
+		    + "#ifdef GL_ES                  \n"
+		    + "#define LOWP lowp             \n"
+		    + "precision mediump float;      \n"
+		    + "#else                         \n"
+		    + "#define LOWP                  \n"
+		    + "#endif                        \n"
+		    + "varying LOWP vec4 v_color;    \n"
+		    + "void main() {                 \n"
+		    + "  gl_FragColor = v_color;     \n"
+		    + "}                             \n";
 	}
 
 }

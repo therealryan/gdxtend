@@ -74,8 +74,8 @@ public abstract class Geometry {
 			int edges = s.vertices() - s.index();
 			float inc = (float) ( Math.PI * 2 / edges );
 			for( int i = 0; i < edges; i++ ) {
-				s.pos.x( (float) Math.cos( i * inc ) * radius )
-						.y( (float) Math.sin( i * inc ) * radius ).done().next();
+				s.pos().x( (float) Math.cos( i * inc ) * radius )
+				    .y( (float) Math.sin( i * inc ) * radius ).done().next();
 			}
 
 			resetParameters();
@@ -93,11 +93,11 @@ public abstract class Geometry {
 		@Override
 		public void define( Shape s ) {
 			int edges = s.vertices() - s.index() - 1;
-			s.pos.x( 0 ).y( 0 ).done().next();
+			s.pos().x( 0 ).y( 0 ).done().next();
 			float inc = (float) ( Math.PI * 2 / edges );
 			for( int i = 0; i < edges; i++ ) {
-				s.pos.x( (float) Math.cos( i * inc ) * radius )
-						.y( (float) Math.sin( i * inc ) * radius ).done().next();
+				s.pos().x( (float) Math.cos( i * inc ) * radius )
+				    .y( (float) Math.sin( i * inc ) * radius ).done().next();
 			}
 
 			resetParameters();
@@ -119,11 +119,11 @@ public abstract class Geometry {
 			float inc = (float) ( Math.PI * 2 / segments );
 
 			for( int i = 0; i < segments; i++ ) {
-				s.pos.x( (float) Math.cos( i * inc ) * radius )
-						.y( (float) Math.sin( i * inc ) * radius ).done().next();
-				s.pos.x( (float) Math.cos( i * inc ) * ( radius - width ) )
-						.y( (float) Math.sin( i * inc ) * ( radius - width ) ).done()
-						.next();
+				s.pos().x( (float) Math.cos( i * inc ) * radius )
+				    .y( (float) Math.sin( i * inc ) * radius ).done().next();
+				s.pos().x( (float) Math.cos( i * inc ) * ( radius - width ) )
+				    .y( (float) Math.sin( i * inc ) * ( radius - width ) ).done()
+				    .next();
 			}
 
 			resetParameters();
@@ -142,10 +142,10 @@ public abstract class Geometry {
 			int quads = ( s.vertices() - s.index() ) / 4;
 
 			for( int i = 0; i < quads; i++ ) {
-				s.pos.x( 0 ).y( 0 ).done().next();
-				s.pos.x( 0 ).y( height ).done().next();
-				s.pos.x( width ).y( 0 ).done().next();
-				s.pos.x( width ).y( height ).done().next();
+				s.pos().x( 0 ).y( 0 ).done().next();
+				s.pos().x( 0 ).y( height ).done().next();
+				s.pos().x( width ).y( 0 ).done().next();
+				s.pos().x( width ).y( height ).done().next();
 			}
 
 			resetParameters();
@@ -163,7 +163,7 @@ public abstract class Geometry {
 
 			// bottom -> right
 			cornerArc( s, vertsPerCorner, width - radius, radius,
-					1.5f * MathUtils.PI );
+			    1.5f * MathUtils.PI );
 			// right -> top
 			cornerArc( s, vertsPerCorner, width - radius, height - radius, 0 );
 			// top -> left
@@ -175,15 +175,15 @@ public abstract class Geometry {
 		}
 
 		private void cornerArc( Shape s, int vertsPerCorner,
-				float centerX, float centerY, float startAngle ) {
+		    float centerX, float centerY, float startAngle ) {
 			float angleIncrement = MathUtils.PI / 2 / ( vertsPerCorner - 1 );
 			for( int i = 0; i < vertsPerCorner; i++ ) {
-				s.pos
-						.x( centerX
-								+ MathUtils.cos( startAngle + i * angleIncrement ) * radius )
-						.y( centerY
-								+ MathUtils.sin( startAngle + i * angleIncrement ) * radius )
-						.done().next();
+				s.pos()
+				    .x( centerX
+				        + MathUtils.cos( startAngle + i * angleIncrement ) * radius )
+				    .y( centerY
+				        + MathUtils.sin( startAngle + i * angleIncrement ) * radius )
+				    .done().next();
 			}
 		}
 	};

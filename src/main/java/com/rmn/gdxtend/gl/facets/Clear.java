@@ -109,17 +109,17 @@ public class Clear extends Facet<Clear> {
 	@Override
 	public Clear from( Clear c ) {
 		return color( c.color )
-				.depth( c.depth )
-				.stencil( c.stencil );
+		    .depth( c.depth )
+		    .stencil( c.stencil );
 	}
 
 	@Override
 	public int compareTo( Clear c ) {
 		return Comparison.instance
-				.compare( color.toIntBits(), c.color.toIntBits(), DEFAULT_COLOR )
-				.compare( depth, c.depth, DEFAULT_DEPTH )
-				.compare( stencil, c.stencil, DEFAULT_STENCIL )
-				.result();
+		    .compare( color.toIntBits(), c.color.toIntBits(), DEFAULT_COLOR )
+		    .compare( depth, c.depth, DEFAULT_DEPTH )
+		    .compare( stencil, c.stencil, DEFAULT_STENCIL )
+		    .result();
 	}
 
 	@Override

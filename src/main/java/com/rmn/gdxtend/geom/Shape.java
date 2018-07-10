@@ -11,14 +11,8 @@ import com.rmn.gdxtend.gl.attribute.Position;
  * A polygonal shape with some number of vertex attributes
  */
 public class Shape {
-	/**
-	 * Controls for vertex position
-	 */
-	public final Position pos;
-	/**
-	 * Controls for vertex colour
-	 */
-	public final Colour col;
+	private final Position pos;
+	private final Colour col;
 
 	/**
 	 * Vertex attributes
@@ -49,7 +43,7 @@ public class Shape {
 	 *          vertex attributes
 	 */
 	public Shape( int vertexCount, int triangleCount,
-			VertexAttribute... attr ) {
+	    VertexAttribute... attr ) {
 		attributes = new VertexAttributes( attr );
 		vertexData = new float[ vertexCount * attributes.vertexSize / 4 ];
 		indices = new short[ triangleCount * 3 ];
@@ -68,7 +62,7 @@ public class Shape {
 	 *          vertex attributes over
 	 */
 	public Shape( int elements, Topology t,
-			VertexAttribute... additional ) {
+	    VertexAttribute... additional ) {
 		this( t.verticesFor( elements ), t.trianglesFor( elements ), additional );
 		t.define( this );
 	}
@@ -86,7 +80,7 @@ public class Shape {
 		for( Shape s : constituents ) {
 			if( !attributes.equals( s.attributes ) ) {
 				throw new IllegalArgumentException( "Different attributes: "
-						+ attributes + " != " + s.attributes );
+				    + attributes + " != " + s.attributes );
 			}
 			vc += s.vertexData.length;
 			ic += s.indices.length;
@@ -109,6 +103,20 @@ public class Shape {
 		}
 		pos = new Position( this );
 		col = new Colour( this );
+	}
+
+	/**
+	 * @return Controls for vertex position
+	 */
+	public final Position pos() {
+		return pos;
+	}
+
+	/**
+	 * @return Controls for vertex colour
+	 */
+	public final Colour col() {
+		return col;
 	}
 
 	/**

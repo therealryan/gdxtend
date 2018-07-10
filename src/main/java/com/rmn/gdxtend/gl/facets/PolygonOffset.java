@@ -69,8 +69,8 @@ public class PolygonOffset extends Facet<PolygonOffset> {
 	@Override
 	public PolygonOffset from( PolygonOffset p ) {
 		return enabled( p.enabled )
-				.factor( p.factor )
-				.units( p.units );
+		    .factor( p.factor )
+		    .units( p.units );
 	}
 
 	@Override
@@ -92,15 +92,15 @@ public class PolygonOffset extends Facet<PolygonOffset> {
 	@Override
 	public int compareTo( PolygonOffset po ) {
 		return Comparison.instance
-				.compare( enabled, po.enabled, DEFAULT_ENABLED )
-				.compare( factor, po.factor, DEFAULT_FACTOR )
-				.compare( units, po.units, DEFAULT_UNITS )
-				.result();
+		    .compare( enabled, po.enabled, DEFAULT_ENABLED )
+		    .compare( factor, po.factor, DEFAULT_FACTOR )
+		    .compare( units, po.units, DEFAULT_UNITS )
+		    .result();
 	}
 
 	@Override
 	public String toString() {
 		return "Polygon offset " + enabled + " factor:" + factor + " units:"
-				+ units;
+		    + units;
 	}
 }

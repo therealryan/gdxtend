@@ -110,10 +110,10 @@ public class Depth extends Facet<Depth> {
 	@Override
 	public Depth from( Depth d ) {
 		return enabled( d.enabled )
-				.far( d.far )
-				.function( d.func )
-				.mask( d.mask )
-				.near( d.near );
+		    .far( d.far )
+		    .function( d.func )
+		    .mask( d.mask )
+		    .near( d.near );
 	}
 
 	@Override
@@ -141,12 +141,12 @@ public class Depth extends Facet<Depth> {
 	@Override
 	public int compareTo( Depth d ) {
 		return Comparison.instance
-				.compare( enabled, d.enabled, DEFAULT_ENABLED )
-				.compare( func, d.func, DEFAULT_FUNCTION )
-				.compare( mask, d.mask, DEFAULT_MASK )
-				.compare( near, d.near, DEFAULT_NEAR )
-				.compare( far, d.far, DEFAULT_FAR )
-				.result();
+		    .compare( enabled, d.enabled, DEFAULT_ENABLED )
+		    .compare( func, d.func, DEFAULT_FUNCTION )
+		    .compare( mask, d.mask, DEFAULT_MASK )
+		    .compare( near, d.near, DEFAULT_NEAR )
+		    .compare( far, d.far, DEFAULT_FAR )
+		    .result();
 	}
 
 	@Override

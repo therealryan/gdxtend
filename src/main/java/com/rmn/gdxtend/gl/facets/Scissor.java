@@ -96,19 +96,19 @@ public class Scissor extends Facet<Scissor> {
 	@Override
 	public Scissor from( Scissor s ) {
 		return enabled( s.enabled )
-				.x( s.x ).y( s.y )
-				.width( s.width ).height( s.height );
+		    .x( s.x ).y( s.y )
+		    .width( s.width ).height( s.height );
 	}
 
 	@Override
 	public int compareTo( Scissor s ) {
 		return Comparison.instance
-				.compare( enabled, s.enabled, DEFAULT_ENABLED )
-				.compare( x, s.x, DEFAULT_MIN )
-				.compare( y, s.y, DEFAULT_MIN )
-				.compare( width, s.width, DEFAULT_SIZE )
-				.compare( height, s.height, DEFAULT_SIZE )
-				.result();
+		    .compare( enabled, s.enabled, DEFAULT_ENABLED )
+		    .compare( x, s.x, DEFAULT_MIN )
+		    .compare( y, s.y, DEFAULT_MIN )
+		    .compare( width, s.width, DEFAULT_SIZE )
+		    .compare( height, s.height, DEFAULT_SIZE )
+		    .result();
 	}
 
 	@Override

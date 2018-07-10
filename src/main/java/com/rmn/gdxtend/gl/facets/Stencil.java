@@ -145,27 +145,27 @@ public class Stencil extends Facet<Stencil> {
 	@Override
 	public Stencil from( Stencil s ) {
 		return enabled( s.enabled )
-				.function( s.function )
-				.reference( s.reference )
-				.testMask( s.testMask )
-				.writeMask( s.writeMask )
-				.sfail( s.sfail )
-				.dpfail( s.dpfail )
-				.dppass( s.dppass );
+		    .function( s.function )
+		    .reference( s.reference )
+		    .testMask( s.testMask )
+		    .writeMask( s.writeMask )
+		    .sfail( s.sfail )
+		    .dpfail( s.dpfail )
+		    .dppass( s.dppass );
 	}
 
 	@Override
 	public int compareTo( Stencil s ) {
 		return Comparison.instance
-				.compare( enabled, s.enabled, DEFAULT_ENABLED )
-				.compare( function, s.function, DEFAULT_FUNCTION )
-				.compare( reference, s.reference, DEFAULT_REF )
-				.compare( testMask, s.testMask, DEFAULT_MASK )
-				.compare( writeMask, s.writeMask, DEFAULT_MASK )
-				.compare( sfail, s.sfail, DEFAULT_OPERATION )
-				.compare( dpfail, s.dpfail, DEFAULT_OPERATION )
-				.compare( dppass, s.dppass, DEFAULT_OPERATION )
-				.result();
+		    .compare( enabled, s.enabled, DEFAULT_ENABLED )
+		    .compare( function, s.function, DEFAULT_FUNCTION )
+		    .compare( reference, s.reference, DEFAULT_REF )
+		    .compare( testMask, s.testMask, DEFAULT_MASK )
+		    .compare( writeMask, s.writeMask, DEFAULT_MASK )
+		    .compare( sfail, s.sfail, DEFAULT_OPERATION )
+		    .compare( dpfail, s.dpfail, DEFAULT_OPERATION )
+		    .compare( dppass, s.dppass, DEFAULT_OPERATION )
+		    .result();
 	}
 
 	@Override
@@ -180,7 +180,7 @@ public class Stencil extends Facet<Stencil> {
 		}
 
 		if( function != s.function || reference != s.reference
-				|| testMask != s.testMask ) {
+		    || testMask != s.testMask ) {
 			gl.glStencilFunc( function.value, reference, testMask );
 		}
 
@@ -197,7 +197,7 @@ public class Stencil extends Facet<Stencil> {
 	public String toString() {
 
 		return "Stencil " + enabled + " function:" + function + " ref:" + reference
-				+ " tm:" + testMask + " wm:" + writeMask + " fail:" + sfail + " zfail:"
-				+ dpfail + " zpass:" + dppass;
+		    + " tm:" + testMask + " wm:" + writeMask + " fail:" + sfail + " zfail:"
+		    + dpfail + " zpass:" + dppass;
 	}
 }

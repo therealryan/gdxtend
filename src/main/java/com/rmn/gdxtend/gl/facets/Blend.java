@@ -149,10 +149,10 @@ public class Blend extends Facet<Blend> {
 	@Override
 	public Blend from( Blend b ) {
 		return enabled( b.enabled )
-				.color( b.color )
-				.dst( b.destFactor )
-				.src( b.srcFactor )
-				.equation( b.equation );
+		    .color( b.color )
+		    .dst( b.destFactor )
+		    .src( b.srcFactor )
+		    .equation( b.equation );
 	}
 
 	@Override
@@ -180,17 +180,17 @@ public class Blend extends Facet<Blend> {
 	@Override
 	public int compareTo( Blend b ) {
 		return Comparison.instance
-				.compare( enabled, b.enabled, DEFAULT_ENABLED )
-				.compare( srcFactor, b.srcFactor, DEFAULT_SRC_FACTOR )
-				.compare( destFactor, b.destFactor, DEFAULT_DEST_FACTOR )
-				.compare( equation, b.equation, DEFAULT_EQUATION )
-				.compare( color.toIntBits(), b.color.toIntBits(), DEFAULT_COLOUR )
-				.result();
+		    .compare( enabled, b.enabled, DEFAULT_ENABLED )
+		    .compare( srcFactor, b.srcFactor, DEFAULT_SRC_FACTOR )
+		    .compare( destFactor, b.destFactor, DEFAULT_DEST_FACTOR )
+		    .compare( equation, b.equation, DEFAULT_EQUATION )
+		    .compare( color.toIntBits(), b.color.toIntBits(), DEFAULT_COLOUR )
+		    .result();
 	}
 
 	@Override
 	public String toString() {
 		return "Blending " + enabled + " src:" + srcFactor + " dest:" + destFactor
-				+ " eq:" + equation + " color:" + color;
+		    + " eq:" + equation + " color:" + color;
 	}
 }

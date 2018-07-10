@@ -22,18 +22,18 @@ public class Monotone extends Shader {
 	 */
 	public Monotone() {
 		super(
-				new ShaderProgram(
-						Programs.Vertex.monotone,
-						Programs.Fragment.passthrough ),
-				VertexAttribute.Position() );
+		    new ShaderProgram(
+		        Programs.Vertex.monotone,
+		        Programs.Fragment.passthrough ),
+		    VertexAttribute.Position() );
 	}
 
 	@Override
 	protected int uniformCompare( Shader other ) {
 		return Comparison.instance.compare(
-				colour.toIntBits(),
-				( (Monotone) other ).colour.toIntBits() )
-				.result();
+		    colour.toIntBits(),
+		    ( (Monotone) other ).colour.toIntBits() )
+		    .result();
 	}
 
 	@Override
