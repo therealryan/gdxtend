@@ -8,15 +8,9 @@ sourceSets.test.java.srcDirs = [ "src/test/java" ]
 
 dependencies {
 	compile "com.badlogicgames.gdx:gdx:$gdxVersion"
-	testCompile "junit:junit:4.11"
-	testCompile "org.mockito:mockito-core:1.+"
-	testCompile "org.assertj:assertj-core:1.7.1"
-	testCompile "org.jfree:jfreesvg:2.0"
-	testCompile "jfree:jfreechart:1.0.12"
-	testCompile "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
-	testCompile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
 }
 
 eclipse.project {
     name = appName + "-gdxtend"
 }
+
