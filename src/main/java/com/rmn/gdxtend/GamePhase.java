@@ -1,14 +1,12 @@
 package com.rmn.gdxtend;
 
-
 /**
  * Defines a distinct phase of a game flow
  */
 public interface GamePhase {
 
 	/**
-	 * Called when this phase is starting. Use this to register event handlers
-	 * etc.
+	 * Called when this phase is starting. Use this to register event handlers etc.
 	 */
 	void start();
 
@@ -23,7 +21,7 @@ public interface GamePhase {
 	/**
 	 * Draws the state of the phase.
 	 */
-	void draw( );
+	void draw();
 
 	/**
 	 * Transitions from one state to the next. This will be called every frame, so

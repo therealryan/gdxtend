@@ -44,8 +44,8 @@ public abstract class TimeVariable<T extends TimeVariable<T>> {
 
 	/**
 	 * @param i
-	 *          the new {@link Interpolation} to use when converting time values
-	 *          to input values
+	 *          the new {@link Interpolation} to use when converting time values to
+	 *          input values
 	 * @return this
 	 */
 	public T by( Interpolation i ) {

@@ -36,8 +36,8 @@ public class Comparison {
 	 * @param b
 	 *          right value
 	 * @param minimum
-	 *          the minimum value - comparison will rank according to distance
-	 *          from this value
+	 *          the minimum value - comparison will rank according to distance from
+	 *          this value
 	 * @return this
 	 */
 	public Comparison compare( boolean a, boolean b, boolean minimum ) {
@@ -68,8 +68,8 @@ public class Comparison {
 	 * @param b
 	 *          right value
 	 * @param min
-	 *          the minimum value - comparison will rank according to distance
-	 *          from this value
+	 *          the minimum value - comparison will rank according to distance from
+	 *          this value
 	 * @return this
 	 */
 	public Comparison compare( float a, float b, float min ) {

@@ -78,8 +78,8 @@ public class RangeMap implements Function {
 	 * 
 	 * @param f
 	 *          output value
-	 * @return the value in the source range that corresponds to f's position in
-	 *         the destination map
+	 * @return the value in the source range that corresponds to f's position in the
+	 *         destination map
 	 */
 	public float linearUnmap( float f ) {
 		return source.lerp( destination.unlerp( f ) );
@@ -104,8 +104,8 @@ public class RangeMap implements Function {
 	}
 
 	/**
-	 * Maps from a point in the source range (linear) to a point in the
-	 * destination range (based on the current interpolation function)
+	 * Maps from a point in the source range (linear) to a point in the destination
+	 * range (based on the current interpolation function)
 	 * 
 	 * @param f
 	 *          the source value

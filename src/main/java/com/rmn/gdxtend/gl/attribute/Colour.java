@@ -94,8 +94,8 @@ public class Colour extends Attribute<Colour> {
 	}
 
 	/**
-	 * The inverse of {@link Color#toFloatBits()}. Bear in mind that we lost the
-	 * low alpha bit on the way out.
+	 * The inverse of {@link Color#toFloatBits()}. Bear in mind that we lost the low
+	 * alpha bit on the way out.
 	 * 
 	 * @param c
 	 *          the {@link Color} to set

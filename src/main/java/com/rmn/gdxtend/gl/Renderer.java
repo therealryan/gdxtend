@@ -30,8 +30,8 @@ public class Renderer {
 	 * Sets the initial size of new geometry batches
 	 * 
 	 * @param size
-	 *          The number of vertices and indices that can be accommodated
-	 *          without resizing the buffers
+	 *          The number of vertices and indices that can be accommodated without
+	 *          resizing the buffers
 	 * @return this
 	 */
 	public Renderer withInitialSize( int size ) {

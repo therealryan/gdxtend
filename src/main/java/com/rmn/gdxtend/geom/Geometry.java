@@ -105,8 +105,8 @@ public abstract class Geometry {
 	};
 
 	/**
-	 * A circular strip of quads centered on the z-axis, anticlockwise when
-	 * viewing in the negative z direction.
+	 * A circular strip of quads centered on the z-axis, anticlockwise when viewing
+	 * in the negative z direction.
 	 *
 	 * @see Topology#loop
 	 */

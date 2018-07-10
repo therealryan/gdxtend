@@ -16,7 +16,7 @@ public class Shape {
 	 */
 	public final Position pos;
 	/**
-	 * Controls for vertx colour
+	 * Controls for vertex colour
 	 */
 	public final Colour col;
 
@@ -40,7 +40,7 @@ public class Shape {
 
 	/**
 	 * Constructs a new shape
-	 * 
+	 *
 	 * @param vertexCount
 	 *          the number of vertices
 	 * @param triangleCount
@@ -59,7 +59,7 @@ public class Shape {
 
 	/**
 	 * Constructs a new shape
-	 * 
+	 *
 	 * @param elements
 	 *          the number of elements - what that means depends on the topography
 	 * @param t
@@ -75,7 +75,7 @@ public class Shape {
 
 	/**
 	 * Constructs a gestalt shape
-	 * 
+	 *
 	 * @param constituents
 	 *          the shapes to combine
 	 */
@@ -120,13 +120,13 @@ public class Shape {
 
 	/**
 	 * Sets the index of the vertex that will be subject to setter calls
-	 * 
+	 *
 	 * @param i
 	 *          vertex index
 	 * @return this
 	 */
 	public Shape index( int i ) {
-		this.vi = i;
+		vi = i;
 		return this;
 	}
 
@@ -139,7 +139,7 @@ public class Shape {
 
 	/**
 	 * Advances the vertex index
-	 * 
+	 *
 	 * @return this
 	 */
 	public Shape next() {
@@ -149,7 +149,7 @@ public class Shape {
 
 	/**
 	 * Adds a triangle by indexing vertices
-	 * 
+	 *
 	 * @param a
 	 *          vertex index
 	 * @param b

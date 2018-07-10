@@ -12,10 +12,10 @@ public enum MagFilter {
 	 */
 	NEAREST( TextureFilter.Nearest ),
 	/**
-	 * Returns the weighted average of the four texture elements that are closest
-	 * to the center of the pixel being textured. These can include border texture
-	 * elements, depending on the values of GL_TEXTURE_WRAP_S and
-	 * GL_TEXTURE_WRAP_T, and on the exact mapping.
+	 * Returns the weighted average of the four texture elements that are closest to
+	 * the center of the pixel being textured. These can include border texture
+	 * elements, depending on the values of GL_TEXTURE_WRAP_S and GL_TEXTURE_WRAP_T,
+	 * and on the exact mapping.
 	 */
 	LINEAR( TextureFilter.Linear );
 

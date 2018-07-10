@@ -91,8 +91,8 @@ public class Stencil extends Facet<Stencil> {
 	}
 
 	/**
-	 * Specifies a bit mask to enable and disable writing of individual bits in
-	 * the stencil planes. Initially, the mask is all 1's.
+	 * Specifies a bit mask to enable and disable writing of individual bits in the
+	 * stencil planes. Initially, the mask is all 1's.
 	 * 
 	 * @param m
 	 *          new mask value
@@ -116,8 +116,8 @@ public class Stencil extends Facet<Stencil> {
 	}
 
 	/**
-	 * Specifies the stencil action when the stencil test passes, but the depth
-	 * test fails.
+	 * Specifies the stencil action when the stencil test passes, but the depth test
+	 * fails.
 	 * 
 	 * @param s
 	 *          new operation
@@ -130,8 +130,8 @@ public class Stencil extends Facet<Stencil> {
 
 	/**
 	 * Specifies the stencil action when both the stencil test and the depth test
-	 * pass, or when the stencil test passes and either there is no depth buffer
-	 * or depth testing is not enabled.
+	 * pass, or when the stencil test passes and either there is no depth buffer or
+	 * depth testing is not enabled.
 	 * 
 	 * @param s
 	 *          new operation

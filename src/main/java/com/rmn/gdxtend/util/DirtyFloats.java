@@ -7,7 +7,6 @@ import com.badlogic.gdx.utils.ObjectIntMap;
 /**
  * Convenient way to maintain a dirty-checking set of values
  */
-@SuppressWarnings( "javadoc" )
 public class DirtyFloats {
 
 	private final float[] current;
@@ -21,7 +20,7 @@ public class DirtyFloats {
 	 *          initial values
 	 */
 	public DirtyFloats( float... initial ) {
-		this.current = initial;
+		current = initial;
 	}
 
 	/**

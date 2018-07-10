@@ -145,8 +145,8 @@ public class TransformStack {
 	 *          point y
 	 * @param z
 	 *          point z
-	 * @return the transformed point. Don't hang on to this object, it is liable
-	 *         to change under you.
+	 * @return the transformed point. Don't hang on to this object, it is liable to
+	 *         change under you.
 	 */
 	public Vector3 transform( float x, float y, float z ) {
 		tmp.set( x, y, z );

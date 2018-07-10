@@ -199,8 +199,8 @@ public class Range {
 	}
 
 	/**
-	 * Shifts the value by multiples of the range length so that it lies within
-	 * this range
+	 * Shifts the value by multiples of the range length so that it lies within this
+	 * range
 	 *
 	 * @param f
 	 *          the input value

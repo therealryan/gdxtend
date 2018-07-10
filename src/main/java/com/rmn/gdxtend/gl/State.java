@@ -26,8 +26,8 @@ public class State<T extends Shader> implements Comparable<State<?>> {
 
 	/**
 	 * The {@link State} class mirrors the OpenGL state as much as possible, so
-	 * don't change it outside of {@link State}, and call this when the OpenGL
-	 * State is refreshed e.g.: when the display has been (re)created
+	 * don't change it outside of {@link State}, and call this when the OpenGL State
+	 * is refreshed e.g.: when the display has been (re)created
 	 */
 	public static void stateReset() {
 		currentState = build( None.instance );
@@ -197,8 +197,8 @@ public class State<T extends Shader> implements Comparable<State<?>> {
 	 * Gets the index that this state achieved in its compilation batch. Remember
 	 * that states compiled in different batches can have the same compiled index
 	 * 
-	 * @return The index of this state in its compilation batch, or -1 if the
-	 *         state has not been compiled
+	 * @return The index of this state in its compilation batch, or -1 if the state
+	 *         has not been compiled
 	 */
 	public int getCompiledIndex() {
 		return compiledIndex;

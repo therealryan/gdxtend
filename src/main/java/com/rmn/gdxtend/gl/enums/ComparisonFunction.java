@@ -31,8 +31,7 @@ public enum ComparisonFunction {
 	 */
 	NOTEQUAL( GL20.GL_NOTEQUAL ),
 	/**
-	 * Passes if the incoming value is greater than or equal to the reference
-	 * value.
+	 * Passes if the incoming value is greater than or equal to the reference value.
 	 */
 	GEQUAL( GL20.GL_GEQUAL ),
 	/**
